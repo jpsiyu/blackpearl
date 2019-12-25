@@ -1,7 +1,7 @@
 import low from 'lowdb';
 import LocalStorage from 'lowdb/adapters/LocalStorage';
 import { Default } from './default';
-import { User } from '@/scripts/chat/user'
+import { User } from '@/scripts/chat/user';
 
 export class DB {
   private db: low.LowdbSync<any>;
@@ -16,6 +16,6 @@ export class DB {
   }
 
   public setChatUser(user: User) {
-    this.db.set("chatUser", user).write();
+    this.db.set('chatUser', user).write();
   }
 }

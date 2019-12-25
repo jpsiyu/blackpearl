@@ -5,10 +5,10 @@ export class User {
   public pubKey: string;
 
   constructor() {
-    this.keyPair = "";
-    this.name = "";
-    this.head = "";
-    this.pubKey = "";
+    this.keyPair = '';
+    this.name = '';
+    this.head = '';
+    this.pubKey = '';
   }
 
 }

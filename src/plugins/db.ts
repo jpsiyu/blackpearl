@@ -1,7 +1,7 @@
 import Vue from 'vue';
-import { DB } from "@/scripts/db/db"
+import { DB } from '@/scripts/db/db';
 
-const db = new DB()
+const db = new DB();
 
 const plugin = {
   install() {
