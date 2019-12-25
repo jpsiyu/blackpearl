@@ -23,8 +23,8 @@ export default new Router({
       children: [
         {
           path: '',
-          component: () => import("@/pages/error.vue")
-        }
+          component: () => import('@/pages/error.vue'),
+        },
       ],
     },
   ],
