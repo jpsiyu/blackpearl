@@ -19,6 +19,7 @@
     "@vue/cli-plugin-babel": "^4.1.0",
     "@vue/cli-plugin-typescript": "^4.1.0",
     "@vue/cli-service": "^4.1.0",
+    "postcss-nested": "^4.2.1",
     "typescript": "~3.5.3",
     "vue-auto-routing": "^0.4.0",
     "vue-cli-plugin-auto-routing": "^0.3.1",
