@@ -1,9 +1,7 @@
 import Vue from 'vue';
-import low from 'lowdb';
-import LocalStorage from 'lowdb/adapters/LocalStorage';
+import { DB } from "@/scripts/db/db"
 
-const adapter = new LocalStorage('db');
-const db = low(adapter);
+const db = new DB()
 
 const plugin = {
   install() {
