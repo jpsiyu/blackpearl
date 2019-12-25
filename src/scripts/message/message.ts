@@ -12,6 +12,6 @@ export class Message {
     this.pubKey = pubKey;
     this.content = content;
     this.timestamp = timestamp;
-    this.head = head
+    this.head = head;
   }
 }

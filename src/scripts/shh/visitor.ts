@@ -12,13 +12,13 @@ export class Visitor {
     this.powTime = 3;
     this.powTarget = 0.5;
     this.ttl = 100;
-    //this.nodeUrl = "ws://localhost:8546";
-    this.nodeUrl = "ws://192.168.0.111:8546";
+    // this.nodeUrl = "ws://localhost:8546";
+    this.nodeUrl = 'ws://192.168.0.111:8546';
   }
 
   public async initWeb3() {
-    this.web3.setProvider(new Web3.providers.WebsocketProvider(this.nodeUrl))
-    await this.web3.eth.net.isListening()
+    this.web3.setProvider(new Web3.providers.WebsocketProvider(this.nodeUrl));
+    await this.web3.eth.net.isListening();
   }
 
 
@@ -32,10 +32,10 @@ export class Visitor {
 
   public async isKeyPairValid(keyPair: string): Promise<boolean> {
     try {
-      let res = await this.web3.shh.hasKeyPair(keyPair)
-      return Promise.resolve(res)
+      const res = await this.web3.shh.hasKeyPair(keyPair);
+      return Promise.resolve(res);
     } catch (err) {
-      return Promise.resolve(false)
+      return Promise.resolve(false);
     }
   }
 }

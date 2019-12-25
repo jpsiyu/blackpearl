@@ -1,7 +1,7 @@
 import Vue from 'vue';
-import { SHH } from '@/scripts/shh/shh'
+import { SHH } from '@/scripts/shh/shh';
 
-const shh = new SHH()
+const shh = new SHH();
 
 const plugin = {
   install() {
