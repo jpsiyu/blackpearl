@@ -1,6 +1,6 @@
 import low from 'lowdb';
 import LocalStorage from 'lowdb/adapters/LocalStorage';
-import { Default } from './default';
+import { Default } from '@/scripts/db/default';
 import { User } from '@/scripts/chat/user';
 
 export class DB {
