@@ -12,10 +12,10 @@
 </template>
 
 <script lang="ts">
-import Vue from "vue";
-import Navigator from "@/components/Navigator.vue";
+import Vue from 'vue';
+import Navigator from '@/components/Navigator.vue';
 export default Vue.extend({
-  components: { Navigator }
+  components: { Navigator },
 });
 </script>
 

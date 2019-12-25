@@ -1,13 +1,13 @@
 <template>
   <div class="nav">
-    <div class="nav-item" v-for="(item, index) in projects" :key="index">
+    <div class="nav-item" v-for="(item, index) in projects" :key="index" @click="handleClick(item)">
       <span>{{item.name}}</span>
     </div>
   </div>
 </template>
 
 <script lang="ts">
-import Vue from "vue";
+import Vue from 'vue';
 export default Vue.extend({
   data() {
     return {};
@@ -15,15 +15,20 @@ export default Vue.extend({
   computed: {
     projects() {
       return [
-        { id: 0, name: "首页" },
-        { id: 1, name: "钱包" },
-        { id: 2, name: "DEX" },
-        { id: 3, name: "聊天" },
-        { id: 4, name: "房子" },
-        { id: 5, name: "知识星球" }
+        { id: 0, name: '首页', link: '/' },
+        { id: 1, name: '钱包', link: '/wallet' },
+        { id: 2, name: 'DEX', link: '/dex' },
+        { id: 3, name: '聊天', link: '/chat' },
+        { id: 4, name: '房子', link: '/house' },
+        { id: 5, name: '知识星球', link: '/knowledge' },
       ];
-    }
-  }
+    },
+  },
+  methods: {
+    handleClick(item: any) {
+      this.$router.push({ path: item.link });
+    },
+  },
 });
 </script>
 
