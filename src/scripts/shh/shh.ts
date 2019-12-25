@@ -12,6 +12,10 @@ export class SHH {
     this.visitor = new Visitor()
   }
 
+  public async init() {
+    await this.visitor.initWeb3()
+  }
+
   public async startSubscribe(topics: string[]) {
     this.symKeyID = await this.visitor.web3.shh.generateSymKeyFromPassword(this.symPasswd);
 
@@ -83,5 +87,4 @@ export class SHH {
     const priv: Private = new Private(msg.pubKey, msg.sender, msg.pubKey)
     store.commit("addPrivate", priv)
   }
-}
 }

@@ -5,8 +5,9 @@ import store from './store';
 
 import '@/assets/css/default.css';
 
-import './plugins/element';
+import '@/plugins/element';
 import '@/plugins/db';
+import '@/plugins/shh';
 
 Vue.config.productionTip = false;
 
