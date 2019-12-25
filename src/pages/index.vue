@@ -8,7 +8,6 @@
 <style lang="postcss" scoped>
 .home {
   &-title {
-    border: 1px red solid;
   }
 }
 </style>
