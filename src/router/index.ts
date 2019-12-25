@@ -17,5 +17,15 @@ export default new Router({
       component: RouterLayout,
       children: routes,
     },
+    {
+      path: '*',
+      component: RouterLayout,
+      children: [
+        {
+          path: '',
+          component: () => import("@/pages/error.vue")
+        }
+      ],
+    },
   ],
 });
