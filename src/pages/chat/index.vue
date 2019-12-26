@@ -29,7 +29,8 @@ export default Vue.extend({
   computed: {
     ...mapState({
       chatting: (state: any) => state.chat.chatting,
-      me: (state: any) => state.chat.user
+      me: (state: any) => state.chat.user,
+      hasSubscribe: (state: any) => state.chat.hasSubscribe
     })
   },
 
@@ -52,11 +53,14 @@ export default Vue.extend({
     this.$store.commit("chat/setGroups", groups);
 
     // start subscribe
-    this.$shh.startPrivSubscribe(user.keyPair);
-    const topics: string[] = groups.map((e: Group) => {
-      return e.topic;
-    });
-    return this.$shh.startSubscribe(topics);
+    if (!this.hasSubscribe) {
+      this.$shh.startPrivSubscribe(user.keyPair);
+      const topics: string[] = groups.map((e: Group) => {
+        return e.topic;
+      });
+      this.$shh.startSubscribe(topics);
+      this.$store.commit("chat/setSubscribe", true);
+    }
   },
 
   methods: {
