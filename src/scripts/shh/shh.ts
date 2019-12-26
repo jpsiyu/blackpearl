@@ -24,7 +24,11 @@ export class SHH {
         symKeyID: this.symKeyID,
         topics: [topic],
       };
-      this.visitor.web3.shh.subscribe('messages', options, this.rece);
+      this.visitor.web3.shh.subscribe('messages', options,
+        (error: Error, message: any, subscription: any) => {
+          this.rece(error, message, subscription);
+        },
+      );
     }
   }
 

@@ -35,6 +35,7 @@ export default Vue.extend({
   },
 
   created() {
+    // init user
     const user = this.$db.getChatUser();
     if (!user) {
       this.$router.push({ path: "/chat/signup" });
@@ -42,6 +43,7 @@ export default Vue.extend({
     }
     this.$store.commit("setUser", user);
 
+    // init contact
     const groups: Group[] = [
       new Group("word", "工作", "work", "0xaabbccdd"),
       new Group("living", "生活", "living", "0x11223344"),
@@ -49,7 +51,15 @@ export default Vue.extend({
     ];
     this.$store.commit("setChatting", groups[0]);
     this.$store.commit("setGroups", groups);
+
+    // start subscribe
+    this.$shh.startPrivSubscribe(user.keyPair);
+    const topics: string[] = groups.map((e: Group) => {
+      return e.topic;
+    });
+    return this.$shh.startSubscribe(topics);
   },
+  
   methods: {
     copy() {
       this.$copyText(this.me.pubKey).then(() => {
