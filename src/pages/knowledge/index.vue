@@ -29,26 +29,14 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
+import Vue from "vue";
 import Article from "@/components/knowledge/Article.vue";
 import cfg from "@/scripts/knowledge/writing-config.js";
 
 const welcomeId = 101;
 
-export default {
-  metaInfo: {
-    title: "区块链知识",
-    meta: [
-      {
-        name: "keywords",
-        content: "blockchain,Ethereum,分布式,加密,加密经济学"
-      },
-      {
-        name: "description",
-        content: "分享、传播区块链的知识，共创科技未来"
-      }
-    ]
-  },
+export default Vue.extend({
   components: {
     Article
   },
@@ -123,87 +111,75 @@ export default {
       this.$router.push({ path: "/knowledge", query: { id } });
     }
   }
-};
+});
 </script>
 
-<style scoped>
+<style lang="postcss" scoped>
 .know {
   display: flex;
-}
-.know-left {
-  position: fixed;
-  top: 64px;
-  bottom: 0;
-  overflow-y: scroll;
-  width: 340px;
-  min-width: 340px;
-  background-image: linear-gradient(-90deg, rgba(0, 0, 0, 0.01), transparent);
-  padding: 40px 30px;
-  box-sizing: border-box;
-}
+  width: 100%;
+  height: 100%;
+  &-left {
+    overflow-y: scroll;
+    width: 240px;
+    min-width: 240px;
+    background-image: linear-gradient(-90deg, rgba(0, 0, 0, 0.01), transparent);
+    padding: 10px;
+    box-sizing: border-box;
+  }
+  &-right {
+    flex: 1;
+    left: 340px;
+    overflow-y: scroll;
+    padding: 0 30px;
+  }
+  &-group {
+    padding: 15px 0;
+    cursor: pointer;
+    user-select: none;
+    &__title {
+      font-size: 16px;
+      font-weight: 600;
+      &:hover {
+        color: gray;
+      }
+    }
 
-.know-right {
-  position: fixed;
-  left: 340px;
-  top: 64px;
-  right: 0;
-  bottom: 0;
-  overflow-y: scroll;
-  padding: 0 30px;
-}
+    &__label {
+      padding-left: 10px;
+    }
 
-.know-group {
-  padding: 15px 0;
-  cursor: pointer;
-  user-select: none;
-}
+    &__arrow {
+      display: inline-block;
+      color: gray;
+      transition: transform 0.3s;
+    }
+  }
 
-.know-group__title {
-  font-size: 16px;
-  font-weight: 600;
-}
-
-.know-group__title:hover {
-  color: gray;
-}
-
-.know-group__label {
-  padding-left: 10px;
-}
-
-.know-group__arrow {
-  display: inline-block;
-  color: gray;
-  transition: transform 0.3s;
-}
-
-.know-writings {
-  cursor: pointer;
-  user-select: none;
-  margin-top: 10px;
-}
-
-.know-writing {
-  padding: 10px 30px;
-  display: flex;
-  align-items: center;
-}
-
-.know-writing__name {
-  font-size: 14px;
-  margin-left: 3px;
-}
-
-.know-writing__circle {
-  display: inline-block;
-  width: 5px;
-  height: 5px;
-  background-color: #07c160;
-  border-radius: 50%;
-}
-
-.know-writing__name:hover {
-  color: gray;
+  &-writings {
+    cursor: pointer;
+    user-select: none;
+    margin-top: 10px;
+  }
+  &-writing {
+    padding: 10px 30px;
+    display: flex;
+    align-items: center;
+    &__name {
+      font-size: 14px;
+      margin-left: 3px;
+    }
+    &__circle {
+      display: inline-block;
+      width: 5px;
+      height: 5px;
+      background-color: #07c160;
+      border-radius: 50%;
+      &:hover {
+        color: gray;
+      }
+    }
+  }
 }
 
 .rotate {
@@ -212,10 +188,9 @@ export default {
 
 .select {
   color: #07c160;
-}
-
-.select:hover {
-  color: #07c160;
+  &:hover {
+    color: #07c160;
+  }
 }
 
 .hide {
