@@ -30,21 +30,21 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue';
-import Article from '@/components/knowledge/Article.vue';
-import { group, writings } from '@/scripts/knowledge/writings';
+import Vue from "vue";
+import Article from "@/components/knowledge/Article.vue";
+import { group, writings } from "@/scripts/knowledge/writings";
 
 const welcomeId = 101;
 
 export default Vue.extend({
   components: {
-    Article,
+    Article
   },
   data() {
     return {
-      source: '',
+      source: "",
       selectId: 0,
-      open: new Map<number, boolean>(),
+      open: new Map<number, boolean>()
     };
   },
   computed: {
@@ -53,7 +53,7 @@ export default Vue.extend({
     },
     writings() {
       return writings;
-    },
+    }
   },
   created() {
     this.init();
@@ -76,7 +76,7 @@ export default Vue.extend({
         this.jumpWriting(welcomeId);
         return;
       }
-      const article = this.writings.find((e) => e.id === id);
+      const article = this.writings.find(e => e.id === id);
       if (!article) {
         this.jumpWriting(welcomeId);
         return;
@@ -106,7 +106,7 @@ export default Vue.extend({
     },
 
     getWritingsByGroupId(id: number) {
-      return this.writings.filter((e) => {
+      return this.writings.filter(e => {
         return e.groupId === id;
       });
     },
@@ -114,9 +114,9 @@ export default Vue.extend({
       this.jumpWriting(id);
     },
     jumpWriting(id: number) {
-      this.$router.push({ path: '/knowledge', query: { id: id.toString() } });
-    },
-  },
+      this.$router.push({ path: "/knowledge", query: { id: id.toString() } });
+    }
+  }
 });
 </script>
 
@@ -127,10 +127,10 @@ export default Vue.extend({
   height: 100%;
   &-left {
     overflow-y: scroll;
-    width: 240px;
+    width: 340px;
     min-width: 240px;
     background-image: linear-gradient(-90deg, rgba(0, 0, 0, 0.01), transparent);
-    padding: 10px 20px;
+    padding: 10px 0px 10px 50px;
     box-sizing: border-box;
   }
   &-right {

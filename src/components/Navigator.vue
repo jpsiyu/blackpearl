@@ -72,11 +72,14 @@ export default Vue.extend({
   height: 100%;
   position: relative;
   &::after {
+    z-index: -1;
     position: absolute;
     content: "";
-    background: var(--color-light-border);
-    width: 650px;
-    height: 0.5px;
+    border: 2px solid var(--color-light-border);
+    border-bottom: none;
+    border-radius: 50px;
+    width: 500px;
+    height: 80%;
     top: 0;
   }
   &-item {
