@@ -61,7 +61,7 @@ export default Vue.extend({
   beforeRouteUpdate(to, from, next) {
     const toId = to.query.id as string;
     const fromId = from.query.id;
-    if (toId != fromId) {
+    if (toId !== fromId) {
       this.getWriting(Number(toId));
     }
     next();
@@ -76,7 +76,7 @@ export default Vue.extend({
         this.jumpWriting(welcomeId);
         return;
       }
-      const article = this.writings.find((e) => e.id == id);
+      const article = this.writings.find((e) => e.id === id);
       if (!article) {
         this.jumpWriting(welcomeId);
         return;
@@ -107,7 +107,7 @@ export default Vue.extend({
 
     getWritingsByGroupId(id: number) {
       return this.writings.filter((e) => {
-        return e.groupId == id;
+        return e.groupId === id;
       });
     },
     clickWriting(id: number) {

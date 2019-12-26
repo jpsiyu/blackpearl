@@ -10,19 +10,19 @@ const config = {
 const axiosInstance = axios.create(config);
 
 axiosInstance.interceptors.request.use(
-  function(config) {
-    return config;
+  (reqConfig: any) => {
+    return reqConfig;
   },
-  function(error) {
+  (error: Error) => {
     return Promise.reject(error);
   },
 );
 
 axiosInstance.interceptors.response.use(
-  function(response) {
+  (response: any) => {
     return response;
   },
-  function(error) {
+  (error: Error) => {
     return error;
   },
 );
