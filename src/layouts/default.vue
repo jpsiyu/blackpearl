@@ -41,6 +41,7 @@ export default Vue.extend({
     justify-content: space-between;
     &-page {
       flex: 1;
+      overflow: auto;
     }
     &-nav {
       height: 100px;

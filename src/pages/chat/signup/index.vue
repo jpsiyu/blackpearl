@@ -74,7 +74,7 @@ export default Vue.extend({
 <style lang="postcss" scoped>
 .sign {
   &-form {
-    margin: 80px auto;
+    margin: 20px auto;
     width: 300px;
   }
   &-heads {
