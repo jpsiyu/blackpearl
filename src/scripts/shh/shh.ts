@@ -60,7 +60,7 @@ export class SHH {
       payload: this.visitor.web3.utils.utf8ToHex(JSON.stringify(message)),
       powTime: this.visitor.powTime,
       powTarget: this.visitor.powTime,
-      topic: '',
+      topic: '0x00000000',
       ttl: this.visitor.ttl,
     });
   }
