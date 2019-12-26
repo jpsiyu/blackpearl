@@ -1,5 +1,5 @@
 import Vue from 'vue';
-import axios from 'axios';
+import axios, { AxiosInstance } from 'axios';
 
 const config = {
   // baseURL: process.env.baseURL || process.env.apiUrl || ""
@@ -7,7 +7,7 @@ const config = {
   // withCredentials: true, // Check cross-site Access-Control
 };
 
-const axiosInstance = axios.create(config);
+const axiosInstance: AxiosInstance = axios.create(config);
 
 axiosInstance.interceptors.request.use(
   (reqConfig: any) => {
@@ -26,6 +26,7 @@ axiosInstance.interceptors.response.use(
     return error;
   },
 );
+
 
 const plugin = {
   install() {
