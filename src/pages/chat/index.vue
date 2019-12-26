@@ -23,14 +23,13 @@ import { Message } from "@/scripts/message/message";
 import Contact from "@/components/chat/Contact.vue";
 import Chat from "@/components/chat/Chat.vue";
 import { mapState } from "vuex";
-import { State } from "@/store/state";
 
 export default Vue.extend({
   components: { Contact, Chat },
   computed: {
     ...mapState({
-      chatting: state => state.chatting,
-      me: state => state.user
+      chatting: (state: any) => state.chat.chatting,
+      me: (state: any) => state.chat.user
     })
   },
 
@@ -41,7 +40,7 @@ export default Vue.extend({
       this.$router.push({ path: "/chat/signup" });
       return;
     }
-    this.$store.commit("setUser", user);
+    this.$store.commit("chat/setUser", user);
 
     // init contact
     const groups: Group[] = [
@@ -49,8 +48,8 @@ export default Vue.extend({
       new Group("living", "生活", "living", "0x11223344"),
       new Group("entainment", "娱乐", "entertainment", "0xaa22bb44")
     ];
-    this.$store.commit("setChatting", groups[0]);
-    this.$store.commit("setGroups", groups);
+    this.$store.commit("chat/setChatting", groups[0]);
+    this.$store.commit("chat/setGroups", groups);
 
     // start subscribe
     this.$shh.startPrivSubscribe(user.keyPair);

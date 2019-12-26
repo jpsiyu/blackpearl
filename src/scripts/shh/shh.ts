@@ -72,7 +72,7 @@ export class SHH {
     const msgHex: string = message.payload;
     const msgStr: string = this.visitor.web3.utils.hexToUtf8(msgHex);
     const msg: Message = JSON.parse(msgStr);
-    store.commit('pushMessage', msg);
+    store.commit('chat/pushMessage', msg);
   }
 
   public recePriv(error: Error, message: any, subscription: any) {
@@ -83,12 +83,12 @@ export class SHH {
     const msgStr: string = this.visitor.web3.utils.hexToUtf8(msgHex);
     const msg: Message = JSON.parse(msgStr);
     msg.chatID = msg.pubKey;
-    store.commit('pushMessage', msg);
+    store.commit('chat/pushMessage', msg);
     this.addPriv(msg);
   }
 
   private addPriv(msg: Message) {
     const priv: Private = new Private(msg.pubKey, msg.sender, msg.pubKey);
-    store.commit('addPrivate', priv);
+    store.commit('chat/addPrivate', priv);
   }
 }

@@ -61,7 +61,7 @@ export default Vue.extend({
         this.userInput.pubKey,
       );
 
-      this.$store.commit('addPrivate', priv);
+      this.$store.commit('chat/addPrivate', priv);
       this.hide();
     },
   },
