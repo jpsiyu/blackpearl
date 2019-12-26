@@ -32,7 +32,7 @@ export default Vue.extend({
     margin: auto;
     box-sizing: border-box;
     box-shadow: 0 0 3px 2px rgba(0, 0, 0, 0.1);
-    width: 80%;
+    width: 90%;
     height: 90%;
     min-height: 500px;
     min-width: 900px;
