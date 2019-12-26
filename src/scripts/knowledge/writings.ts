@@ -6,7 +6,7 @@ export const group = [
   { id: 5, name: '区块链基础' },
   { id: 6, name: 'Ethereum大观' },
   { id: 7, name: '加密经济学' },
-]
+];
 
 export const writings = [
   { id: 101, groupId: 1, name: '欢迎', path: '/writings/group01/welcome.md' },
@@ -53,4 +53,4 @@ export const writings = [
   { id: 706, groupId: 7, name: '交易小费', path: '/writings/group07/fee.md' },
   { id: 707, groupId: 7, name: '激励', path: '/writings/group07/incentive.md' },
   { id: 708, groupId: 7, name: '攻击', path: '/writings/group07/attack.md' },
-]
+];

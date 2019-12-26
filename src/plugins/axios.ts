@@ -1,7 +1,7 @@
 import Vue from 'vue';
-import axios from "axios";
+import axios from 'axios';
 
-let config = {
+const config = {
   // baseURL: process.env.baseURL || process.env.apiUrl || ""
   // timeout: 60 * 1000, // Timeout
   // withCredentials: true, // Check cross-site Access-Control
@@ -10,21 +10,21 @@ let config = {
 const axiosInstance = axios.create(config);
 
 axiosInstance.interceptors.request.use(
-  function (config) {
+  function(config) {
     return config;
   },
-  function (error) {
+  function(error) {
     return Promise.reject(error);
-  }
+  },
 );
 
 axiosInstance.interceptors.response.use(
-  function (response) {
+  function(response) {
     return response;
   },
-  function (error) {
-    return error
-  }
+  function(error) {
+    return error;
+  },
 );
 
 const plugin = {
@@ -32,10 +32,10 @@ const plugin = {
     Object.defineProperties(Vue.prototype, {
       $axios: { get() { return axiosInstance; } },
     });
-  }
-}
+  },
+};
 
-Vue.use(plugin)
+Vue.use(plugin);
 
 export default plugin;
 export { axiosInstance };

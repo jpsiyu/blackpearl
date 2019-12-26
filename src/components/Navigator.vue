@@ -7,7 +7,7 @@
 </template>
 
 <script lang="ts">
-import Vue from "vue";
+import Vue from 'vue';
 export default Vue.extend({
   data() {
     return {};
@@ -15,20 +15,20 @@ export default Vue.extend({
   computed: {
     projects() {
       return [
-        { id: 0, name: "首页", link: "/" },
-        { id: 1, name: "钱包", link: "/wallet" },
-        { id: 2, name: "DEX", link: "/dex" },
-        { id: 3, name: "聊天", link: "/chat" },
-        { id: 4, name: "房子", link: "/house" },
-        { id: 5, name: "知识", link: "/knowledge" }
+        { id: 0, name: '首页', link: '/' },
+        { id: 1, name: '钱包', link: '/wallet' },
+        { id: 2, name: 'DEX', link: '/dex' },
+        { id: 3, name: '聊天', link: '/chat' },
+        { id: 4, name: '房子', link: '/house' },
+        { id: 5, name: '知识', link: '/knowledge' },
       ];
-    }
+    },
   },
   methods: {
     handleClick(item: any) {
       this.$router.push({ path: item.link });
-    }
-  }
+    },
+  },
 });
 </script>
 

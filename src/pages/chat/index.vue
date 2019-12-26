@@ -15,14 +15,14 @@
 </template>
 
 <script lang="ts">
-import Vue from "vue";
-import { User } from "@/scripts/chat/user";
-import { Group } from "@/scripts/contact/group";
-import { Private } from "@/scripts/contact/private";
-import { Message } from "@/scripts/message/message";
-import Contact from "@/components/chat/Contact.vue";
-import Chat from "@/components/chat/Chat.vue";
-import { mapState } from "vuex";
+import Vue from 'vue';
+import { User } from '@/scripts/chat/user';
+import { Group } from '@/scripts/contact/group';
+import { Private } from '@/scripts/contact/private';
+import { Message } from '@/scripts/message/message';
+import Contact from '@/components/chat/Contact.vue';
+import Chat from '@/components/chat/Chat.vue';
+import { mapState } from 'vuex';
 
 export default Vue.extend({
   components: { Contact, Chat },
@@ -30,27 +30,27 @@ export default Vue.extend({
     ...mapState({
       chatting: (state: any) => state.chat.chatting,
       me: (state: any) => state.chat.user,
-      hasSubscribe: (state: any) => state.chat.hasSubscribe
-    })
+      hasSubscribe: (state: any) => state.chat.hasSubscribe,
+    }),
   },
 
   created() {
     // init user
     const user = this.$db.getChatUser();
     if (!user) {
-      this.$router.push({ path: "/chat/signup" });
+      this.$router.push({ path: '/chat/signup' });
       return;
     }
-    this.$store.commit("chat/setUser", user);
+    this.$store.commit('chat/setUser', user);
 
     // init contact
     const groups: Group[] = [
-      new Group("word", "工作", "work", "0xaabbccdd"),
-      new Group("living", "生活", "living", "0x11223344"),
-      new Group("entainment", "娱乐", "entertainment", "0xaa22bb44")
+      new Group('word', '工作', 'work', '0xaabbccdd'),
+      new Group('living', '生活', 'living', '0x11223344'),
+      new Group('entainment', '娱乐', 'entertainment', '0xaa22bb44'),
     ];
-    this.$store.commit("chat/setChatting", groups[0]);
-    this.$store.commit("chat/setGroups", groups);
+    this.$store.commit('chat/setChatting', groups[0]);
+    this.$store.commit('chat/setGroups', groups);
 
     // start subscribe
     if (!this.hasSubscribe) {
@@ -59,7 +59,7 @@ export default Vue.extend({
         return e.topic;
       });
       this.$shh.startSubscribe(topics);
-      this.$store.commit("chat/setSubscribe", true);
+      this.$store.commit('chat/setSubscribe', true);
     }
   },
 
@@ -67,12 +67,12 @@ export default Vue.extend({
     copy() {
       this.$copyText(this.me.pubKey).then(() => {
         this.$message({
-          message: "Publick Key 已复制到剪贴板",
-          type: "success"
+          message: 'Publick Key 已复制到剪贴板',
+          type: 'success',
         });
       });
-    }
-  }
+    },
+  },
 });
 </script>
 

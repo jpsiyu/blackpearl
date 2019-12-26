@@ -34,42 +34,42 @@
 </template>
 
 <script lang="ts">
-import Vue from "vue";
-import AddFriend from "@/components/chat/popup/AddFriend.vue";
-import { Group } from "@/scripts/contact/group";
-import { Private } from "@/scripts/contact/private";
-import { Message } from "@/scripts/message/message";
-import { mapState } from "vuex";
+import Vue from 'vue';
+import AddFriend from '@/components/chat/popup/AddFriend.vue';
+import { Group } from '@/scripts/contact/group';
+import { Private } from '@/scripts/contact/private';
+import { Message } from '@/scripts/message/message';
+import { mapState } from 'vuex';
 
 export default Vue.extend({
   components: { AddFriend },
   data() {
     return {
-      collapse: ""
+      collapse: '',
     };
   },
   computed: {
     ...mapState({
       chatting: (state: any) => state.chat.chatting,
       groups: (state: any) => state.chat.groups,
-      privates: (state: any) => state.chat.privates
-    })
+      privates: (state: any) => state.chat.privates,
+    }),
   },
 
   mounted() {
     this.chatting instanceof Group
-      ? (this.collapse = "group")
-      : (this.collapse = "private");
+      ? (this.collapse = 'group')
+      : (this.collapse = 'private');
   },
   methods: {
     select(item: Group | Private) {
-      this.$store.commit("chat/setChatting", item);
+      this.$store.commit('chat/setChatting', item);
     },
     addPriv() {
       const addFriendComp: any = this.$refs.addFriend;
       addFriendComp.show();
-    }
-  }
+    },
+  },
 });
 </script>
 

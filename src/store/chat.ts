@@ -55,4 +55,4 @@ export default {
       state.chatLogs = newMap;
     },
   },
-}
+};
