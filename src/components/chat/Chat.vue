@@ -3,7 +3,7 @@
     <div class="chat-top">{{chatting.name}}</div>
     <div class="chat-main" ref="main">
       <div class="chat-main-item" v-for="(item, index) in chats" :key="index">
-        <CompMessage :msg="item" />
+        <MessageComp :msg="item" />
         <span id="chat-main__tail" ref="tail"></span>
       </div>
     </div>
@@ -20,7 +20,7 @@
 
 <script lang="ts">
 import Vue from "vue";
-import CompMessage from "@/components/Message.vue";
+import MessageComp from "@/components/chat/Message.vue";
 import { Group } from "@/scripts/contact/group";
 import { Private } from "@/scripts/contact/private";
 import { Message } from "@/scripts/message/message";
@@ -28,6 +28,7 @@ import { mapState } from "vuex";
 import { User } from "@/scripts/chat/user";
 
 export default Vue.extend({
+  components: { MessageComp },
   data() {
     return {
       msg: ""
