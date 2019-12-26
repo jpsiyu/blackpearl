@@ -9,6 +9,7 @@ import '@/plugins/element';
 import '@/plugins/db';
 import '@/plugins/shh';
 import '@/plugins/clipboard';
+import '@/plugins/axios';
 
 Vue.config.productionTip = false;
 
