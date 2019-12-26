@@ -6,5 +6,6 @@ declare module 'vue/types/vue' {
   interface Vue {
     $db: DB;
     $shh: SHH;
+    $axios: any;
   }
 }

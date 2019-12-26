@@ -1,4 +1,4 @@
-const group = [
+export const group = [
   { id: 1, name: '前言' },
   { id: 2, name: 'Ethereum基础' },
   { id: 3, name: 'Ethereum进阶' },
@@ -8,7 +8,7 @@ const group = [
   { id: 7, name: '加密经济学' },
 ]
 
-const writings = [
+export const writings = [
   { id: 101, groupId: 1, name: '欢迎', path: '/writings/group01/welcome.md' },
 
   { id: 201, groupId: 2, name: '是什么', path: '/writings/group02/what.md' },
@@ -54,5 +54,3 @@ const writings = [
   { id: 707, groupId: 7, name: '激励', path: '/writings/group07/incentive.md' },
   { id: 708, groupId: 7, name: '攻击', path: '/writings/group07/attack.md' },
 ]
-
-export default { group, writings }

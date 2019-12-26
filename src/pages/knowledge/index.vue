@@ -32,7 +32,7 @@
 <script lang="ts">
 import Vue from "vue";
 import Article from "@/components/knowledge/Article.vue";
-import cfg from "@/scripts/knowledge/writing-config.js";
+import { group, writings } from "@/scripts/knowledge/writings";
 
 const welcomeId = 101;
 
@@ -43,37 +43,40 @@ export default Vue.extend({
   data() {
     return {
       source: "",
-      group: [],
-      writings: [],
       selectId: 0,
-      open: {}
+      open: new Map<number, boolean>()
     };
   },
-  mounted() {
+  computed: {
+    group() {
+      return group;
+    },
+    writings() {
+      return writings;
+    }
+  },
+  created() {
     this.init();
   },
-  updated() {},
   beforeRouteUpdate(to, from, next) {
-    const toId = to.query.id;
+    const toId = to.query.id as string;
     const fromId = from.query.id;
     if (toId != fromId) {
-      this.getWriting(toId);
+      this.getWriting(Number(toId));
     }
     next();
   },
   methods: {
     init() {
-      this.group = cfg.group;
-      this.writings = cfg.writings;
-      const id = this.$route.query.id;
-      this.getWriting(id);
+      const id = this.$route.query.id as string;
+      this.getWriting(Number(id));
     },
-    getWriting(id) {
+    getWriting(id: number) {
       if (!id) {
         this.jumpWriting(welcomeId);
         return;
       }
-      const article = cfg.writings.find(e => e.id == id);
+      const article = this.writings.find(e => e.id == id);
       if (!article) {
         this.jumpWriting(welcomeId);
         return;
@@ -81,34 +84,37 @@ export default Vue.extend({
       this.selectId = id;
       this.$axios
         .get(article.path)
-        .then(res => {
+        .then((res: any) => {
           this.source = res.data;
           return this.$nextTick();
         })
-        .then(_ => {
-          this.$refs.right.scrollTop = 0;
+        .then(() => {
+          const rightComp: any = this.$refs.right;
+          rightComp.scrollTop = 0;
         })
-        .catch(err => {
+        .catch((err: Error) => {
           console.error(err);
         });
     },
-    isOpen(id) {
-      return this.open[id] ? true : false;
+    isOpen(id: number) {
+      return this.open.get(id) ? true : false;
     },
-    clickGroup(id) {
-      this.open[id] = this.isOpen(id) ? false : true;
+    clickGroup(id: number) {
+      const status = this.isOpen(id) ? false : true;
+      this.open.set(id, status);
       this.$forceUpdate();
     },
-    getWritingsByGroupId(id) {
-      return cfg.writings.filter(e => {
+
+    getWritingsByGroupId(id: number) {
+      return this.writings.filter(e => {
         return e.groupId == id;
       });
     },
-    clickWriting(id) {
+    clickWriting(id: number) {
       this.jumpWriting(id);
     },
-    jumpWriting(id) {
-      this.$router.push({ path: "/knowledge", query: { id } });
+    jumpWriting(id: number) {
+      this.$router.push({ path: "/knowledge", query: { id: id.toString() } });
     }
   }
 });
