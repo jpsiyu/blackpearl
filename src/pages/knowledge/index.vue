@@ -85,7 +85,7 @@ export default Vue.extend({
       this.$axios
         .get(article.path)
         .then((res: any) => {
-          this.source = res.data;
+          this.source = res
           return this.$nextTick();
         })
         .then(() => {

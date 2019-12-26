@@ -1,4 +1,4 @@
-import Vue from 'vue';
+import Vue, { PluginObject } from 'vue';
 import axios, { AxiosInstance } from 'axios';
 
 const config = {
@@ -20,7 +20,7 @@ axiosInstance.interceptors.request.use(
 
 axiosInstance.interceptors.response.use(
   (response: any) => {
-    return response;
+    return response.data;
   },
   (error: Error) => {
     return error;
@@ -28,7 +28,7 @@ axiosInstance.interceptors.response.use(
 );
 
 
-const plugin = {
+const plugin: PluginObject<any> = {
   install() {
     Object.defineProperties(Vue.prototype, {
       $axios: { get() { return axiosInstance; } },
