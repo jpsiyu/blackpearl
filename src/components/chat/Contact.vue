@@ -35,12 +35,13 @@
 
 <script lang="ts">
 import Vue from "vue";
-import AddFriend from "@/components/popup/AddFriend.vue";
+import AddFriend from "@/components/chat/popup/AddFriend.vue";
 import { Group } from "@/scripts/contact/group";
 import { Private } from "@/scripts/contact/private";
 import { Message } from "@/scripts/message/message";
 
 export default Vue.extend({
+  components: { AddFriend },
   data() {
     return {
       collapse: ""

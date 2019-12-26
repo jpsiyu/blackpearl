@@ -8,6 +8,7 @@ import '@/assets/css/default.css';
 import '@/plugins/element';
 import '@/plugins/db';
 import '@/plugins/shh';
+import '@/plugins/clipboard';
 
 Vue.config.productionTip = false;
 
