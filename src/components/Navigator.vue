@@ -25,7 +25,7 @@ export default Vue.extend({
       return [
         { id: 0, name: "首页", link: "/" },
         { id: 1, name: "钱包", link: "/wallet" },
-        { id: 2, name: "DEX", link: "/dex" },
+        { id: 2, name: "交易", link: "/dex" },
         { id: 3, name: "聊天", link: "/chat" },
         { id: 4, name: "房子", link: "/house" },
         { id: 5, name: "知识", link: "/knowledge" }
