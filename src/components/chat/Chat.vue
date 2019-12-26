@@ -1,5 +1,6 @@
 <template>
-  <div class="chat">
+  <div class="empty" v-if="!chatting"></div>
+  <div class="chat" v-else>
     <div class="chat-top">{{chatting.name}}</div>
     <div class="chat-main" ref="main">
       <div class="chat-main-item" v-for="(item, index) in chats" :key="index">
@@ -40,7 +41,9 @@ export default Vue.extend({
       me: (state: any) => state.chat.user
     }),
     chats(): Message[] {
-      return this.$store.state.chat.chatLogs.get(this.chatting.id);
+      if (!this.chatting) return [];
+      const chats = this.$store.state.chat.chatLogs.get(this.chatting.id);
+      return chats;
     }
   },
   watch: {

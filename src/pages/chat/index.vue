@@ -6,7 +6,7 @@
     <div class="home-chat">
       <Chat v-if="chatting" />
     </div>
-    <div class="home-me">
+    <div class="home-me" v-if="me">
       <span>{{me.name}}</span>
       <span class="home-me__pub">{{me.pubKey}}</span>
       <span class="home-me__copy" @click="copy">复制</span>
