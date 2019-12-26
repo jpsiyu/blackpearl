@@ -23,33 +23,33 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue';
-import { User } from '@/scripts/chat/user';
+import Vue from "vue";
+import { User } from "@/scripts/chat/user";
 export default Vue.extend({
   data() {
     return {
-      nick: '',
-      head: '',
+      nick: "",
+      head: ""
     };
   },
   computed: {
     heads(): string[] {
       return [
-        '/images/head01.jpeg',
-        '/images/head02.jpeg',
-        '/images/head03.jpeg',
-        '/images/head04.jpeg',
-        '/images/head05.jpeg',
-        '/images/head06.jpeg',
-        '/images/head07.jpeg',
-        '/images/head08.jpeg',
-        '/images/head09.jpeg',
-        '/images/head10.jpeg',
+        "/images/head01.jpeg",
+        "/images/head02.jpeg",
+        "/images/head03.jpeg",
+        "/images/head04.jpeg",
+        "/images/head05.jpeg",
+        "/images/head06.jpeg",
+        "/images/head07.jpeg",
+        "/images/head08.jpeg",
+        "/images/head09.jpeg",
+        "/images/head10.jpeg"
       ];
     },
     ready(): boolean {
-      return this.nick !== '' && this.head !== '';
-    },
+      return this.nick !== "" && this.head !== "";
+    }
   },
   methods: {
     selectHead(head: string) {
@@ -58,16 +58,18 @@ export default Vue.extend({
 
     async sure() {
       const keyPair = await this.$shh.visitor.newKeyPair();
+      const pubKey = await this.$shh.visitor.getPubFromKeyPair(keyPair);
 
       const user: User = new User();
       user.name = this.nick;
       user.head = this.head;
       user.keyPair = keyPair;
+      user.pubKey = pubKey;
 
       this.$db.setChatUser(user);
-      console.log('haha');
-    },
-  },
+      this.$router.push({ path: "/chat" });
+    }
+  }
 });
 </script>
 
