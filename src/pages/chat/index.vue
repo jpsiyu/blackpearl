@@ -22,18 +22,16 @@ import { Private } from "@/scripts/contact/private";
 import { Message } from "@/scripts/message/message";
 import Contact from "@/components/chat/Contact.vue";
 import Chat from "@/components/chat/Chat.vue";
+import { mapState } from "vuex";
+import { State } from "@/store/state";
 
 export default Vue.extend({
   components: { Contact, Chat },
-  data() {
-    return {
-      me: new User()
-    };
-  },
   computed: {
-    chatting(): Group | Private {
-      return this.$store.state.chatting;
-    }
+    ...mapState({
+      chatting: state => state.chatting,
+      me: state => state.user
+    })
   },
 
   created() {
@@ -42,7 +40,15 @@ export default Vue.extend({
       this.$router.push({ path: "/chat/signup" });
       return;
     }
-    this.me = user;
+    this.$store.commit("setUser", user);
+
+    const groups: Group[] = [
+      new Group("word", "工作", "work", "0xaabbccdd"),
+      new Group("living", "生活", "living", "0x11223344"),
+      new Group("entainment", "娱乐", "entertainment", "0xaa22bb44")
+    ];
+    this.$store.commit("setChatting", groups[0]);
+    this.$store.commit("setGroups", groups);
   },
   methods: {
     copy() {
