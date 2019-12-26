@@ -17,24 +17,24 @@
 </template>
 
 <script lang="ts">
-import Vue from "vue";
-import { Group } from "@/scripts/contact/group";
-import { Private } from "@/scripts/contact/private";
+import Vue from 'vue';
+import { Group } from '@/scripts/contact/group';
+import { Private } from '@/scripts/contact/private';
 
 export default Vue.extend({
   data() {
     return {
       userInput: {
-        name: "",
-        pubKey: ""
+        name: '',
+        pubKey: '',
       },
-      visible: false
+      visible: false,
     };
   },
   computed: {
     pass(): boolean {
-      return this.userInput.name !== "" && this.userInput.pubKey !== "";
-    }
+      return this.userInput.name !== '' && this.userInput.pubKey !== '';
+    },
   },
   methods: {
     show() {
@@ -51,19 +51,19 @@ export default Vue.extend({
     },
     sure() {
       if (this.userInput.name.length > 6) {
-        this.$message({ message: "名字太长了啊(6个字符)!", type: "warning" });
+        this.$message({ message: '名字太长了啊(6个字符)!', type: 'warning' });
         return;
       }
 
       const priv = new Private(
         this.userInput.pubKey,
         this.userInput.name,
-        this.userInput.pubKey
+        this.userInput.pubKey,
       );
 
-      this.$store.commit("addPrivate", priv);
+      this.$store.commit('addPrivate', priv);
       this.hide();
-    }
-  }
+    },
+  },
 });
 </script>

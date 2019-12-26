@@ -11,13 +11,13 @@
 </template>
 
 <script lang="ts">
-import Vue from "vue";
-import { Message } from "@/scripts/message/message";
-import { mapState } from "vuex";
-import { User } from "@/scripts/chat/user";
+import Vue from 'vue';
+import { Message } from '@/scripts/message/message';
+import { mapState } from 'vuex';
+import { User } from '@/scripts/chat/user';
 
 export default Vue.extend({
-  props: ["msg"],
+  props: ['msg'],
   computed: {
     me(): User {
       return this.$store.state.user;
@@ -25,8 +25,8 @@ export default Vue.extend({
     isMe(): boolean {
       const res = this.me.pubKey === this.msg!.pubKey;
       return res;
-    }
-  }
+    },
+  },
 });
 </script>
 

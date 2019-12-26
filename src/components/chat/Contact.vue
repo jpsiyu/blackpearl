@@ -34,17 +34,17 @@
 </template>
 
 <script lang="ts">
-import Vue from "vue";
-import AddFriend from "@/components/chat/popup/AddFriend.vue";
-import { Group } from "@/scripts/contact/group";
-import { Private } from "@/scripts/contact/private";
-import { Message } from "@/scripts/message/message";
+import Vue from 'vue';
+import AddFriend from '@/components/chat/popup/AddFriend.vue';
+import { Group } from '@/scripts/contact/group';
+import { Private } from '@/scripts/contact/private';
+import { Message } from '@/scripts/message/message';
 
 export default Vue.extend({
   components: { AddFriend },
   data() {
     return {
-      collapse: ""
+      collapse: '',
     };
   },
   computed: {
@@ -56,23 +56,23 @@ export default Vue.extend({
     },
     privates() {
       return this.$store.state.privates;
-    }
+    },
   },
 
   mounted() {
     this.chatting instanceof Group
-      ? (this.collapse = "group")
-      : (this.collapse = "private");
+      ? (this.collapse = 'group')
+      : (this.collapse = 'private');
   },
   methods: {
     select(item: Group | Private) {
-      this.$store.commit("setChatting", item);
+      this.$store.commit('setChatting', item);
     },
     addPriv() {
       const addFriendComp: any = this.$refs.addFriend;
       addFriendComp.show();
-    }
-  }
+    },
+  },
 });
 </script>
 

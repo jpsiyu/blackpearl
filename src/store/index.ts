@@ -1,9 +1,9 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
-import { Group } from "@/scripts/contact/group";
-import { Private } from "@/scripts/contact/private";
-import { Message } from "@/scripts/message/message";
-import { User } from "@/scripts/chat/user";
+import { Group } from '@/scripts/contact/group';
+import { Private } from '@/scripts/contact/private';
+import { Message } from '@/scripts/message/message';
+import { User } from '@/scripts/chat/user';
 
 Vue.use(Vuex);
 
@@ -33,9 +33,9 @@ export default new Vuex.Store({
     addPrivate: (state: State, payload: Private) => {
       const targe = state.privates.find((priv: Private) => {
         return priv.pubKey === payload.pubKey;
-      })
+      });
       if (targe) {
-        return
+        return;
       }
       state.privates.push(payload);
     },
@@ -43,16 +43,16 @@ export default new Vuex.Store({
       state.chatting = payload;
     },
     pushMessage: (state: State, payload: Message) => {
-      let logs = state.chatLogs.get(payload.chatID)
-      logs ? logs.push(payload) : logs = [payload]
-      state.chatLogs.set(payload.chatID, logs)
+      let logs = state.chatLogs.get(payload.chatID);
+      logs ? logs.push(payload) : logs = [payload];
+      state.chatLogs.set(payload.chatID, logs);
 
-      const newMap = new Map<string, Message[]>()
+      const newMap = new Map<string, Message[]>();
       state.chatLogs.forEach((value, key) => {
-        newMap.set(key, value)
-      })
+        newMap.set(key, value);
+      });
       state.chatLogs = newMap;
-    }
+    },
   },
   actions: {
   },

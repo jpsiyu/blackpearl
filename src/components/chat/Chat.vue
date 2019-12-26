@@ -19,19 +19,19 @@
 </template>
 
 <script lang="ts">
-import Vue from "vue";
-import MessageComp from "@/components/chat/Message.vue";
-import { Group } from "@/scripts/contact/group";
-import { Private } from "@/scripts/contact/private";
-import { Message } from "@/scripts/message/message";
-import { mapState } from "vuex";
-import { User } from "@/scripts/chat/user";
+import Vue from 'vue';
+import MessageComp from '@/components/chat/Message.vue';
+import { Group } from '@/scripts/contact/group';
+import { Private } from '@/scripts/contact/private';
+import { Message } from '@/scripts/message/message';
+import { mapState } from 'vuex';
+import { User } from '@/scripts/chat/user';
 
 export default Vue.extend({
   components: { MessageComp },
   data() {
     return {
-      msg: ""
+      msg: '',
     };
   },
   computed: {
@@ -43,14 +43,14 @@ export default Vue.extend({
     },
     me(): User {
       return this.$store.state.user;
-    }
+    },
   },
   watch: {
-    chats: function() {
+    chats() {
       this.$nextTick(() => {
         this.scrollBottom();
       });
-    }
+    },
   },
   methods: {
     async handleEnter() {
@@ -69,33 +69,33 @@ export default Vue.extend({
           this.me.pubKey,
           msgFix,
           Date.now(),
-          this.me.head
+          this.me.head,
         );
         await this.$shh.send(this.chatting.topic, msg);
       } else if (this.chatting instanceof Private) {
         const msg: Message = new Message(
-          "",
+          '',
           this.me.name,
           this.me.pubKey,
           msgFix,
           Date.now(),
-          this.me.head
+          this.me.head,
         );
         await this.$shh.sendPriv(this.chatting.pubKey, msg);
         msg.chatID = this.chatting.pubKey;
-        this.$store.commit("pushMessage", msg);
+        this.$store.commit('pushMessage', msg);
       }
 
       setTimeout(() => {
-        this.msg = "";
+        this.msg = '';
       }, 100);
     },
 
     scrollBottom() {
       const comp: any = this.$refs.main;
       comp.scrollTop = comp.scrollHeight;
-    }
-  }
+    },
+  },
 });
 </script>
 

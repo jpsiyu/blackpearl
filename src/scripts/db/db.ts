@@ -20,16 +20,16 @@ export class DB {
   }
 
   public getChatUser(): User | null {
-    const data = this.db.get('chatUser').value()
+    const data = this.db.get('chatUser').value();
     if (!data) {
-      return null
+      return null;
     }
 
-    const user: User = new User()
-    user.name = data.name
-    user.head = data.head
-    user.keyPair = data.keyPair
-    user.pubKey = data.pubKey
-    return user
+    const user: User = new User();
+    user.name = data.name;
+    user.head = data.head;
+    user.keyPair = data.keyPair;
+    user.pubKey = data.pubKey;
+    return user;
   }
 }
