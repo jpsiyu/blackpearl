@@ -43,7 +43,7 @@ export default Vue.extend({
     position: absolute;
     content: "";
     background: var(--color-light-border);
-    width: 350px;
+    width: 650px;
     height: 0.5px;
     top: 0;
   }

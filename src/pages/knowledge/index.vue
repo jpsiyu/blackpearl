@@ -130,7 +130,7 @@ export default Vue.extend({
     width: 240px;
     min-width: 240px;
     background-image: linear-gradient(-90deg, rgba(0, 0, 0, 0.01), transparent);
-    padding: 10px;
+    padding: 10px 20px;
     box-sizing: border-box;
   }
   &-right {
