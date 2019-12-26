@@ -15,42 +15,42 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue';
-import { User } from '@/scripts/chat/user';
-import { Group } from '@/scripts/contact/group';
-import { Private } from '@/scripts/contact/private';
-import { Message } from '@/scripts/message/message';
-import Contact from '@/components/chat/Contact.vue';
-import Chat from '@/components/chat/Chat.vue';
-import { mapState } from 'vuex';
-import { State } from '@/store/state';
+import Vue from "vue";
+import { User } from "@/scripts/chat/user";
+import { Group } from "@/scripts/contact/group";
+import { Private } from "@/scripts/contact/private";
+import { Message } from "@/scripts/message/message";
+import Contact from "@/components/chat/Contact.vue";
+import Chat from "@/components/chat/Chat.vue";
+import { mapState } from "vuex";
+import { State } from "@/store/state";
 
 export default Vue.extend({
   components: { Contact, Chat },
   computed: {
     ...mapState({
-      chatting: (state) => state.chatting,
-      me: (state) => state.user,
-    }),
+      chatting: state => state.chatting,
+      me: state => state.user
+    })
   },
 
   created() {
     // init user
     const user = this.$db.getChatUser();
     if (!user) {
-      this.$router.push({ path: '/chat/signup' });
+      this.$router.push({ path: "/chat/signup" });
       return;
     }
-    this.$store.commit('setUser', user);
+    this.$store.commit("setUser", user);
 
     // init contact
     const groups: Group[] = [
-      new Group('word', '工作', 'work', '0xaabbccdd'),
-      new Group('living', '生活', 'living', '0x11223344'),
-      new Group('entainment', '娱乐', 'entertainment', '0xaa22bb44'),
+      new Group("word", "工作", "work", "0xaabbccdd"),
+      new Group("living", "生活", "living", "0x11223344"),
+      new Group("entainment", "娱乐", "entertainment", "0xaa22bb44")
     ];
-    this.$store.commit('setChatting', groups[0]);
-    this.$store.commit('setGroups', groups);
+    this.$store.commit("setChatting", groups[0]);
+    this.$store.commit("setGroups", groups);
 
     // start subscribe
     this.$shh.startPrivSubscribe(user.keyPair);
@@ -64,12 +64,12 @@ export default Vue.extend({
     copy() {
       this.$copyText(this.me.pubKey).then(() => {
         this.$message({
-          message: 'Publick Key 已复制到剪贴板',
-          type: 'success',
+          message: "Publick Key 已复制到剪贴板",
+          type: "success"
         });
       });
-    },
-  },
+    }
+  }
 });
 </script>
 
@@ -78,7 +78,7 @@ export default Vue.extend({
   color: var(--color-regular-text);
   width: 900px;
   height: 500px;
-  margin: 50px auto;
+  margin: 50px auto 0 auto;
   box-shadow: 0 0 3px 2px rgba(200, 200, 200, 0.5);
   display: flex;
   position: relative;

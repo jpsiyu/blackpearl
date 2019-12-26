@@ -44,7 +44,7 @@ export default Vue.extend({
       overflow: auto;
     }
     &-nav {
-      height: 100px;
+      height: 60px;
     }
   }
 }
