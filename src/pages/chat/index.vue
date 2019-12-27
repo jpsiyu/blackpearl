@@ -17,9 +17,9 @@
 <script lang="ts">
 import Vue from 'vue';
 import { User } from '@/scripts/chat/user';
-import { Group } from '@/scripts/contact/group';
-import { Private } from '@/scripts/contact/private';
-import { Message } from '@/scripts/message/message';
+import { Group } from '@/scripts/chat/group';
+import { Private } from '@/scripts/chat/private';
+import { Message } from '@/scripts/chat/message';
 import Contact from '@/components/chat/Contact.vue';
 import Chat from '@/components/chat/Chat.vue';
 import { mapState } from 'vuex';

@@ -18,8 +18,8 @@
 
 <script lang="ts">
 import Vue from 'vue';
-import { Group } from '@/scripts/contact/group';
-import { Private } from '@/scripts/contact/private';
+import { Group } from '@/scripts/chat/group';
+import { Private } from '@/scripts/chat/private';
 
 export default Vue.extend({
   data() {

@@ -12,7 +12,7 @@
 
 <script lang="ts">
 import Vue from 'vue';
-import { Message } from '@/scripts/message/message';
+import { Message } from '@/scripts/chat/message';
 import { mapState } from 'vuex';
 import { User } from '@/scripts/chat/user';
 

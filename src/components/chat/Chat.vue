@@ -22,9 +22,9 @@
 <script lang="ts">
 import Vue from 'vue';
 import MessageComp from '@/components/chat/Message.vue';
-import { Group } from '@/scripts/contact/group';
-import { Private } from '@/scripts/contact/private';
-import { Message } from '@/scripts/message/message';
+import { Group } from '@/scripts/chat/group';
+import { Private } from '@/scripts/chat/private';
+import { Message } from '@/scripts/chat/message';
 import { mapState } from 'vuex';
 import { User } from '@/scripts/chat/user';
 
