@@ -57,8 +57,8 @@ export default Vue.extend({
     },
 
     async sure() {
-      const keyPair = await this.$shh.visitor.newKeyPair();
-      const pubKey = await this.$shh.visitor.getPubFromKeyPair(keyPair);
+      const keyPair = await this.$shh.newKeyPair();
+      const pubKey = await this.$shh.getPubFromKeyPair(keyPair);
 
       const user: User = new User();
       user.name = this.nick;

@@ -1,30 +1,60 @@
-import { Visitor } from '@/scripts/shh/visitor';
 import store from '@/store';
 import { Message } from '@/scripts/message/message';
 import { Private } from '@/scripts/contact/private';
+import Web3 from 'web3';
 
 export class SHH {
-  public visitor: Visitor;
-  private symPasswd: string = 'apple&banana';
-  private symKeyID: string = '';
+  public powTime: number;
+  public powTarget: number;
+  public ttl: number;
+  public web3: Web3;
+  public nodeUrl: string;
+  private symPasswd: string;
+  private symKeyID: string;
 
   constructor() {
-    this.visitor = new Visitor();
+    this.powTime = 3;
+    this.powTarget = 0.5;
+    this.ttl = 100;
+    this.symKeyID = "";
+    this.symPasswd = "apple&banana"
+    this.web3 = new Web3()
+    // this.nodeUrl = "ws://localhost:8546";
+    this.nodeUrl = 'ws://192.168.0.111:8546';
   }
 
+
   public async init() {
-    await this.visitor.initWeb3();
+    this.web3.setProvider(new Web3.providers.WebsocketProvider(this.nodeUrl));
+    await this.web3.eth.net.isListening();
+  }
+
+  public async newKeyPair(): Promise<string> {
+    return this.web3.shh.newKeyPair();
+  }
+
+  public async getPubFromKeyPair(keyPair: string): Promise<string> {
+    return this.web3.shh.getPublicKey(keyPair);
+  }
+
+  public async isKeyPairValid(keyPair: string): Promise<boolean> {
+    try {
+      const res = await this.web3.shh.hasKeyPair(keyPair);
+      return Promise.resolve(res);
+    } catch (err) {
+      return Promise.resolve(false);
+    }
   }
 
   public async startSubscribe(topics: string[]) {
-    this.symKeyID = await this.visitor.web3.shh.generateSymKeyFromPassword(this.symPasswd);
+    this.symKeyID = await this.web3.shh.generateSymKeyFromPassword(this.symPasswd);
 
     for (const topic of topics) {
       const options: any = {
         symKeyID: this.symKeyID,
         topics: [topic],
       };
-      this.visitor.web3.shh.subscribe('messages', options,
+      this.web3.shh.subscribe('messages', options,
         (error: Error, message: any, subscription: any) => {
           this.rece(error, message, subscription);
         },
@@ -36,7 +66,7 @@ export class SHH {
     const options = {
       privateKeyID: keyPair,
     };
-    this.visitor.web3.shh.subscribe('messages', options,
+    this.web3.shh.subscribe('messages', options,
       (error: Error, message: any, subscription: any) => {
         this.recePriv(error, message, subscription);
       },
@@ -44,24 +74,24 @@ export class SHH {
   }
 
   public async send(topic: string, message: Message) {
-    const hash = await this.visitor.web3.shh.post({
+    const hash = await this.web3.shh.post({
       symKeyID: this.symKeyID,
       topic,
-      powTime: this.visitor.powTime,
-      powTarget: this.visitor.powTime,
-      payload: this.visitor.web3.utils.utf8ToHex(JSON.stringify(message)),
-      ttl: this.visitor.ttl,
+      powTime: this.powTime,
+      powTarget: this.powTime,
+      payload: this.web3.utils.utf8ToHex(JSON.stringify(message)),
+      ttl: this.ttl,
     });
   }
 
   public async sendPriv(pubKey: string, message: Message) {
-    const hash = await this.visitor.web3.shh.post({
+    const hash = await this.web3.shh.post({
       pubKey,
-      payload: this.visitor.web3.utils.utf8ToHex(JSON.stringify(message)),
-      powTime: this.visitor.powTime,
-      powTarget: this.visitor.powTime,
+      payload: this.web3.utils.utf8ToHex(JSON.stringify(message)),
+      powTime: this.powTime,
+      powTarget: this.powTime,
       topic: '0x00000000',
-      ttl: this.visitor.ttl,
+      ttl: this.ttl,
     });
   }
 
@@ -70,7 +100,7 @@ export class SHH {
       return;
     }
     const msgHex: string = message.payload;
-    const msgStr: string = this.visitor.web3.utils.hexToUtf8(msgHex);
+    const msgStr: string = this.web3.utils.hexToUtf8(msgHex);
     const msg: Message = JSON.parse(msgStr);
     store.commit('chat/pushMessage', msg);
   }
@@ -80,7 +110,7 @@ export class SHH {
       return;
     }
     const msgHex: string = message.payload;
-    const msgStr: string = this.visitor.web3.utils.hexToUtf8(msgHex);
+    const msgStr: string = this.web3.utils.hexToUtf8(msgHex);
     const msg: Message = JSON.parse(msgStr);
     msg.chatID = msg.pubKey;
     store.commit('chat/pushMessage', msg);
