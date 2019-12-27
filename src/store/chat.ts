@@ -4,7 +4,6 @@ import { Message } from '@/scripts/message/message';
 import { User } from '@/scripts/chat/user';
 
 class ChatState {
-  public hasSubscribe: boolean = false;
   public user: User | null = null;
   public chatting: Group | Private | null = null;
   public groups: Group[] = [];
@@ -16,9 +15,6 @@ export default {
   namespaced: true,
   state: new ChatState(),
   mutations: {
-    setSubscribe: (state: ChatState, payload: boolean) => {
-      state.hasSubscribe = payload;
-    },
     setUser: (state: ChatState, payload: User) => {
       state.user = payload;
     },

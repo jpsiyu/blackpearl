@@ -30,7 +30,6 @@ export default Vue.extend({
     ...mapState({
       chatting: (state: any) => state.chat.chatting,
       me: (state: any) => state.chat.user,
-      hasSubscribe: (state: any) => state.chat.hasSubscribe,
     }),
   },
 

@@ -31,7 +31,6 @@ export class SHH {
     }
     this.web3.setProvider(new Web3.providers.WebsocketProvider(this.nodeUrl));
     const res: boolean = await this.web3.eth.net.isListening();
-    console.log("shh init res", res);
     this.hasInit = res
   }
 
