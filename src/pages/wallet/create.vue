@@ -64,7 +64,6 @@
 <script lang="ts">
 import Vue from "vue";
 import bipHelper from "@/scripts/wallet/bipHelper";
-import { WalletState } from "@/scripts/wallet/struct";
 
 interface IData {
   mnemonicRaw: string;
@@ -76,6 +75,14 @@ interface IData {
     passwd: string;
   };
   encrypting: boolean;
+}
+
+enum WalletState {
+  Empty = 1,
+  Created,
+  NeedRecovert,
+  NeedEncrypt,
+  Stored
 }
 
 export default Vue.extend({
