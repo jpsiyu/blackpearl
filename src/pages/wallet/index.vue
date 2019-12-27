@@ -20,7 +20,8 @@ export default Vue.extend({
     const node = bipHelper.genBip32Node(wallet.mnemonic);
     const master = new BIP32Node(node);
 
-    console.log(master);
+    console.log(master.publicKey);
+    console.log(master.privateKey);
   }
 });
 </script>
