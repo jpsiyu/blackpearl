@@ -34,33 +34,8 @@ export default Vue.extend({
     }),
   },
 
-  created() {
-    // init user
-    const user = this.$db.getChatUser();
-    if (!user) {
-      this.$router.push({ path: '/chat/signup' });
-      return;
-    }
-    this.$store.commit('chat/setUser', user);
-
-    // init contact
-    const groups: Group[] = [
-      new Group('word', '工作', 'work', '0xaabbccdd'),
-      new Group('living', '生活', 'living', '0x11223344'),
-      new Group('entainment', '娱乐', 'entertainment', '0xaa22bb44'),
-    ];
-    this.$store.commit('chat/setChatting', groups[0]);
-    this.$store.commit('chat/setGroups', groups);
-
-    // start subscribe
-    if (!this.hasSubscribe) {
-      this.$shh.startPrivSubscribe(user.keyPair);
-      const topics: string[] = groups.map((e: Group) => {
-        return e.topic;
-      });
-      this.$shh.startSubscribe(topics);
-      this.$store.commit('chat/setSubscribe', true);
-    }
+  async created() {
+    await this.$app.chat.init() 
   },
 
   methods: {

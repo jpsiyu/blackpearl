@@ -5,6 +5,7 @@ import store from './store';
 
 import '@/assets/css/default.css';
 
+import '@/plugins/app';
 import '@/plugins/element';
 import '@/plugins/db';
 import '@/plugins/shh';

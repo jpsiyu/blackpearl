@@ -9,10 +9,12 @@ export class SHH {
   public ttl: number;
   public web3: Web3;
   public nodeUrl: string;
+  public hasInit: boolean;
   private symPasswd: string;
   private symKeyID: string;
 
   constructor() {
+    this.hasInit = false;
     this.powTime = 3;
     this.powTarget = 0.5;
     this.ttl = 100;
@@ -23,10 +25,14 @@ export class SHH {
     this.nodeUrl = 'ws://192.168.0.111:8546';
   }
 
-
   public async init() {
+    if (this.hasInit) {
+      return;
+    }
     this.web3.setProvider(new Web3.providers.WebsocketProvider(this.nodeUrl));
-    await this.web3.eth.net.isListening();
+    const res: boolean = await this.web3.eth.net.isListening();
+    console.log("shh init res", res);
+    this.hasInit = res
   }
 
   public async newKeyPair(): Promise<string> {
