@@ -190,6 +190,8 @@ export default Vue.extend({
       const wallet: Wallet = new Wallet();
       wallet.mnemonic = this.mnemonicRaw;
       this.$db.setWallet(wallet);
+      this.encrypting = false;
+      this.$router.push({ path: "/wallet" });
     }
   }
 });
