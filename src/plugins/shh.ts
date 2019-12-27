@@ -1,5 +1,5 @@
 import Vue from 'vue';
-import { SHH } from '@/scripts/shh/shh';
+import { SHH } from '@/scripts/chat/shh';
 
 const shh = new SHH();
 

@@ -1,5 +1,5 @@
 import { DB } from '@/scripts/db/db';
-import { SHH } from '@/scripts/shh/shh';
+import { SHH } from '@/scripts/chat/shh';
 import { AxiosInstance } from 'axios';
 import { App } from '@/scripts/app/app'
 

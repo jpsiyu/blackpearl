@@ -1,5 +1,5 @@
 import { PluginApp } from '@/scripts/app/pluginApp'
-import { Group } from '@/scripts/contact/group';
+import { Group } from '@/scripts/chat/group';
 
 export class Chat extends PluginApp {
 

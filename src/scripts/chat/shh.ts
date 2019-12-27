@@ -1,6 +1,6 @@
 import store from '@/store';
-import { Message } from '@/scripts/message/message';
-import { Private } from '@/scripts/contact/private';
+import { Message } from '@/scripts/chat/message';
+import { Private } from '@/scripts/chat/private';
 import Web3 from 'web3';
 
 export class SHH {
