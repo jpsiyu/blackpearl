@@ -90,11 +90,10 @@ export default Vue.extend({
   display: flex;
   flex-direction: column;
   &-top {
-    padding: 0 10px;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    height: 50px;
+    height: 60px;
     &-account {
       display: flex;
       align-items: center;
@@ -111,15 +110,19 @@ export default Vue.extend({
     }
   }
   &-main {
+    margin-top: 20px;
     flex: 1;
-    border-top: 1px solid var(--color-light-border);
     display: flex;
     overflow: hidden;
     &-left {
+      background-image: linear-gradient(
+        -90deg,
+        rgba(0, 0, 0, 0.01),
+        transparent
+      );
       height: 100%;
       overflow-y: auto;
       width: 200px;
-      border-right: 1px solid var(--color-light-border);
     }
     &-right {
       padding: 0 10px;
