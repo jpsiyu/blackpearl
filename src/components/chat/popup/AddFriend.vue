@@ -29,6 +29,7 @@
 import Vue from "vue";
 import { Group } from "@/scripts/chat/group";
 import { Private } from "@/scripts/chat/private";
+import { Form } from "element-ui";
 
 export default Vue.extend({
   data() {
@@ -55,7 +56,7 @@ export default Vue.extend({
       this.visible = false;
     },
     reset() {
-      const { form } = this.$refs;
+      const form = this.$refs.form as Form;
       form.resetFields();
     },
     sure() {
