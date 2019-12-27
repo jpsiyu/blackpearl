@@ -64,6 +64,7 @@
 <script lang="ts">
 import Vue from "vue";
 import bipHelper from "@/scripts/wallet/bipHelper";
+import { Wallet } from "@/scripts/db/wallet";
 
 interface IData {
   mnemonicRaw: string;
@@ -186,19 +187,9 @@ export default Vue.extend({
       }
 
       this.encrypting = true;
-      setTimeout(() => {
-        const node = bipHelper.genBip32Node(this.mnemonicRaw);
-        console.log(node);
-        /*
-        const privKey = "0x" + node.privateKey.toString("hex");
-        const keystore: object = web3Helper.encryptPrivKey(
-          privKey,
-          this.formData.passwd
-        );
-        fileHelper.saveKeystore(keystore);
-      */
-        this.encrypting = false;
-      }, 200);
+      const wallet: Wallet = new Wallet();
+      wallet.mnemonic = this.mnemonicRaw;
+      this.$db.setWallet(wallet);
     }
   }
 });

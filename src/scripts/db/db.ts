@@ -2,6 +2,7 @@ import low from "lowdb";
 import LocalStorage from "lowdb/adapters/LocalStorage";
 import { Default } from "@/scripts/db/default";
 import { User } from "@/scripts/chat/user";
+import { Wallet } from "@/scripts/db/wallet";
 
 export class DB {
   private db: low.LowdbSync<any>;
@@ -30,5 +31,20 @@ export class DB {
     user.keyPair = data.keyPair;
     user.pubKey = data.pubKey;
     return user;
+  }
+
+  public setWallet(wallet: Wallet) {
+    this.db.set("wallet", wallet).write();
+  }
+
+  public getWallet(): Wallet | null {
+    const data = this.db.get("wallet").value();
+    if (!data) {
+      return null;
+    }
+    const wallet: Wallet = new Wallet();
+    wallet.mnemonic = data.mnemonic;
+    wallet.children = data.children;
+    return wallet;
   }
 }
