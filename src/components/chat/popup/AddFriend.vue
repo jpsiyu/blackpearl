@@ -55,7 +55,7 @@ export default Vue.extend({
       this.visible = false;
     },
     reset() {
-      const form: any = this.$refs.form;
+      const { form } = this.$refs;
       form.resetFields();
     },
     sure() {

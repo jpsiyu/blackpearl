@@ -14,6 +14,7 @@
 
 <script lang="ts">
 import Vue from "vue";
+
 export default Vue.extend({
   data() {
     return {
@@ -33,7 +34,7 @@ export default Vue.extend({
     }
   },
   watch: {
-    $route: function(val) {
+    $route(val) {
       this.calSelected(val.path);
     }
   },

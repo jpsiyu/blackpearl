@@ -16,13 +16,13 @@
 
 <script lang="ts">
 import Vue from "vue";
+import { mapState } from "vuex";
 import { User } from "@/scripts/chat/user";
 import { Group } from "@/scripts/chat/group";
 import { Private } from "@/scripts/chat/private";
 import { Message } from "@/scripts/chat/message";
 import Contact from "@/components/chat/Contact.vue";
 import Chat from "@/components/chat/Chat.vue";
-import { mapState } from "vuex";
 
 export default Vue.extend({
   components: { Contact, Chat },

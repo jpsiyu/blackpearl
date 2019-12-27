@@ -21,11 +21,11 @@
 
 <script lang="ts">
 import Vue from "vue";
+import { mapState } from "vuex";
 import MessageComp from "@/components/chat/Message.vue";
 import { Group } from "@/scripts/chat/group";
 import { Private } from "@/scripts/chat/private";
 import { Message } from "@/scripts/chat/message";
-import { mapState } from "vuex";
 import { User } from "@/scripts/chat/user";
 
 export default Vue.extend({

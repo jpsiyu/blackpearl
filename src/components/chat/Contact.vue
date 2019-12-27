@@ -39,11 +39,11 @@
 
 <script lang="ts">
 import Vue from "vue";
+import { mapState } from "vuex";
 import AddFriend from "@/components/chat/popup/AddFriend.vue";
 import { Group } from "@/scripts/chat/group";
 import { Private } from "@/scripts/chat/private";
 import { Message } from "@/scripts/chat/message";
-import { mapState } from "vuex";
 
 export default Vue.extend({
   components: { AddFriend },

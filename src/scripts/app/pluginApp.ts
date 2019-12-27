@@ -1,5 +1,5 @@
-import { DB } from "@/scripts/db/db";
 import Router from "vue-router";
+import { DB } from "@/scripts/db/db";
 import { SHH } from "@/scripts/chat/shh";
 import db from "@/plugins/db";
 import router from "@/router/index";
@@ -13,9 +13,13 @@ export interface IPluginApp {
 
 export class PluginApp implements IPluginApp {
   public hasInit: boolean;
+
   protected $db: DB;
+
   protected $router: Router;
+
   protected $store: any;
+
   protected $shh: SHH;
 
   constructor() {

@@ -12,8 +12,8 @@
 
 <script lang="ts">
 import Vue from "vue";
-import { Message } from "@/scripts/chat/message";
 import { mapState } from "vuex";
+import { Message } from "@/scripts/chat/message";
 import { User } from "@/scripts/chat/user";
 
 export default Vue.extend({

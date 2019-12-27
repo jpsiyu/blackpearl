@@ -5,9 +5,13 @@ import { User } from "@/scripts/chat/user";
 
 class ChatState {
   public user: User | null = null;
+
   public chatting: Group | Private | null = null;
+
   public groups: Group[] = [];
+
   public privates: Private[] = [];
+
   public chatLogs: Map<string, Message[]> = new Map<string, Message[]>();
 }
 
@@ -28,9 +32,9 @@ export default {
       state.groups.push(payload);
     },
     addPrivate: (state: ChatState, payload: Private) => {
-      const targe = state.privates.find((priv: Private) => {
-        return priv.pubKey === payload.pubKey;
-      });
+      const targe = state.privates.find(
+        (priv: Private) => priv.pubKey === payload.pubKey
+      );
       if (targe) {
         return;
       }

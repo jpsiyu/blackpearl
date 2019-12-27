@@ -1,7 +1,10 @@
 export class User {
   public keyPair: string;
+
   public name: string;
+
   public head: string;
+
   public pubKey: string;
 
   constructor() {

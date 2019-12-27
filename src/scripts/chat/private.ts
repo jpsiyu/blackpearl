@@ -1,6 +1,8 @@
 export class Private {
   public id: string;
+
   public name: string;
+
   public pubKey: string;
 
   constructor(id: string, name: string, pubKey: string) {

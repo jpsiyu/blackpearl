@@ -1,9 +1,14 @@
 export class Message {
   public chatID: string;
+
   public sender: string;
+
   public pubKey: string;
+
   public content: string;
+
   public timestamp: number;
+
   public head: string;
 
   constructor(

@@ -10,21 +10,13 @@ const config = {
 const axiosInstance: AxiosInstance = axios.create(config);
 
 axiosInstance.interceptors.request.use(
-  (reqConfig: any) => {
-    return reqConfig;
-  },
-  (error: Error) => {
-    return Promise.reject(error);
-  }
+  (reqConfig: any) => reqConfig,
+  (error: Error) => Promise.reject(error)
 );
 
 axiosInstance.interceptors.response.use(
-  (response: any) => {
-    return response.data;
-  },
-  (error: Error) => {
-    return error;
-  }
+  (response: any) => response.data,
+  (error: Error) => error
 );
 
 const plugin: PluginObject<any> = {

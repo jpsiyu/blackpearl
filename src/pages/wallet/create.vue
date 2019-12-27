@@ -124,8 +124,8 @@ export default Vue.extend({
 
     shuffle<T>(array: Array<T>): void {
       for (let i = array.length - 1; i >= 0; i--) {
-        let randomIndex = Math.floor(Math.random() * (i + 1));
-        let itemAtIndex = array[randomIndex];
+        const randomIndex = Math.floor(Math.random() * (i + 1));
+        const itemAtIndex = array[randomIndex];
 
         array[randomIndex] = array[i];
         array[i] = itemAtIndex;
@@ -155,9 +155,9 @@ export default Vue.extend({
     },
 
     chooseWord(word: string): void {
-      const index: number = this.shuffleArray.findIndex((e: string) => {
-        return e === word;
-      });
+      const index: number = this.shuffleArray.findIndex(
+        (e: string) => e === word
+      );
       if (index !== -1) {
         this.shuffleArray.splice(index, 1);
       }

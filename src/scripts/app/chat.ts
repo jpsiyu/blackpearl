@@ -31,9 +31,7 @@ export class Chat extends PluginApp {
 
     // start subscribe
     this.$shh.startPrivSubscribe(user.keyPair);
-    const topics: string[] = groups.map((e: Group) => {
-      return e.topic;
-    });
+    const topics: string[] = groups.map((e: Group) => e.topic);
     this.$shh.startSubscribe(topics);
     this.hasInit = true;
   }

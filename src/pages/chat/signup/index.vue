@@ -27,6 +27,7 @@
 <script lang="ts">
 import Vue from "vue";
 import { User } from "@/scripts/chat/user";
+
 export default Vue.extend({
   data() {
     return {

@@ -106,18 +106,16 @@ export default Vue.extend({
         });
     },
     isOpen(id: number) {
-      return this.open.get(id) ? true : false;
+      return !!this.open.get(id);
     },
     clickGroup(id: number) {
-      const status = this.isOpen(id) ? false : true;
+      const status = !this.isOpen(id);
       this.open.set(id, status);
       this.$forceUpdate();
     },
 
     getWritingsByGroupId(id: number) {
-      return this.writings.filter(e => {
-        return e.groupId === id;
-      });
+      return this.writings.filter(e => e.groupId === id);
     },
     clickWriting(id: number) {
       this.jumpWriting(id);

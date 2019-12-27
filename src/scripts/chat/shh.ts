@@ -1,16 +1,23 @@
+import Web3 from "web3";
 import store from "@/store";
 import { Message } from "@/scripts/chat/message";
 import { Private } from "@/scripts/chat/private";
-import Web3 from "web3";
 
 export class SHH {
   public powTime: number;
+
   public powTarget: number;
+
   public ttl: number;
+
   public web3: Web3;
+
   public nodeUrl: string;
+
   public hasInit: boolean;
+
   private symPasswd: string;
+
   private symKeyID: string;
 
   constructor() {

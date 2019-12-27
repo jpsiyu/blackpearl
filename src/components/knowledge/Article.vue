@@ -7,6 +7,7 @@
 <script lang="ts">
 import Vue from "vue";
 import VueMarkdown from "vue-markdown";
+
 export default Vue.extend({
   props: ["source"],
   components: {
