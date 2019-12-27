@@ -10,7 +10,18 @@ import { Wallet } from "@/scripts/db/wallet";
 import * as bipHelper from "@/scripts/wallet/bipHelper";
 import { BIP32Node } from "@/scripts/wallet/bip32Node";
 
+interface IData {
+  master: BIP32Node | null;
+  accounts: BIP32Node[];
+}
+
 export default Vue.extend({
+  data(): IData {
+    return {
+      master: null,
+      accounts: []
+    };
+  },
   created() {
     const wallet = this.$db.getWallet();
     if (!wallet) {
@@ -18,12 +29,9 @@ export default Vue.extend({
       return;
     }
     const node = bipHelper.genBip32Node(wallet.mnemonic);
-    const master = new BIP32Node(node);
 
-    console.log(master.publicKey);
-    console.log(master.privateKey);
-    console.log(master.address);
-    console.log(master.checksumAddress);
+    this.master = new BIP32Node(node);
+    this.accounts = [this.master];
   }
 });
 </script>
