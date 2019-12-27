@@ -1,4 +1,5 @@
 import { BIP32Interface } from "bip32";
+import * as etherUtil from "ethereumjs-util";
 
 export class BIP32Node {
   private node: BIP32Interface;
@@ -17,5 +18,13 @@ export class BIP32Node {
     } else {
       return "";
     }
+  }
+
+  public get address(): string {
+    return etherUtil.pubToAddress(this.node.publicKey, true).toString("hex");
+  }
+
+  public get checksumAddress(): string {
+    return etherUtil.toChecksumAddress(this.address);
   }
 }

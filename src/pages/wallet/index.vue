@@ -22,6 +22,8 @@ export default Vue.extend({
 
     console.log(master.publicKey);
     console.log(master.privateKey);
+    console.log(master.address);
+    console.log(master.checksumAddress);
   }
 });
 </script>
