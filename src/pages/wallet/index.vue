@@ -14,7 +14,9 @@
     </div>
     <div class="wallet-main">
       <div class="wallet-main-left">
-        <div class="wallet-token" v-for="i in 100" :key="i">钱包</div>
+        <div class="wallet-token" v-for="(coin, index) in coins" :key="index">
+          {{ coin.code }}
+        </div>
       </div>
       <div class="wallet-main-right">
         haha
@@ -28,11 +30,13 @@ import Vue from "vue";
 import { Wallet } from "@/scripts/db/wallet";
 import * as bipHelper from "@/scripts/wallet/bipHelper";
 import { BIP32Node } from "@/scripts/wallet/bip32Node";
+import { Coin } from "@/scripts/wallet/coin";
 
 interface IData {
   master: BIP32Node | null;
   accounts: BIP32Node[];
   currentAcc: BIP32Node | null;
+  coins: Coin[];
 }
 
 export default Vue.extend({
@@ -40,7 +44,8 @@ export default Vue.extend({
     return {
       master: null,
       accounts: [],
-      currentAcc: null
+      currentAcc: null,
+      coins: []
     };
   },
   created() {
@@ -50,10 +55,15 @@ export default Vue.extend({
       return;
     }
     const node = bipHelper.genBip32Node(wallet.mnemonic);
-
     this.master = new BIP32Node(node);
     this.accounts = [this.master];
     this.currentAcc = this.accounts[0];
+
+    this.coins = [
+      new Coin("ETH", "", false),
+      new Coin("USDT", "0x123", true),
+      new Coin("DAI", "0x345", true)
+    ];
   }
 });
 </script>
