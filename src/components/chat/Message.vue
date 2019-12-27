@@ -1,32 +1,32 @@
 <template>
-  <div class="msg" :class="{'me': isMe}">
+  <div class="msg" :class="{ me: isMe }">
     <div class="msg-head">
       <img :src="msg.head" alt class="msg-head__img" />
     </div>
     <div class="msg-main">
-      <span class="msg-main__name">{{msg.sender}}</span>
-      <div class="msg-main__content">{{msg.content}}</div>
+      <span class="msg-main__name">{{ msg.sender }}</span>
+      <div class="msg-main__content">{{ msg.content }}</div>
     </div>
   </div>
 </template>
 
 <script lang="ts">
-import Vue from 'vue';
-import { Message } from '@/scripts/chat/message';
-import { mapState } from 'vuex';
-import { User } from '@/scripts/chat/user';
+import Vue from "vue";
+import { Message } from "@/scripts/chat/message";
+import { mapState } from "vuex";
+import { User } from "@/scripts/chat/user";
 
 export default Vue.extend({
-  props: ['msg'],
+  props: ["msg"],
   computed: {
     ...mapState({
-      me: (state: any) => state.chat.user,
+      me: (state: any) => state.chat.user
     }),
     isMe(): boolean {
       const res = this.me.pubKey === this.msg!.pubKey;
       return res;
-    },
-  },
+    }
+  }
 });
 </script>
 

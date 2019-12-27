@@ -1,31 +1,31 @@
-import Vue from 'vue';
-import Router from 'vue-router';
-import routes from 'vue-auto-routing';
-import { createRouterLayout } from 'vue-router-layout';
+import Vue from "vue";
+import Router from "vue-router";
+import routes from "vue-auto-routing";
+import { createRouterLayout } from "vue-router-layout";
 
 Vue.use(Router);
 
-const RouterLayout = createRouterLayout((layout) => {
-  return import('@/layouts/' + layout + '.vue');
+const RouterLayout = createRouterLayout(layout => {
+  return import("@/layouts/" + layout + ".vue");
 });
 
 export default new Router({
-  mode: 'history',
+  mode: "history",
   routes: [
     {
-      path: '/',
+      path: "/",
       component: RouterLayout,
-      children: routes,
+      children: routes
     },
     {
-      path: '*',
+      path: "*",
       component: RouterLayout,
       children: [
         {
-          path: '',
-          component: () => import('@/pages/error.vue'),
-        },
-      ],
-    },
-  ],
+          path: "",
+          component: () => import("@/pages/error.vue")
+        }
+      ]
+    }
+  ]
 });

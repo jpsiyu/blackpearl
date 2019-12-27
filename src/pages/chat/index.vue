@@ -7,46 +7,46 @@
       <Chat v-if="chatting" />
     </div>
     <div class="home-me" v-if="me">
-      <span>{{me.name}}</span>
-      <span class="home-me__pub">{{me.pubKey}}</span>
+      <span>{{ me.name }}</span>
+      <span class="home-me__pub">{{ me.pubKey }}</span>
       <span class="home-me__copy" @click="copy">复制</span>
     </div>
   </div>
 </template>
 
 <script lang="ts">
-import Vue from 'vue';
-import { User } from '@/scripts/chat/user';
-import { Group } from '@/scripts/chat/group';
-import { Private } from '@/scripts/chat/private';
-import { Message } from '@/scripts/chat/message';
-import Contact from '@/components/chat/Contact.vue';
-import Chat from '@/components/chat/Chat.vue';
-import { mapState } from 'vuex';
+import Vue from "vue";
+import { User } from "@/scripts/chat/user";
+import { Group } from "@/scripts/chat/group";
+import { Private } from "@/scripts/chat/private";
+import { Message } from "@/scripts/chat/message";
+import Contact from "@/components/chat/Contact.vue";
+import Chat from "@/components/chat/Chat.vue";
+import { mapState } from "vuex";
 
 export default Vue.extend({
   components: { Contact, Chat },
   computed: {
     ...mapState({
       chatting: (state: any) => state.chat.chatting,
-      me: (state: any) => state.chat.user,
-    }),
+      me: (state: any) => state.chat.user
+    })
   },
 
   async created() {
-    await this.$app.chat.init() 
+    await this.$app.chat.init();
   },
 
   methods: {
     copy() {
       this.$copyText(this.me.pubKey).then(() => {
         this.$message({
-          message: 'Publick Key 已复制到剪贴板',
-          type: 'success',
+          message: "Publick Key 已复制到剪贴板",
+          type: "success"
         });
       });
-    },
-  },
+    }
+  }
 });
 </script>
 

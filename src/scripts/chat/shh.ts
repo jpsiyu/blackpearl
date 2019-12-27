@@ -1,7 +1,7 @@
-import store from '@/store';
-import { Message } from '@/scripts/chat/message';
-import { Private } from '@/scripts/chat/private';
-import Web3 from 'web3';
+import store from "@/store";
+import { Message } from "@/scripts/chat/message";
+import { Private } from "@/scripts/chat/private";
+import Web3 from "web3";
 
 export class SHH {
   public powTime: number;
@@ -19,10 +19,10 @@ export class SHH {
     this.powTarget = 0.5;
     this.ttl = 100;
     this.symKeyID = "";
-    this.symPasswd = "apple&banana"
-    this.web3 = new Web3()
+    this.symPasswd = "apple&banana";
+    this.web3 = new Web3();
     // this.nodeUrl = "ws://localhost:8546";
-    this.nodeUrl = 'ws://192.168.0.111:8546';
+    this.nodeUrl = "ws://192.168.0.111:8546";
   }
 
   public async init() {
@@ -31,7 +31,7 @@ export class SHH {
     }
     this.web3.setProvider(new Web3.providers.WebsocketProvider(this.nodeUrl));
     const res: boolean = await this.web3.eth.net.isListening();
-    this.hasInit = res
+    this.hasInit = res;
   }
 
   public async newKeyPair(): Promise<string> {
@@ -52,29 +52,35 @@ export class SHH {
   }
 
   public async startSubscribe(topics: string[]) {
-    this.symKeyID = await this.web3.shh.generateSymKeyFromPassword(this.symPasswd);
+    this.symKeyID = await this.web3.shh.generateSymKeyFromPassword(
+      this.symPasswd
+    );
 
     for (const topic of topics) {
       const options: any = {
         symKeyID: this.symKeyID,
-        topics: [topic],
+        topics: [topic]
       };
-      this.web3.shh.subscribe('messages', options,
+      this.web3.shh.subscribe(
+        "messages",
+        options,
         (error: Error, message: any, subscription: any) => {
           this.rece(error, message, subscription);
-        },
+        }
       );
     }
   }
 
   public startPrivSubscribe(keyPair: string) {
     const options = {
-      privateKeyID: keyPair,
+      privateKeyID: keyPair
     };
-    this.web3.shh.subscribe('messages', options,
+    this.web3.shh.subscribe(
+      "messages",
+      options,
       (error: Error, message: any, subscription: any) => {
         this.recePriv(error, message, subscription);
-      },
+      }
     );
   }
 
@@ -85,7 +91,7 @@ export class SHH {
       powTime: this.powTime,
       powTarget: this.powTime,
       payload: this.web3.utils.utf8ToHex(JSON.stringify(message)),
-      ttl: this.ttl,
+      ttl: this.ttl
     });
   }
 
@@ -95,8 +101,8 @@ export class SHH {
       payload: this.web3.utils.utf8ToHex(JSON.stringify(message)),
       powTime: this.powTime,
       powTarget: this.powTime,
-      topic: '0x00000000',
-      ttl: this.ttl,
+      topic: "0x00000000",
+      ttl: this.ttl
     });
   }
 
@@ -107,7 +113,7 @@ export class SHH {
     const msgHex: string = message.payload;
     const msgStr: string = this.web3.utils.hexToUtf8(msgHex);
     const msg: Message = JSON.parse(msgStr);
-    store.commit('chat/pushMessage', msg);
+    store.commit("chat/pushMessage", msg);
   }
 
   public recePriv(error: Error, message: any, subscription: any) {
@@ -118,12 +124,12 @@ export class SHH {
     const msgStr: string = this.web3.utils.hexToUtf8(msgHex);
     const msg: Message = JSON.parse(msgStr);
     msg.chatID = msg.pubKey;
-    store.commit('chat/pushMessage', msg);
+    store.commit("chat/pushMessage", msg);
     this.addPriv(msg);
   }
 
   private addPriv(msg: Message) {
     const priv: Private = new Private(msg.pubKey, msg.sender, msg.pubKey);
-    store.commit('chat/addPrivate', priv);
+    store.commit("chat/addPrivate", priv);
   }
 }

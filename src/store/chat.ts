@@ -1,7 +1,7 @@
-import { Group } from '@/scripts/chat/group';
-import { Private } from '@/scripts/chat/private';
-import { Message } from '@/scripts/chat/message';
-import { User } from '@/scripts/chat/user';
+import { Group } from "@/scripts/chat/group";
+import { Private } from "@/scripts/chat/private";
+import { Message } from "@/scripts/chat/message";
+import { User } from "@/scripts/chat/user";
 
 class ChatState {
   public user: User | null = null;
@@ -41,7 +41,7 @@ export default {
     },
     pushMessage: (state: ChatState, payload: Message) => {
       let logs = state.chatLogs.get(payload.chatID);
-      logs ? logs.push(payload) : logs = [payload];
+      logs ? logs.push(payload) : (logs = [payload]);
       state.chatLogs.set(payload.chatID, logs);
 
       const newMap = new Map<string, Message[]>();
@@ -49,6 +49,6 @@ export default {
         newMap.set(key, value);
       });
       state.chatLogs = newMap;
-    },
-  },
+    }
+  }
 };

@@ -6,10 +6,10 @@ const genMnemonic = (): string => {
 };
 
 const genBip32Node = (mnemonic: string, password?: string): any => {
-  const seed = bip39.mnemonicToSeedSync(mnemonic, password)
-  const node = bip32.fromSeed(seed)
-  return node
-}
+  const seed = bip39.mnemonicToSeedSync(mnemonic, password);
+  const node = bip32.fromSeed(seed);
+  return node;
+};
 
 export default {
   genMnemonic,

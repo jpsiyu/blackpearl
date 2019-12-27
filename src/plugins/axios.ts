@@ -1,5 +1,5 @@
-import Vue, { PluginObject } from 'vue';
-import axios, { AxiosInstance } from 'axios';
+import Vue, { PluginObject } from "vue";
+import axios, { AxiosInstance } from "axios";
 
 const config = {
   // baseURL: process.env.baseURL || process.env.apiUrl || ""
@@ -15,7 +15,7 @@ axiosInstance.interceptors.request.use(
   },
   (error: Error) => {
     return Promise.reject(error);
-  },
+  }
 );
 
 axiosInstance.interceptors.response.use(
@@ -24,16 +24,19 @@ axiosInstance.interceptors.response.use(
   },
   (error: Error) => {
     return error;
-  },
+  }
 );
-
 
 const plugin: PluginObject<any> = {
   install() {
     Object.defineProperties(Vue.prototype, {
-      $axios: { get() { return axiosInstance; } },
+      $axios: {
+        get() {
+          return axiosInstance;
+        }
+      }
     });
-  },
+  }
 };
 
 Vue.use(plugin);

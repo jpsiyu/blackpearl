@@ -8,11 +8,13 @@
         </div>
         <div
           class="cont-item"
-          :class="{'select': chatting.id === item.id}"
+          :class="{ select: chatting.id === item.id }"
           v-for="(item, index) in groups"
           :key="index"
           @click="select(item)"
-        >{{item.name}}</div>
+        >
+          {{ item.name }}
+        </div>
       </el-collapse-item>
       <el-collapse-item title="私聊" name="private">
         <div class="cont-title" slot="title">
@@ -22,11 +24,13 @@
         <i class="cont-add fas fa-plus" @click="addPriv"></i>
         <div
           class="cont-item"
-          :class="{'select': chatting.id === item.id}"
+          :class="{ select: chatting.id === item.id }"
           v-for="(item, index) in privates"
           :key="index"
           @click="select(item)"
-        >{{item.name}}</div>
+        >
+          {{ item.name }}
+        </div>
       </el-collapse-item>
     </el-collapse>
     <AddFriend ref="addFriend" />
@@ -34,42 +38,42 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue';
-import AddFriend from '@/components/chat/popup/AddFriend.vue';
-import { Group } from '@/scripts/chat/group';
-import { Private } from '@/scripts/chat/private';
-import { Message } from '@/scripts/chat/message';
-import { mapState } from 'vuex';
+import Vue from "vue";
+import AddFriend from "@/components/chat/popup/AddFriend.vue";
+import { Group } from "@/scripts/chat/group";
+import { Private } from "@/scripts/chat/private";
+import { Message } from "@/scripts/chat/message";
+import { mapState } from "vuex";
 
 export default Vue.extend({
   components: { AddFriend },
   data() {
     return {
-      collapse: '',
+      collapse: ""
     };
   },
   computed: {
     ...mapState({
       chatting: (state: any) => state.chat.chatting,
       groups: (state: any) => state.chat.groups,
-      privates: (state: any) => state.chat.privates,
-    }),
+      privates: (state: any) => state.chat.privates
+    })
   },
 
   mounted() {
     this.chatting instanceof Group
-      ? (this.collapse = 'group')
-      : (this.collapse = 'private');
+      ? (this.collapse = "group")
+      : (this.collapse = "private");
   },
   methods: {
     select(item: Group | Private) {
-      this.$store.commit('chat/setChatting', item);
+      this.$store.commit("chat/setChatting", item);
     },
     addPriv() {
       const addFriendComp: any = this.$refs.addFriend;
       addFriendComp.show();
-    },
-  },
+    }
+  }
 });
 </script>
 

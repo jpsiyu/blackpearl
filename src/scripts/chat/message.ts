@@ -6,7 +6,14 @@ export class Message {
   public timestamp: number;
   public head: string;
 
-  constructor(chatID: string, sender: string, pubKey: string, content: string, timestamp: number, head: string) {
+  constructor(
+    chatID: string,
+    sender: string,
+    pubKey: string,
+    content: string,
+    timestamp: number,
+    head: string
+  ) {
     this.chatID = chatID;
     this.sender = sender;
     this.pubKey = pubKey;

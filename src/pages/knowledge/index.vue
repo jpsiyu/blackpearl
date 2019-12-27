@@ -5,7 +5,9 @@
       <div class="know-group" v-for="g in group" :key="g.id">
         <!--分组-->
         <div class="know-group__title" @click="clickGroup(g.id)">
-          <span class="know-group__arrow" :class="{ rotate: isOpen(g.id) }">❯</span>
+          <span class="know-group__arrow" :class="{ rotate: isOpen(g.id) }"
+            >❯</span
+          >
           <span class="know-group__label">{{ g.name }}</span>
         </div>
         <!--文章-->
@@ -16,8 +18,15 @@
             :key="w.id"
             @click="clickWriting(w.id)"
           >
-            <span class="know-writing__circle" :class="{hide: w.id!=selectId}"></span>
-            <span class="know-writing__name" :class="{select: w.id==selectId}">{{ w.name }}</span>
+            <span
+              class="know-writing__circle"
+              :class="{ hide: w.id != selectId }"
+            ></span>
+            <span
+              class="know-writing__name"
+              :class="{ select: w.id == selectId }"
+              >{{ w.name }}</span
+            >
           </div>
         </div>
       </div>
@@ -85,7 +94,7 @@ export default Vue.extend({
       this.$axios
         .get(article.path)
         .then((res: any) => {
-          this.source = res
+          this.source = res;
           return this.$nextTick();
         })
         .then(() => {
@@ -203,4 +212,3 @@ export default Vue.extend({
   visibility: hidden;
 }
 </style>
-

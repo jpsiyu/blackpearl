@@ -2,12 +2,12 @@
   <div class="nav">
     <div
       class="nav-item"
-      :class="{'selected': selectedId === item.id }"
+      :class="{ selected: selectedId === item.id }"
       v-for="(item, index) in projects"
       :key="index"
       @click="handleClick(item)"
     >
-      <span>{{item.name}}</span>
+      <span>{{ item.name }}</span>
     </div>
   </div>
 </template>

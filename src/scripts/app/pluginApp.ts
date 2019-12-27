@@ -1,10 +1,10 @@
-import { DB } from '@/scripts/db/db';
-import Router from 'vue-router';
-import { SHH } from '@/scripts/chat/shh'
-import db from '@/plugins/db';
-import router from '@/router/index'
-import store from '@/store/index'
-import shh from '@/plugins/shh'
+import { DB } from "@/scripts/db/db";
+import Router from "vue-router";
+import { SHH } from "@/scripts/chat/shh";
+import db from "@/plugins/db";
+import router from "@/router/index";
+import store from "@/store/index";
+import shh from "@/plugins/shh";
 
 export interface IPluginApp {
   hasInit: boolean;
@@ -26,5 +26,5 @@ export class PluginApp implements IPluginApp {
     this.$shh = shh;
   }
 
-  async init() { }
+  async init() {}
 }

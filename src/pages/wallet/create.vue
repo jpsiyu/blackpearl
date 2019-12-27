@@ -2,12 +2,19 @@
   <div class="cw">
     <template v-if="isEmpty">
       <div class="cw-empty">
-        <strong @click="createWallet" class="cw-textBtn cw-empty-create">初始化助记词</strong>
+        <strong @click="createWallet" class="cw-textBtn cw-empty-create"
+          >初始化助记词</strong
+        >
       </div>
     </template>
     <template v-else-if="isCreated">
       <el-row class="cw-row">
-        <el-col class="cw-col" :span="8" v-for="(item, index) in mnemonic" :key="index">
+        <el-col
+          class="cw-col"
+          :span="8"
+          v-for="(item, index) in mnemonic"
+          :key="index"
+        >
           <span class="cw-col-item">{{ item }}</span>
         </el-col>
       </el-row>
@@ -16,7 +23,7 @@
     <template v-else-if="isNeedRecovert">
       <el-row class="cw-row">
         <el-col class="cw-col" :span="8" v-for="n in 24" :key="n">
-          <span class="cw-col-item" :readonly="true">{{recover[n-1]}}</span>
+          <span class="cw-col-item" :readonly="true">{{ recover[n - 1] }}</span>
         </el-col>
       </el-row>
       <el-row class="cw-row">
@@ -25,7 +32,8 @@
           :key="index"
           class="cw-word"
           @click="chooseWord(item)"
-        >{{item}}</span>
+          >{{ item }}</span
+        >
       </el-row>
       <el-row>
         <el-button @click="matchBack">回退</el-button>
@@ -37,10 +45,15 @@
       <div class="cw-encrypt">
         <el-form :inline="true" :model="formData">
           <el-form-item label="密码" prop="passwd">
-            <el-input v-model="formData.passwd" placeholder="请输入密码"></el-input>
+            <el-input
+              v-model="formData.passwd"
+              placeholder="请输入密码"
+            ></el-input>
           </el-form-item>
           <el-form-item>
-            <el-button type="primary" @click="encrypt" :loading="encrypting">确定</el-button>
+            <el-button type="primary" @click="encrypt" :loading="encrypting"
+              >确定</el-button
+            >
           </el-form-item>
         </el-form>
       </div>

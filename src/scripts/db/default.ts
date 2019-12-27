@@ -1,4 +1,4 @@
-import { User } from '@/scripts/chat/user';
+import { User } from "@/scripts/chat/user";
 
 export class Default {
   public chatUser: User;

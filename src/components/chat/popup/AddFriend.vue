@@ -1,11 +1,20 @@
 <template>
-  <el-dialog class="af" :append-to-body="true" :visible.sync="visible" width="400px">
+  <el-dialog
+    class="af"
+    :append-to-body="true"
+    :visible.sync="visible"
+    width="400px"
+  >
     <div class="af-title" slot="title">添加联系人</div>
     <el-form :model="userInput" ref="form">
       <el-form-item prop="name" label="昵称" placeholder="请输入昵称">
         <el-input v-model="userInput.name"></el-input>
       </el-form-item>
-      <el-form-item prop="pubKey" label="Public Key" placeholder="请输入联系人的 publick key">
+      <el-form-item
+        prop="pubKey"
+        label="Public Key"
+        placeholder="请输入联系人的 publick key"
+      >
         <el-input v-model="userInput.pubKey"></el-input>
       </el-form-item>
     </el-form>
@@ -17,24 +26,24 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue';
-import { Group } from '@/scripts/chat/group';
-import { Private } from '@/scripts/chat/private';
+import Vue from "vue";
+import { Group } from "@/scripts/chat/group";
+import { Private } from "@/scripts/chat/private";
 
 export default Vue.extend({
   data() {
     return {
       userInput: {
-        name: '',
-        pubKey: '',
+        name: "",
+        pubKey: ""
       },
-      visible: false,
+      visible: false
     };
   },
   computed: {
     pass(): boolean {
-      return this.userInput.name !== '' && this.userInput.pubKey !== '';
-    },
+      return this.userInput.name !== "" && this.userInput.pubKey !== "";
+    }
   },
   methods: {
     show() {
@@ -51,19 +60,19 @@ export default Vue.extend({
     },
     sure() {
       if (this.userInput.name.length > 6) {
-        this.$message({ message: '名字太长了啊(6个字符)!', type: 'warning' });
+        this.$message({ message: "名字太长了啊(6个字符)!", type: "warning" });
         return;
       }
 
       const priv = new Private(
         this.userInput.pubKey,
         this.userInput.name,
-        this.userInput.pubKey,
+        this.userInput.pubKey
       );
 
-      this.$store.commit('chat/addPrivate', priv);
+      this.$store.commit("chat/addPrivate", priv);
       this.hide();
-    },
-  },
+    }
+  }
 });
 </script>
