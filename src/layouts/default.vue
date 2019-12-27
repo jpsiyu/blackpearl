@@ -2,7 +2,9 @@
   <div class="default">
     <div class="default-main">
       <div class="default-main-page">
-        <router-view />
+        <transition name="fade" mode="out-in">
+          <router-view />
+        </transition>
       </div>
       <div class="default-main-nav">
         <Navigator />
@@ -48,5 +50,14 @@ export default Vue.extend({
       height: 60px;
     }
   }
+}
+
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.5s;
+}
+.fade-enter,
+.fade-leave-to {
+  opacity: 0;
 }
 </style>
