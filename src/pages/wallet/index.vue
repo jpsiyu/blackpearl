@@ -14,7 +14,13 @@
     </div>
     <div class="wallet-main">
       <div class="wallet-main-left">
-        <div class="wallet-token" v-for="(coin, index) in coins" :key="index">
+        <div
+          class="wallet-token"
+          v-for="(coin, index) in coins"
+          :key="index"
+          :class="{ selected: currentCoin === coin }"
+          @click="handleClickCoin(coin)"
+        >
           {{ coin.code }}
         </div>
       </div>
@@ -37,6 +43,7 @@ interface IData {
   accounts: BIP32Node[];
   currentAcc: BIP32Node | null;
   coins: Coin[];
+  currentCoin: Coin | null;
 }
 
 export default Vue.extend({
@@ -45,7 +52,8 @@ export default Vue.extend({
       master: null,
       accounts: [],
       currentAcc: null,
-      coins: []
+      coins: [],
+      currentCoin: null
     };
   },
   created() {
@@ -64,6 +72,12 @@ export default Vue.extend({
       new Coin("USDT", "0x123", true),
       new Coin("DAI", "0x345", true)
     ];
+    this.currentCoin = this.coins[0];
+  },
+  methods: {
+    handleClickCoin(coin: Coin) {
+      this.currentCoin = coin;
+    }
   }
 });
 </script>
@@ -116,10 +130,18 @@ export default Vue.extend({
   }
   &-token {
     cursor: pointer;
-    padding: 5px 20px;
+    padding: 10px 20px;
     &:hover {
       background: var(--color-extra-light-border);
     }
+  }
+}
+
+.selected {
+  background: var(--color-success);
+  color: #fff;
+  &:hover {
+    background: var(--color-success);
   }
 }
 </style>
