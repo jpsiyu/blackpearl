@@ -63,7 +63,7 @@
 
 <script lang="ts">
 import Vue from "vue";
-import bipHelper from "@/scripts/wallet/bipHelper";
+import * as bipHelper from "@/scripts/wallet/bipHelper";
 import { Wallet } from "@/scripts/db/wallet";
 
 interface IData {
