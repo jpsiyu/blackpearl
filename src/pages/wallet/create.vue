@@ -52,8 +52,21 @@
 import Vue from "vue";
 import bipHelper from "@/scripts/wallet/bipHelper";
 import { WalletState } from "@/scripts/wallet/struct";
+
+interface IData {
+  mnemonicRaw: string;
+  mnemonic: string[];
+  walletState: WalletState;
+  recover: string[];
+  shuffleArray: string[];
+  formData: {
+    passwd: string;
+  };
+  encrypting: boolean;
+}
+
 export default Vue.extend({
-  data() {
+  data(): IData {
     return {
       mnemonicRaw: "",
       mnemonic: [],
@@ -156,7 +169,7 @@ export default Vue.extend({
       setTimeout(() => {
         const node = bipHelper.genBip32Node(this.mnemonicRaw);
         console.log(node);
-      /*
+        /*
         const privKey = "0x" + node.privateKey.toString("hex");
         const keystore: object = web3Helper.encryptPrivKey(
           privKey,
