@@ -5,14 +5,23 @@ const deriveRoot: string = "m/44'/60'/0'/0";
 const deriveMax: number = 100000000
 
 export class BIP32Node {
-  public name: string;
   public isMaster: boolean;
   private node: BIP32Interface;
+  private _name: string;
 
   constructor(node: BIP32Interface) {
     this.node = node;
-    this.name = "";
+    this._name = "";
     this.isMaster = false;
+  }
+
+  public get name(): string {
+    if (this.isMaster) return "根账户"
+    else return this._name
+  }
+
+  public set name(name: string) {
+    this._name = name;
   }
 
   public get publicKey(): string {

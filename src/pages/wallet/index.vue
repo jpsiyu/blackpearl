@@ -7,7 +7,7 @@
             <div class="wallet-acc__name">
               <i class="fas fa-user"></i>
               <span>账号:</span>
-              <span>账号1</span>
+              <span>{{ currentAcc.name }}</span>
             </div>
             <div class="wallet-acc__addr">
               <i class="fas fa-address-card"></i>
@@ -33,7 +33,12 @@
       </div>
       <div class="wallet-main-rightWrap">
         <div class="wallet-main-right">
-          <el-carousel type="card" height="400px" :autoplay="false">
+          <el-carousel
+            type="card"
+            height="400px"
+            :autoplay="false"
+            @change="handleCardChange"
+          >
             <el-carousel-item v-for="(item, index) in accounts" :key="index">
               <div class="wallet-card">
                 <span>余额：1000eth</span>
@@ -58,8 +63,17 @@ import { mapState } from "vuex";
 import Setting from "@/components/wallet/Setting.vue";
 import AddAcc from "@/components/wallet/AddAcc.vue";
 
+interface IData {
+  activeCardIndex: number;
+}
+
 export default Vue.extend({
   components: { Setting, AddAcc },
+  data(): IData {
+    return {
+      activeCardIndex: 0
+    };
+  },
   computed: {
     ...mapState({
       accounts: (state: any) => state.wallet.accounts,
@@ -82,6 +96,11 @@ export default Vue.extend({
     handleClickAdd() {
       const comp: any = this.$refs.add;
       comp.show();
+    },
+    handleCardChange(active: number, last: number) {
+      this.activeCardIndex = active;
+      const acc = this.accounts[this.activeCardIndex];
+      this.$store.commit("wallet/setCurrentAcc", acc);
     }
   }
 });
