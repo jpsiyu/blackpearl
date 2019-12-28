@@ -32,6 +32,6 @@ export class Wallet extends PluginApp {
     this.$store.commit("wallet/setCoins", coins);
     this.$store.commit("wallet/setCurrentCoin", currentCoin);
 
-    this.hasInit = true
+    this.hasInit = true;
   }
 }

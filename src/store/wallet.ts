@@ -25,5 +25,5 @@ export default {
       state.currentCoin = payload;
     }
   },
-  actions: {},
-}
+  actions: {}
+};
