@@ -27,7 +27,7 @@
           </div>
           <div class="wallet-op">
             <i class="el-icon-setting" @click="handleClickSetting"></i>
-            <i class="el-icon-circle-plus-outline"></i>
+            <i class="el-icon-circle-plus-outline" @click="handleClickAdd"></i>
           </div>
         </div>
       </div>
@@ -44,6 +44,7 @@
       </div>
     </div>
     <Setting ref="setting" />
+    <AddAcc ref="add" />
   </div>
 </template>
 
@@ -55,9 +56,10 @@ import { BIP32Node } from "@/scripts/wallet/bip32Node";
 import { Coin } from "@/scripts/wallet/coin";
 import { mapState } from "vuex";
 import Setting from "@/components/wallet/Setting.vue";
+import AddAcc from "@/components/wallet/AddAcc.vue";
 
 export default Vue.extend({
-  components: { Setting },
+  components: { Setting, AddAcc },
   computed: {
     ...mapState({
       accounts: (state: any) => state.wallet.accounts,
@@ -75,6 +77,10 @@ export default Vue.extend({
     },
     handleClickSetting() {
       const comp: any = this.$refs.setting;
+      comp.show();
+    },
+    handleClickAdd() {
+      const comp: any = this.$refs.add;
       comp.show();
     }
   }

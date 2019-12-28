@@ -46,6 +46,7 @@ export class Wallet extends PluginApp {
     ];
     const currentNet: INetwork = networks[0];
 
+    this.$store.commit("wallet/setMaster", master);
     this.$store.commit("wallet/setAccounts", accounts);
     this.$store.commit("wallet/setCurrentAcc", currentAcc);
     this.$store.commit("wallet/setCoins", coins);

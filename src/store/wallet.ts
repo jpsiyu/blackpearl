@@ -3,6 +3,7 @@ import { Coin } from "@/scripts/wallet/coin";
 import { INetwork } from "@/scripts/wallet/network";
 
 class WalletState {
+  public master: BIP32Node | null = null;
   public accounts: BIP32Node[] = [];
   public currentAcc: BIP32Node | null = null;
   public coins: Coin[] = [];
@@ -15,6 +16,9 @@ export default {
   namespaced: true,
   state: new WalletState(),
   mutations: {
+    setMaster: (state: WalletState, payload: BIP32Node) => {
+      state.master = payload;
+    },
     setAccounts: (state: WalletState, payload: BIP32Node[]) => {
       state.accounts = payload;
     },

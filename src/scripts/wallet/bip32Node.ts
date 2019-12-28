@@ -1,11 +1,16 @@
 import { BIP32Interface } from "bip32";
 import * as etherUtil from "ethereumjs-util";
 
+const deriveRoot: string = "m/44'/60'/0'/0";
+const deriveMax: number = 100000000
+
 export class BIP32Node {
+  public name: string;
   private node: BIP32Interface;
 
   constructor(node: BIP32Interface) {
     this.node = node;
+    this.name = "";
   }
 
   public get publicKey(): string {
@@ -26,5 +31,12 @@ export class BIP32Node {
 
   public get checksumAddress(): string {
     return etherUtil.toChecksumAddress(this.address);
+  }
+
+  public randomDerive(): [string, BIP32Node] {
+    const index = Math.floor(Math.random() * deriveMax)
+    const p = `${deriveRoot}/${index}`
+    const child = this.node.derivePath(p)
+    return [p, new BIP32Node(child)]
   }
 }
