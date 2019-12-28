@@ -25,6 +25,7 @@
               <span>Main Net</span>
             </div>
           </div>
+          <i class="el-icon-setting wallet-main-left__setting"></i>
         </div>
       </div>
       <div class="wallet-main-rightWrap">
@@ -118,6 +119,14 @@ export default Vue.extend({
       background: var(--color-extra-light-border);
       border-right: 1px solid var(--color-light-border);
       padding: 10px;
+      position: relative;
+      &__setting {
+        position: absolute;
+        left: 10px;
+        bottom: 10px;
+        font-size: 22px;
+        cursor: pointer;
+      }
     }
     &-rightWrap {
       flex: 1;
