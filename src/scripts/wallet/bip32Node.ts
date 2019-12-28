@@ -6,11 +6,13 @@ const deriveMax: number = 100000000
 
 export class BIP32Node {
   public name: string;
+  public isMaster: boolean;
   private node: BIP32Interface;
 
   constructor(node: BIP32Interface) {
     this.node = node;
     this.name = "";
+    this.isMaster = false;
   }
 
   public get publicKey(): string {
@@ -38,5 +40,10 @@ export class BIP32Node {
     const p = `${deriveRoot}/${index}`
     const child = this.node.derivePath(p)
     return [p, new BIP32Node(child)]
+  }
+
+  public derivePath(p: string): BIP32Node {
+    const child = this.node.derivePath(p)
+    return new BIP32Node(child)
   }
 }
