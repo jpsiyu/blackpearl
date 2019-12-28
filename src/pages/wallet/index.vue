@@ -25,10 +25,10 @@
               <span>{{ currentNet.name }}</span>
             </div>
           </div>
-          <i
-            class="el-icon-setting wallet-main-left__setting"
-            @click="handleClickSetting"
-          ></i>
+          <div class="wallet-op">
+            <i class="el-icon-setting" @click="handleClickSetting"></i>
+            <i class="el-icon-circle-plus-outline"></i>
+          </div>
         </div>
       </div>
       <div class="wallet-main-rightWrap">
@@ -107,13 +107,6 @@ export default Vue.extend({
       border-right: 1px solid var(--color-light-border);
       padding: 10px;
       position: relative;
-      &__setting {
-        position: absolute;
-        left: 10px;
-        bottom: 10px;
-        font-size: 22px;
-        cursor: pointer;
-      }
     }
     &-rightWrap {
       flex: 1;
@@ -126,6 +119,16 @@ export default Vue.extend({
       background: var(--color-extra-light-border);
       padding: 10% 10px;
       overflow-y: auto;
+    }
+  }
+  &-op {
+    position: absolute;
+    left: 10px;
+    bottom: 10px;
+    i {
+      font-size: 22px;
+      cursor: pointer;
+      margin-right: 5px;
     }
   }
   &-acc {
