@@ -29,11 +29,21 @@ export class Wallet extends PluginApp {
     const currentCoin = coins[0];
 
     const networks: INetwork[] = [
-      { netID: 1, name: "Main Ethereum Network", color: "darkseagreen", url: "" },
-      { netID: 2, name: "Ropsten Test Network", color: "palevioletred", url: "" },
+      {
+        netID: 1,
+        name: "Main Ethereum Network",
+        color: "darkseagreen",
+        url: ""
+      },
+      {
+        netID: 2,
+        name: "Ropsten Test Network",
+        color: "palevioletred",
+        url: ""
+      },
       { netID: 3, name: "Kovan Test Network", color: "blueviolet", url: "" },
-      { netID: 4, name: "Rinkeby Test Network", color: "orange", url: "" },
-    ]
+      { netID: 4, name: "Rinkeby Test Network", color: "orange", url: "" }
+    ];
     const currentNet: INetwork = networks[0];
 
     this.$store.commit("wallet/setAccounts", accounts);
