@@ -3,20 +3,39 @@
     <div class="wallet-main">
       <div class="wallet-main-leftWrap">
         <div class="wallet-main-left">
-          <div
-            class="wallet-token"
-            v-for="(coin, index) in coins"
-            :key="index"
-            :class="{ selected: currentCoin === coin }"
-            @click="handleClickCoin(coin)"
-          >
-            {{ coin.code }}
+          <div class="wallet-acc">
+            <div class="wallet-acc__name">
+              <i class="fas fa-user"></i>
+              <span>账号:</span>
+              <span>账号1</span>
+            </div>
+            <div class="wallet-acc__addr">
+              <i class="fas fa-address-card"></i>
+              <span>地址:</span>
+              <span>{{ currentAcc.checksumAddress }}</span>
+            </div>
+            <div class="wallet-acc__coin">
+              <i class="fas fa-coins"></i>
+              <span>币种:</span>
+              <span>{{ currentCoin.code }}</span>
+            </div>
+            <div class="wallet-acc__net">
+              <i class="fas fa-wifi"></i>
+              <span>网络:</span>
+              <span>Main Net</span>
+            </div>
           </div>
         </div>
       </div>
       <div class="wallet-main-rightWrap">
         <div class="wallet-main-right">
-          haha
+          <el-carousel type="card" height="400px" :autoplay="false">
+            <el-carousel-item v-for="(item, index) in accounts" :key="index">
+              <div class="wallet-card">
+                <span>余额：1000eth</span>
+              </div>
+            </el-carousel-item>
+          </el-carousel>
         </div>
       </div>
     </div>
@@ -98,6 +117,7 @@ export default Vue.extend({
       overflow-y: auto;
       background: var(--color-extra-light-border);
       border-right: 1px solid var(--color-light-border);
+      padding: 10px;
     }
     &-rightWrap {
       flex: 1;
@@ -108,16 +128,35 @@ export default Vue.extend({
       width: 100%;
       height: 100%;
       background: var(--color-extra-light-border);
-      padding: 0 10px;
+      padding: 10% 10px;
       overflow-y: auto;
     }
   }
-  &-token {
-    cursor: pointer;
-    padding: 10px 20px;
-    &:hover {
-      background: var(--color-light-border);
+  &-acc {
+    & > div {
+      padding: 15px 0;
+      display: flex;
+      align-items: center;
+      i:nth-child(1) {
+        width: 15px;
+      }
+      span:nth-child(2) {
+        margin-left: 5px;
+        color: var(--color-primary-text);
+      }
+      span:nth-child(3) {
+        margin-left: 10px;
+        display: inline-block;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        width: 120px;
+      }
     }
+  }
+  &-card {
+    width: 100%;
+    height: 100%;
+    background: #fff;
   }
 }
 
