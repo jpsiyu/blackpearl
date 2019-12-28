@@ -35,7 +35,8 @@
 <script lang="ts">
 import Vue from "vue";
 import { mapState } from "vuex";
-import { BIP32Node } from "../../scripts/wallet/bip32Node";
+import { BIP32Node } from "@/scripts/wallet/bip32Node";
+import { Child } from "@/scripts/db/wallet";
 
 interface IData {
   visible: boolean;
@@ -75,6 +76,12 @@ export default Vue.extend({
     },
     sure() {
       const [derivePath, child] = this.master.randomDerive();
+
+      const dbChild: Child = new Child();
+      dbChild.name = this.form.name;
+      dbChild.derivePath = derivePath;
+      this.$db.addWalletChild(dbChild);
+
       this.derivePath = derivePath;
       this.child = child;
     }
