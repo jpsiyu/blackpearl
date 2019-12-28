@@ -25,7 +25,10 @@
               <span>Main Net</span>
             </div>
           </div>
-          <i class="el-icon-setting wallet-main-left__setting"></i>
+          <i
+            class="el-icon-setting wallet-main-left__setting"
+            @click="handleClickSetting"
+          ></i>
         </div>
       </div>
       <div class="wallet-main-rightWrap">
@@ -40,6 +43,7 @@
         </div>
       </div>
     </div>
+    <Setting ref="setting" />
   </div>
 </template>
 
@@ -50,8 +54,10 @@ import * as bipHelper from "@/scripts/wallet/bipHelper";
 import { BIP32Node } from "@/scripts/wallet/bip32Node";
 import { Coin } from "@/scripts/wallet/coin";
 import { mapState } from "vuex";
+import Setting from "@/components/wallet/Setting.vue";
 
 export default Vue.extend({
+  components: { Setting },
   computed: {
     ...mapState({
       accounts: (state: any) => state.wallet.accounts,
@@ -66,6 +72,10 @@ export default Vue.extend({
   methods: {
     handleClickCoin(coin: Coin) {
       this.currentCoin = coin;
+    },
+    handleClickSetting() {
+      const comp: any = this.$refs.setting;
+      comp.show();
     }
   }
 });
