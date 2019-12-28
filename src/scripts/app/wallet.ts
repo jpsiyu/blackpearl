@@ -3,7 +3,7 @@ import * as bipHelper from "@/scripts/wallet/bipHelper";
 import { BIP32Node } from "@/scripts/wallet/bip32Node";
 import { Coin } from "@/scripts/wallet/coin";
 import { INetwork } from "@/scripts/wallet/network";
-import { Child } from '@/scripts/db/wallet';
+import { Child } from "@/scripts/db/wallet";
 
 export class Wallet extends PluginApp {
   async init() {
@@ -29,10 +29,10 @@ export class Wallet extends PluginApp {
 
     const accounts = [master];
     wallet.children.forEach((el: Child) => {
-      const child = master.derivePath(el.derivePath)
-      child.name = el.name
-      accounts.push(child)
-    })
+      const child = master.derivePath(el.derivePath);
+      child.name = el.name;
+      accounts.push(child);
+    });
 
     const currentAcc = accounts[0];
 

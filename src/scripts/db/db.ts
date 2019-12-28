@@ -49,8 +49,8 @@ export class DB {
   }
 
   public addWalletChild(child: Child) {
-    const children = this.db.get("wallet.children").value()
-    children.push(child)
-    this.db.set("wallet.children", children).write()
+    const children = this.db.get("wallet.children").value();
+    children.push(child);
+    this.db.set("wallet.children", children).write();
   }
 }

@@ -2,7 +2,7 @@ import { BIP32Interface } from "bip32";
 import * as etherUtil from "ethereumjs-util";
 
 const deriveRoot: string = "m/44'/60'/0'/0";
-const deriveMax: number = 100000000
+const deriveMax: number = 100000000;
 
 export class BIP32Node {
   public isMaster: boolean;
@@ -16,8 +16,8 @@ export class BIP32Node {
   }
 
   public get name(): string {
-    if (this.isMaster) return "根账户"
-    else return this._name
+    if (this.isMaster) return "根账户";
+    else return this._name;
   }
 
   public set name(name: string) {
@@ -45,14 +45,14 @@ export class BIP32Node {
   }
 
   public randomDerive(): [string, BIP32Node] {
-    const index = Math.floor(Math.random() * deriveMax)
-    const p = `${deriveRoot}/${index}`
-    const child = this.node.derivePath(p)
-    return [p, new BIP32Node(child)]
+    const index = Math.floor(Math.random() * deriveMax);
+    const p = `${deriveRoot}/${index}`;
+    const child = this.node.derivePath(p);
+    return [p, new BIP32Node(child)];
   }
 
   public derivePath(p: string): BIP32Node {
-    const child = this.node.derivePath(p)
-    return new BIP32Node(child)
+    const child = this.node.derivePath(p);
+    return new BIP32Node(child);
   }
 }
