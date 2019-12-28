@@ -35,12 +35,15 @@
         <div class="wallet-main-right">
           <el-carousel
             type="card"
-            height="400px"
+            height="300px"
             :autoplay="false"
             @change="handleCardChange"
           >
             <el-carousel-item v-for="(item, index) in accounts" :key="index">
-              <div class="wallet-card">
+              <div
+                class="wallet-card"
+                :class="{ selected: index === activeCardIndex }"
+              >
                 <span>余额：1000eth</span>
               </div>
             </el-carousel-item>
@@ -182,14 +185,12 @@ export default Vue.extend({
     width: 100%;
     height: 100%;
     background: #fff;
+    opacity: 0.1;
+    transition: opacity 0.5s;
   }
 }
 
 .selected {
-  background: var(--color-success);
-  color: #fff;
-  &:hover {
-    background: var(--color-success);
-  }
+  opacity: 1;
 }
 </style>

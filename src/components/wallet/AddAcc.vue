@@ -81,6 +81,7 @@ export default Vue.extend({
       dbChild.name = this.form.name;
       dbChild.derivePath = derivePath;
       this.$db.addWalletChild(dbChild);
+      this.$app.wallet.loadWallet();
 
       this.derivePath = derivePath;
       this.child = child;

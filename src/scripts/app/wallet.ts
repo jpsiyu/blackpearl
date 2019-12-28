@@ -11,6 +11,12 @@ export class Wallet extends PluginApp {
       return;
     }
 
+    this.loadWallet();
+
+    this.hasInit = true;
+  }
+
+  loadWallet() {
     const wallet = this.$db.getWallet();
     if (!wallet) {
       this.$router.push({ path: "/wallet/create" });
@@ -62,7 +68,5 @@ export class Wallet extends PluginApp {
     this.$store.commit("wallet/setCurrentCoin", currentCoin);
     this.$store.commit("wallet/setNetworks", networks);
     this.$store.commit("wallet/setCurrentNet", currentNet);
-
-    this.hasInit = true;
   }
 }
