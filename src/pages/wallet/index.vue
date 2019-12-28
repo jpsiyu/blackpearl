@@ -49,42 +49,19 @@ import { Wallet } from "@/scripts/db/wallet";
 import * as bipHelper from "@/scripts/wallet/bipHelper";
 import { BIP32Node } from "@/scripts/wallet/bip32Node";
 import { Coin } from "@/scripts/wallet/coin";
-
-interface IData {
-  master: BIP32Node | null;
-  accounts: BIP32Node[];
-  currentAcc: BIP32Node | null;
-  coins: Coin[];
-  currentCoin: Coin | null;
-}
+import { mapState } from "vuex";
 
 export default Vue.extend({
-  data(): IData {
-    return {
-      master: null,
-      accounts: [],
-      currentAcc: null,
-      coins: [],
-      currentCoin: null
-    };
+  computed: {
+    ...mapState({
+      accounts: (state: any) => state.wallet.accounts,
+      currentAcc: (state: any) => state.wallet.currentAcc,
+      coins: (state: any) => state.wallet.coins,
+      currentCoin: (state: any) => state.wallet.currentCoin
+    })
   },
-  created() {
-    const wallet = this.$db.getWallet();
-    if (!wallet) {
-      this.$router.push({ path: "/wallet/create" });
-      return;
-    }
-    const node = bipHelper.genBip32Node(wallet.mnemonic);
-    this.master = new BIP32Node(node);
-    this.accounts = [this.master];
-    this.currentAcc = this.accounts[0];
-
-    this.coins = [
-      new Coin("ETH", "", false),
-      new Coin("USDT", "0x123", true),
-      new Coin("DAI", "0x345", true)
-    ];
-    this.currentCoin = this.coins[0];
+  async created() {
+    await this.$app.wallet.init();
   },
   methods: {
     handleClickCoin(coin: Coin) {

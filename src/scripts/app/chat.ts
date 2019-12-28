@@ -2,10 +2,6 @@ import { PluginApp } from "@/scripts/app/pluginApp";
 import { Group } from "@/scripts/chat/group";
 
 export class Chat extends PluginApp {
-  constructor() {
-    super();
-  }
-
   async init() {
     if (this.hasInit) {
       return;
