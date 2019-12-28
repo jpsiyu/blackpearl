@@ -22,7 +22,7 @@
             <div class="wallet-acc__net">
               <i class="fas fa-wifi"></i>
               <span>网络:</span>
-              <span>Main Net</span>
+              <span>{{ currentNet.name }}</span>
             </div>
           </div>
           <i
@@ -62,8 +62,8 @@ export default Vue.extend({
     ...mapState({
       accounts: (state: any) => state.wallet.accounts,
       currentAcc: (state: any) => state.wallet.currentAcc,
-      coins: (state: any) => state.wallet.coins,
-      currentCoin: (state: any) => state.wallet.currentCoin
+      currentCoin: (state: any) => state.wallet.currentCoin,
+      currentNet: (state: any) => state.wallet.currentNet
     })
   },
   async created() {
@@ -145,7 +145,8 @@ export default Vue.extend({
         display: inline-block;
         overflow: hidden;
         text-overflow: ellipsis;
-        width: 120px;
+        width: 150px;
+        white-space: pre;
       }
     }
   }
