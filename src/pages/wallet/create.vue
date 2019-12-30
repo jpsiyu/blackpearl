@@ -18,28 +18,40 @@
           <span class="cw-col-item">{{ item }}</span>
         </el-col>
       </el-row>
-      <span class="cw-textBtn" @click="writed">确定已抄下助记词!</span>
+      <span class="cw-textBtn" @click="writed">我已抄下助记词!</span>
     </template>
     <template v-else-if="isNeedRecovert">
-      <el-row class="cw-row">
-        <el-col class="cw-col" :span="8" v-for="n in 24" :key="n">
-          <span class="cw-col-item" :readonly="true">{{ recover[n - 1] }}</span>
-        </el-col>
-      </el-row>
-      <el-row class="cw-row">
-        <span
-          v-for="(item, index) in shuffleArray"
-          :key="index"
-          class="cw-word"
-          @click="chooseWord(item)"
-          >{{ item }}</span
-        >
-      </el-row>
-      <el-row>
-        <el-button @click="matchBack">回退</el-button>
-        <el-button type="warning" @click="forceMatch">强制匹配</el-button>
-        <el-button type="primary" @click="match">匹配</el-button>
-      </el-row>
+      <div class="cw-reco">
+        <div>
+          <h2>请输入助记词进行恢复验证</h2>
+          <el-row class="cw-reco-mnemonic">
+            <el-col
+              class="cw-reco-mnemonic-col"
+              :span="8"
+              v-for="n in 24"
+              :key="n"
+            >
+              <span :readonly="true">{{ recover[n - 1] }}</span>
+            </el-col>
+          </el-row>
+        </div>
+        <div class="cw-reco-op">
+          <el-row class="cw-reco-op-row">
+            <span
+              v-for="(item, index) in shuffleArray"
+              :key="index"
+              class="cw-reco-op-word"
+              @click="chooseWord(item)"
+              >{{ item }}</span
+            >
+          </el-row>
+          <el-row class="cw-reco-op-btns">
+            <el-button type="primary" @click="match">匹配</el-button>
+            <el-button type="warning" @click="forceMatch">强制匹配</el-button>
+            <el-button type="danger" @click="matchBack">回退</el-button>
+          </el-row>
+        </div>
+      </div>
     </template>
     <template v-else-if="isNeedEncrypt">
       <div class="cw-encrypt">
@@ -173,7 +185,10 @@ export default Vue.extend({
     },
 
     matchBack(): void {
-      this.recover.pop();
+      const last = this.recover.pop();
+      if (last) {
+        this.shuffleArray.push(last);
+      }
     },
 
     forceMatch(): void {
@@ -224,13 +239,12 @@ export default Vue.extend({
   }
   &-col {
     margin: 5px 0;
+    display: flex;
+    align-items: center;
+    height: 40px;
+    border: 1px solid #dcdfe6;
     &-item {
-      display: inline-block;
-      border: 1px solid #dcdfe6;
-      width: 80%;
       padding: 0px 20px;
-      height: 40px;
-      box-sizing: border-box;
     }
   }
   &-textBtn {
@@ -252,6 +266,53 @@ export default Vue.extend({
     display: flex;
     justify-content: center;
     align-items: center;
+  }
+  &-reco {
+    display: flex;
+    &-mnemonic {
+      width: 500px;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      &-col {
+        margin-top: 10px;
+        display: flex;
+        align-items: center;
+        height: 40px;
+        border: 1px solid #dcdfe6;
+        span {
+          padding: 0px 20px;
+        }
+      }
+    }
+    &-op {
+      width: 300px;
+      margin-left: 10px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: space-between;
+      background: rgba(0, 0, 0, 0.5);
+      padding: 5px 0;
+      &-row {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: flex-start;
+      }
+      &-word {
+        background: #fff;
+        border: 1px solid #dcdfe6;
+        padding: 5px 10px;
+        margin: 10px;
+        cursor: pointer;
+        &:hover {
+          background: var(--color-light-border);
+        }
+      }
+      &-btns {
+        margin-top: 20px;
+      }
+    }
   }
 }
 </style>
