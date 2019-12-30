@@ -33,21 +33,7 @@
       </div>
       <div class="wallet-main-rightWrap">
         <div class="wallet-main-right">
-          <el-carousel
-            type="card"
-            height="300px"
-            :autoplay="false"
-            @change="handleCardChange"
-          >
-            <el-carousel-item v-for="(item, index) in accounts" :key="index">
-              <div
-                class="wallet-card"
-                :class="{ selected: index === activeCardIndex }"
-              >
-                <span>余额：1000eth</span>
-              </div>
-            </el-carousel-item>
-          </el-carousel>
+          <Cards ref="cards" />
         </div>
       </div>
     </div>
@@ -65,18 +51,10 @@ import { Coin } from "@/scripts/wallet/coin";
 import { mapState } from "vuex";
 import Setting from "@/components/wallet/Setting.vue";
 import AddAcc from "@/components/wallet/AddAcc.vue";
-
-interface IData {
-  activeCardIndex: number;
-}
+import Cards from "@/components/wallet/Cards.vue";
 
 export default Vue.extend({
-  components: { Setting, AddAcc },
-  data(): IData {
-    return {
-      activeCardIndex: 0
-    };
-  },
+  components: { Setting, AddAcc, Cards },
   computed: {
     ...mapState({
       accounts: (state: any) => state.wallet.accounts,
@@ -99,11 +77,6 @@ export default Vue.extend({
     handleClickAdd() {
       const comp: any = this.$refs.add;
       comp.show();
-    },
-    handleCardChange(active: number, last: number) {
-      this.activeCardIndex = active;
-      const acc = this.accounts[this.activeCardIndex];
-      this.$store.commit("wallet/setCurrentAcc", acc);
     }
   }
 });
@@ -181,16 +154,5 @@ export default Vue.extend({
       }
     }
   }
-  &-card {
-    width: 100%;
-    height: 100%;
-    background: #fff;
-    opacity: 0.1;
-    transition: opacity 0.5s;
-  }
-}
-
-.selected {
-  opacity: 1;
 }
 </style>
