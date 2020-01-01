@@ -7,6 +7,16 @@
   >
     <div slot="title">设置</div>
     <el-form class="set-form">
+      <el-form-item label="切换账号:">
+        <el-select v-model="form.accIndex">
+          <el-option
+            v-for="(item, index) in accounts"
+            :key="index"
+            :label="item.name"
+            :value="index"
+          />
+        </el-select>
+      </el-form-item>
       <el-form-item label="切换网络:">
         <el-select v-model="form.netID">
           <el-option
@@ -40,12 +50,14 @@ import Vue from "vue";
 import { mapState } from "vuex";
 import { INetwork } from "../../scripts/wallet/network";
 import { Coin } from "../../scripts/wallet/coin";
+import { BIP32Node } from "@/scripts/wallet/bip32Node";
 
 interface IData {
   visible: boolean;
   form: {
     netID: number;
     code: string;
+    accIndex: number;
   };
 }
 
@@ -55,7 +67,8 @@ export default Vue.extend({
       visible: false,
       form: {
         netID: 0,
-        code: ""
+        code: "",
+        accIndex: 0
       }
     };
   },
@@ -64,12 +77,17 @@ export default Vue.extend({
       networks: (state: any) => state.wallet.networks,
       currentNet: (state: any) => state.wallet.currentNet,
       coins: (state: any) => state.wallet.coins,
-      currentCoin: (state: any) => state.wallet.currentCoin
+      currentCoin: (state: any) => state.wallet.currentCoin,
+      accounts: (state: any) => state.wallet.accounts,
+      currentAcc: (state: any) => state.wallet.currentAcc
     })
   },
   created() {
     this.form.netID = this.currentNet.netID;
     this.form.code = this.currentCoin.code;
+    this.form.accIndex = this.accounts.findIndex((el: BIP32Node) => {
+      return el.address === this.currentAcc.address;
+    });
   },
   methods: {
     show() {
@@ -85,8 +103,10 @@ export default Vue.extend({
       const selectedCoin = this.coins.find((el: Coin) => {
         return el.code === this.form.code;
       });
+      const selectedAcc = this.accounts[this.form.accIndex];
       this.$store.commit("wallet/setCurrentNet", selectedNetwork);
       this.$store.commit("wallet/setCurrentCoin", selectedCoin);
+      this.$store.commit("wallet/setCurrentAcc", selectedAcc);
       this.hide();
     }
   }

@@ -33,7 +33,7 @@
       </div>
       <div class="wallet-main-rightWrap">
         <div class="wallet-main-right">
-          <Cards ref="cards" />
+          <Card ref="card" />
         </div>
       </div>
     </div>
@@ -51,10 +51,10 @@ import { Coin } from "@/scripts/wallet/coin";
 import { mapState } from "vuex";
 import Setting from "@/components/wallet/Setting.vue";
 import AddAcc from "@/components/wallet/AddAcc.vue";
-import Cards from "@/components/wallet/Cards.vue";
+import Card from "@/components/wallet/Card.vue";
 
 export default Vue.extend({
-  components: { Setting, AddAcc, Cards },
+  components: { Setting, AddAcc, Card },
   computed: {
     ...mapState({
       accounts: (state: any) => state.wallet.accounts,
@@ -118,7 +118,6 @@ export default Vue.extend({
       width: 100%;
       height: 100%;
       background: var(--color-extra-light-border);
-      padding: 10% 10px;
       overflow-y: auto;
     }
   }
