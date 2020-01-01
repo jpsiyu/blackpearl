@@ -48,25 +48,25 @@ export class Wallet extends PluginApp {
         netID: 1,
         name: "Main Ethereum Network",
         color: "darkseagreen",
-        url: "mainnet.infura.io/v3/9f28b75fa35c4dc2ae401196993494f5"
+        url: "https://mainnet.infura.io/v3/9f28b75fa35c4dc2ae401196993494f5"
       },
       {
         netID: 2,
         name: "Ropsten Test Network",
         color: "palevioletred",
-        url: "ropsten.infura.io/v3/9f28b75fa35c4dc2ae401196993494f5"
+        url: "https://ropsten.infura.io/v3/9f28b75fa35c4dc2ae401196993494f5"
       },
       {
         netID: 3,
         name: "Kovan Test Network",
         color: "blueviolet",
-        url: "kovan.infura.io/v3/9f28b75fa35c4dc2ae401196993494f5"
+        url: "https://kovan.infura.io/v3/9f28b75fa35c4dc2ae401196993494f5"
       },
       {
         netID: 4,
         name: "Rinkeby Test Network",
         color: "orange",
-        url: "rinkeby.infura.io/v3/9f28b75fa35c4dc2ae401196993494f5"
+        url: "https://rinkeby.infura.io/v3/9f28b75fa35c4dc2ae401196993494f5"
       }
     ];
     const currentNet: INetwork = networks[0];
