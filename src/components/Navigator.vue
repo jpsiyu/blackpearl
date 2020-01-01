@@ -68,36 +68,31 @@ export default Vue.extend({
 <style lang="postcss" scoped>
 .nav {
   display: flex;
-  justify-content: center;
   align-items: center;
   height: 100%;
   position: relative;
-  &::after {
-    z-index: -1;
-    position: absolute;
-    content: "";
-    border: 2px solid var(--color-light-border);
-    border-bottom: none;
-    border-radius: 50px;
-    width: 500px;
-    height: 80%;
-    top: 0;
-  }
+  border-bottom: 1px solid var(--color-extra-light-border);
   &-item {
     cursor: pointer;
     display: flex;
     justify-content: center;
     align-items: center;
-    margin: 0 10px;
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    box-shadow: 0 0 3px 2px rgba(0, 0, 0, 0.1);
+    width: 80px;
+    height: 100%;
+    font-weight: 600;
   }
 }
 
 .selected {
-  background: var(--color-success);
-  color: #fff;
+  color: var(--color-success);
+  position: relative;
+  &::after {
+    content: "";
+    background: var(--color-success);
+    position: absolute;
+    bottom: 0;
+    width: 50%;
+    height: 2px;
+  }
 }
 </style>

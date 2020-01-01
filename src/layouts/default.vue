@@ -1,13 +1,13 @@
 <template>
   <div class="default">
     <div class="default-main">
+      <div class="default-main-nav">
+        <Navigator />
+      </div>
       <div class="default-main-page">
         <transition name="fade" mode="out-in">
           <router-view />
         </transition>
-      </div>
-      <div class="default-main-nav">
-        <Navigator />
       </div>
     </div>
   </div>
@@ -32,12 +32,10 @@ export default Vue.extend({
   overflow: auto;
   display: flex;
   &-main {
+    width: 100%;
+    height: 100%;
     margin: auto;
     box-sizing: border-box;
-    width: 90%;
-    height: 90%;
-    min-height: 500px;
-    min-width: 900px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -46,7 +44,7 @@ export default Vue.extend({
       overflow: auto;
     }
     &-nav {
-      height: 60px;
+      height: 50px;
     }
   }
 }
