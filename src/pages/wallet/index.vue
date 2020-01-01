@@ -86,7 +86,7 @@ export default Vue.extend({
 .wallet {
   margin: auto;
   width: 900px;
-  height: 100%;
+  height: 600px;
   display: flex;
   flex-direction: column;
   &-main {
