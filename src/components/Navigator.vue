@@ -1,5 +1,11 @@
 <template>
   <div class="nav">
+    <img
+      class="nav-logo"
+      src="@/assets/logo.png"
+      alt=""
+      @click="handleClickLogo"
+    />
     <div
       class="nav-item"
       :class="{ selected: selectedId === item.id }"
@@ -60,6 +66,10 @@ export default Vue.extend({
       } else {
         this.selectedId = target.id;
       }
+    },
+
+    handleClickLogo() {
+      this.$router.push({ path: "/" });
     }
   }
 });
@@ -72,6 +82,12 @@ export default Vue.extend({
   height: 100%;
   position: relative;
   border-bottom: 1px solid var(--color-extra-light-border);
+  &-logo {
+    width: 30px;
+    height: 30px;
+    margin: 0 20px;
+    cursor: pointer;
+  }
   &-item {
     cursor: pointer;
     display: flex;
