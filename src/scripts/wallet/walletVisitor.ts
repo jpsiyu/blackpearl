@@ -8,7 +8,7 @@ class WalletVisitor extends Visitor {
     return contract;
   }
 
-  public signTx(privKey: Buffer, to: Buffer, value: Buffer, gasPrice: Buffer, nonce: Buffer, data: Buffer): Buffer {
+  public signTx(privKey: Buffer, to: Buffer, value: Buffer, gasPrice: Buffer, nonce: Buffer, data: Buffer): string {
     const tx = new Transaction({
       to,
       value,
@@ -17,7 +17,7 @@ class WalletVisitor extends Visitor {
       data
     })
     tx.sign(privKey)
-    return tx.serialize()
+    return "0x" + tx.serialize().toString("hex")
   }
 }
 

@@ -177,16 +177,6 @@ export default Vue.extend({
       this.gsLoading = false;
     },
 
-    async sendEth(from: string, to: string, value: string, gasPrice: string) {
-      const receipt = await visitor.web3.eth.sendTransaction({
-        from,
-        to,
-        value,
-        gasPrice
-      });
-      return receipt;
-    },
-
     handleSwitch(val: boolean) {
       if (val) {
         this.txForm.from = this.currentAcc.checksumAddress;
@@ -230,7 +220,8 @@ export default Vue.extend({
         Buffer.from(visitor.web3.utils.numberToHex(nonce)),
         Buffer.from(data, "hex")
       );
-      console.log(signedTx);
+      const receipt = visitor.web3.eth.sendSignedTransaction(signedTx);
+      console.log(receipt);
     },
 
     detail(address: string) {
