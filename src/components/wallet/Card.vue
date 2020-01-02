@@ -197,24 +197,40 @@ export default Vue.extend({
     },
 
     async handleSure() {
-      let receipt;
+      if (!this.currentAcc.privateKey) {
+        return;
+      }
+
+      let data = "";
+      let txValue = 0;
+
       const value = new BN(this.txForm.value)
         .multipliedBy(10 ** this.currentCoin.decimals)
-        .toString();
+        .toNumber();
+
       if (this.currentCoin.isToken) {
-        const contract = visitor.loadErc20Contract(this.currentCoin.address);
-        receipt = await contract.methods
-          .transfer(this.txForm.to, value)
-          .send({ from: this.txForm.from, gasPrice: this.gasPrice });
+        const method = "0xa9059cbb";
+        const zero = "000000000000000000000000";
+        const data = `${method}${zero}${this.txForm.to.substring(2)}${value}`;
       } else {
-        receipt = await visitor.web3.eth.sendTransaction({
-          from: this.txForm.from,
-          to: this.txForm.to,
-          value: value,
-          gasPrice: this.gasPrice
-        });
+        txValue = value;
       }
-      console.log(receipt);
+
+      const nonce = await visitor.web3.eth.getTransactionCount(
+        this.currentAcc.address
+      );
+
+      const signedTx = visitor.signTx(
+        this.currentAcc.privateKey,
+        Buffer.from(this.txForm.to, "hex"),
+        Buffer.from(visitor.web3.utils.numberToHex(txValue)),
+        Buffer.from(
+          visitor.web3.utils.numberToHex(new BN(this.gasPrice).toNumber())
+        ),
+        Buffer.from(visitor.web3.utils.numberToHex(nonce)),
+        Buffer.from(data, "hex")
+      );
+      console.log(signedTx);
     },
 
     detail(address: string) {

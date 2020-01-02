@@ -28,12 +28,8 @@ export class BIP32Node {
     return this.node.publicKey.toString("hex");
   }
 
-  public get privateKey(): string {
-    if (this.node.privateKey) {
-      return this.node.privateKey.toString("hex");
-    } else {
-      return "";
-    }
+  public get privateKey(): Buffer | undefined {
+    return this.node.privateKey
   }
 
   public get address(): string {
