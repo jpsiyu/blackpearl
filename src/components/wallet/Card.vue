@@ -78,13 +78,23 @@ export default Vue.extend({
       this.loading = false;
     },
 
-    async updateBalance() {
-      this.loading = true;
-      const balance = await visitor.web3.eth.getBalance(
-        this.currentAcc.checksumAddress
-      );
-      this.balance = balance;
-      this.loading = false;
+    async updateBalance(isToken: boolean = false) {
+      if (!this.currentCoin.isToken) {
+        this.loading = true;
+        const balance = await visitor.web3.eth.getBalance(
+          this.currentAcc.checksumAddress
+        );
+        this.balance = balance;
+        this.loading = false;
+      } else {
+        this.loading = true;
+        const contract = visitor.loadErc20Contract(this.currentCoin.address);
+        const balance = await contract.methods
+          .balanceOf(this.currentAcc.address)
+          .call();
+        this.balance = balance;
+        this.loading = false;
+      }
     }
   }
 });
