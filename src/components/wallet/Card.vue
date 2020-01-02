@@ -23,10 +23,42 @@
           class="ca-card-switch__open"
           active-color="gold"
           v-model="open"
+          @change="handleSwitch"
         ></el-switch>
       </div>
     </div>
-    <div class="ca-tran" v-if="open"></div>
+    <div class="ca-tran" v-show="open">
+      <el-form :model="txForm" label-width="80px">
+        <el-form-item label="发送方:" prop="from">
+          <el-input v-model="txForm.from" :readonly="true"></el-input>
+        </el-form-item>
+        <el-form-item label="接收方:" prop="to">
+          <el-input
+            v-model="txForm.to"
+            placeholder="请输入接收方地址"
+          ></el-input>
+        </el-form-item>
+        <el-form-item label="金额:" prop="value">
+          <el-input
+            v-model="txForm.value"
+            placeholder="请输入转账金额"
+          ></el-input>
+        </el-form-item>
+        <el-form-item label="GasPrice:">
+          <el-input :readonly="true" :value="gasPrice | toGwei">
+            <i
+              slot="append"
+              class="ca-tran__refresh "
+              :class="[gsLoading ? 'el-icon-loading' : 'el-icon-refresh']"
+              @click="updateGasPrice"
+            ></i>
+          </el-input>
+        </el-form-item>
+        <el-form-item>
+          <el-button type="primary" :disabled="!allFill">确定</el-button>
+        </el-form-item>
+      </el-form>
+    </div>
   </div>
 </template>
 
@@ -41,7 +73,14 @@ import BN from "bignumber.js";
 interface IData {
   balance: string;
   loading: boolean;
+  gsLoading: boolean;
   open: boolean;
+  gasPrice: string;
+  txForm: {
+    from: string;
+    to: string;
+    value: string;
+  };
 }
 
 export default Vue.extend({
@@ -49,7 +88,14 @@ export default Vue.extend({
     return {
       balance: "0",
       loading: false,
-      open: false
+      gsLoading: false,
+      open: false,
+      gasPrice: "",
+      txForm: {
+        from: "",
+        to: "",
+        value: ""
+      }
     };
   },
   computed: {
@@ -57,11 +103,18 @@ export default Vue.extend({
       currentAcc: (state: any) => state.wallet.currentAcc as BIP32Node,
       currentNet: (state: any) => state.wallet.currentNet as INetwork,
       currentCoin: (state: any) => state.wallet.currentCoin as ICoin
-    })
+    }),
+    allFill(): boolean {
+      return this.txForm.to !== "" && this.txForm.value !== "";
+    }
   },
   filters: {
     inBaseUnit(value: string, decimals: number) {
       return new BN(value).dividedBy(10 ** decimals).toString();
+    },
+    toGwei(val: string) {
+      const gwei = visitor.web3.utils.fromWei(val, "Gwei");
+      return gwei + " Gwei";
     }
   },
   watch: {
@@ -75,9 +128,12 @@ export default Vue.extend({
       this.handleChange();
     }
   },
-  created() {
+
+  async created() {
     this.handleChange();
+    this.updateGasPrice();
   },
+
   methods: {
     async handleChange() {
       await this.updatePrivider();
@@ -113,6 +169,22 @@ export default Vue.extend({
       }
     },
 
+    async updateGasPrice() {
+      this.gsLoading = true;
+      const gasPrice = await visitor.web3.eth.getGasPrice();
+      this.gasPrice = gasPrice;
+      this.gsLoading = false;
+    },
+
+    handleSwitch(val: boolean) {
+      if (val) {
+        this.txForm.from = this.currentAcc.checksumAddress;
+      } else {
+        this.txForm.to = "";
+        this.txForm.value = "";
+      }
+    },
+
     detail(address: string) {
       const url: string = `https://cn.etherscan.com/address/${address}`;
       window.open(url, "_blank");
@@ -123,7 +195,7 @@ export default Vue.extend({
 
 <style lang="postcss" scoped>
 .ca {
-  padding: 10px;
+  padding: 20px;
   &-card {
     position: relative;
     z-index: 1;
@@ -199,6 +271,7 @@ export default Vue.extend({
     }
   }
   &-tran {
+    padding: 20px 0px;
     position: relative;
     margin-top: 20px;
     background: seagreen;
@@ -206,6 +279,9 @@ export default Vue.extend({
     width: 450px;
     min-height: 200px;
     animation: slidein 0.2s;
+    &__refresh {
+      cursor: pointer;
+    }
     &::before {
       position: absolute;
       top: -20px;
@@ -215,6 +291,12 @@ export default Vue.extend({
       height: 20px;
       border-left: 10px solid chocolate;
       border-right: 10px solid chocolate;
+    }
+    & >>> .el-form-item__label {
+      color: whitesmoke;
+    }
+    .el-input {
+      width: 300px;
     }
   }
 }
