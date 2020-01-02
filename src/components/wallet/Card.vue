@@ -1,29 +1,32 @@
 <template>
-  <div class="card">
-    <div class="card-addr">
-      <span>地址:</span>
-      <span>{{ currentAcc.checksumAddress }}</span>
-      <span @click="detail(currentAcc.checksumAddress)">详情</span>
+  <div class="ca">
+    <div class="ca-card">
+      <div class="ca-card-addr">
+        <span>地址:</span>
+        <span>{{ currentAcc.checksumAddress }}</span>
+        <span @click="detail(currentAcc.checksumAddress)">详情</span>
+      </div>
+      <div class="ca-card-balance">
+        <span>余额:</span>
+        <span>{{ balance | inBaseUnit(currentCoin.decimals) }} </span>
+        <span>{{ currentCoin.code }}</span>
+        <i
+          class="ca-card-balance__reload"
+          type="primary"
+          @click="updateInfo"
+          :class="[loading ? 'el-icon-loading' : 'el-icon-refresh']"
+        ></i>
+      </div>
+      <div class="ca-card-switch">
+        <span>转账:</span>
+        <el-switch
+          class="ca-card-switch__open"
+          active-color="gold"
+          v-model="open"
+        ></el-switch>
+      </div>
     </div>
-    <div class="card-balance">
-      <span>余额:</span>
-      <span>{{ balance | inBaseUnit(currentCoin.decimals) }} </span>
-      <span>{{ currentCoin.code }}</span>
-      <i
-        class="card-balance__reload"
-        type="primary"
-        @click="updateInfo"
-        :class="[loading ? 'el-icon-loading' : 'el-icon-refresh']"
-      ></i>
-    </div>
-    <div class="card-switch">
-      <span>转账:</span>
-      <el-switch
-        class="card-switch__open"
-        active-color="gold"
-        v-model="open"
-      ></el-switch>
-    </div>
+    <div class="ca-tran" v-if="open"></div>
   </div>
 </template>
 
@@ -119,77 +122,111 @@ export default Vue.extend({
 </script>
 
 <style lang="postcss" scoped>
-.card {
-  background: seagreen;
-  color: #fff;
-  border-radius: 10px;
-  margin: 10px;
+.ca {
   padding: 10px;
-  width: 450px;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  &-addr {
-    color: whitesmoke;
-    span {
-      &:nth-child(1) {
-        font-size: 18px;
-        letter-spacing: 2px;
-        font-weight: 600;
-      }
-      &:nth-child(2) {
-        margin-left: 30px;
-        color: gold;
-      }
-      &:nth-child(3) {
-        margin-left: 10px;
-        cursor: pointer;
-        text-decoration: underline;
-        color: deepskyblue;
-      }
-    }
-  }
-  &-balance {
-    color: whitesmoke;
-    margin-top: 10px;
+  &-card {
+    position: relative;
+    z-index: 1;
+    background: seagreen;
+    color: #fff;
+    border-radius: 10px;
+    padding: 10px;
+    width: 450px;
     display: flex;
-    align-items: flex-end;
-    span {
-      &:nth-child(1) {
-        font-weight: 600;
-        font-size: 18px;
-        letter-spacing: 2px;
-      }
-      &:nth-child(2) {
-        margin-left: 30px;
-        font-size: 20px;
-        color: gold;
-        text-decoration: underline;
-        font-style: italic;
-      }
-      &:nth-child(3) {
-        font-size: 12px;
-        margin-left: 10px;
+    flex-direction: column;
+    align-items: flex-start;
+    &-addr {
+      color: whitesmoke;
+      span {
+        &:nth-child(1) {
+          font-size: 18px;
+          letter-spacing: 2px;
+          font-weight: 600;
+        }
+        &:nth-child(2) {
+          margin-left: 30px;
+          color: gold;
+        }
+        &:nth-child(3) {
+          margin-left: 10px;
+          cursor: pointer;
+          text-decoration: underline;
+          color: deepskyblue;
+        }
       }
     }
-    &__reload {
-      margin-left: 20px;
-      cursor: pointer;
+    &-balance {
+      color: whitesmoke;
+      margin-top: 10px;
+      display: flex;
+      align-items: flex-end;
+      span {
+        &:nth-child(1) {
+          font-weight: 600;
+          font-size: 18px;
+          letter-spacing: 2px;
+        }
+        &:nth-child(2) {
+          margin-left: 30px;
+          font-size: 20px;
+          color: gold;
+          text-decoration: underline;
+          font-style: italic;
+        }
+        &:nth-child(3) {
+          font-size: 12px;
+          margin-left: 10px;
+        }
+      }
+      &__reload {
+        margin-left: 20px;
+        cursor: pointer;
+      }
+    }
+    &-switch {
+      color: whitesmoke;
+      margin-top: 10px;
+      span {
+        &:nth-child(1) {
+          font-weight: 600;
+          font-size: 18px;
+          letter-spacing: 2px;
+        }
+      }
+      &__open {
+        margin-left: 30px;
+      }
     }
   }
-  &-switch {
-    color: whitesmoke;
-    margin-top: 10px;
-    span {
-      &:nth-child(1) {
-        font-weight: 600;
-        font-size: 18px;
-        letter-spacing: 2px;
-      }
+  &-tran {
+    position: relative;
+    margin-top: 20px;
+    background: seagreen;
+    border-radius: 10px;
+    width: 450px;
+    min-height: 200px;
+    animation: slidein 0.2s;
+    &::before {
+      position: absolute;
+      top: -20px;
+      left: 10%;
+      content: "";
+      width: 10px;
+      height: 20px;
+      border-left: 10px solid chocolate;
+      border-right: 10px solid chocolate;
     }
-    &__open {
-      margin-left: 30px;
-    }
+  }
+}
+
+@keyframes slidein {
+  from {
+    opacity: 0;
+    transform: translateY(-100px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0px);
   }
 }
 </style>
