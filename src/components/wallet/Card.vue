@@ -19,9 +19,8 @@
 import Vue from "vue";
 import { mapState } from "vuex";
 import { visitor } from "@/scripts/wallet/walletVisitor";
-import { INetwork } from "@/scripts/wallet/network";
+import { INetwork, ICoin } from "@/scripts/wallet/interfaces";
 import { BIP32Node } from "@/scripts/wallet/bip32Node";
-import { Coin } from "@/scripts/wallet/coin";
 import BN from "bignumber.js";
 
 interface IData {
@@ -40,7 +39,7 @@ export default Vue.extend({
     ...mapState({
       currentAcc: (state: any) => state.wallet.currentAcc as BIP32Node,
       currentNet: (state: any) => state.wallet.currentNet as INetwork,
-      currentCoin: (state: any) => state.wallet.currentCoin as Coin
+      currentCoin: (state: any) => state.wallet.currentCoin as ICoin
     })
   },
   filters: {

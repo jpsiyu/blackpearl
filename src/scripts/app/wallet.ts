@@ -1,8 +1,7 @@
 import { PluginApp } from "@/scripts/app/pluginApp";
 import * as bipHelper from "@/scripts/wallet/bipHelper";
 import { BIP32Node } from "@/scripts/wallet/bip32Node";
-import { Coin } from "@/scripts/wallet/coin";
-import { INetwork } from "@/scripts/wallet/network";
+import { INetwork, ICoin } from "@/scripts/wallet/interfaces";
 import { Child } from "@/scripts/db/wallet";
 
 export class Wallet extends PluginApp {
@@ -24,9 +23,19 @@ export class Wallet extends PluginApp {
         color: "darkseagreen",
         url: "https://mainnet.infura.io/v3/9f28b75fa35c4dc2ae401196993494f5",
         coins: [
-          new Coin("ETH", "", false),
-          new Coin("USDT", "0xdac17f958d2ee523a2206206994597c13d831ec7", true),
-          new Coin("DAI", "0x6b175474e89094c44da98b954eedeac495271d0f", true)
+          { code: "ETH", address: "", isToken: false, decimals: 18 },
+          {
+            code: "USDT",
+            address: "0xdac17f958d2ee523a2206206994597c13d831ec7",
+            isToken: true,
+            decimals: 18
+          },
+          {
+            code: "DAI",
+            address: "0x6b175474e89094c44da98b954eedeac495271d0f",
+            isToken: true,
+            decimals: 18
+          }
         ]
       },
       {
@@ -34,21 +43,29 @@ export class Wallet extends PluginApp {
         name: "Ropsten Test Network",
         color: "palevioletred",
         url: "https://ropsten.infura.io/v3/9f28b75fa35c4dc2ae401196993494f5",
-        coins: [new Coin("ETH", "", false), new Coin("GTM", "0xD5d3B39Bd6259579fB6885D69789aB05dC895Fc7", true)]
+        coins: [
+          { code: "ETH", address: "", isToken: false, decimals: 18 },
+          {
+            code: "GTM",
+            address: "0xD5d3B39Bd6259579fB6885D69789aB05dC895Fc7",
+            isToken: true,
+            decimals: 18
+          }
+        ]
       },
       {
         netID: 3,
         name: "Kovan Test Network",
         color: "blueviolet",
         url: "https://kovan.infura.io/v3/9f28b75fa35c4dc2ae401196993494f5",
-        coins: [new Coin("ETH", "", false)]
+        coins: [{ code: "ETH", address: "", isToken: false, decimals: 18 }]
       },
       {
         netID: 4,
         name: "Rinkeby Test Network",
         color: "orange",
         url: "https://rinkeby.infura.io/v3/9f28b75fa35c4dc2ae401196993494f5",
-        coins: [new Coin("ETH", "", false)]
+        coins: [{ code: "ETH", address: "", isToken: false, decimals: 18 }]
       }
     ];
     return nets;

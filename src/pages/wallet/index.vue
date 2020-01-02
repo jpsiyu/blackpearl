@@ -47,7 +47,7 @@ import Vue from "vue";
 import { Wallet } from "@/scripts/db/wallet";
 import * as bipHelper from "@/scripts/wallet/bipHelper";
 import { BIP32Node } from "@/scripts/wallet/bip32Node";
-import { Coin } from "@/scripts/wallet/coin";
+import { ICoin } from "@/scripts/wallet/interfaces";
 import { mapState } from "vuex";
 import Setting from "@/components/wallet/Setting.vue";
 import AddAcc from "@/components/wallet/AddAcc.vue";
@@ -67,7 +67,7 @@ export default Vue.extend({
     await this.$app.wallet.init();
   },
   methods: {
-    handleClickCoin(coin: Coin) {
+    handleClickCoin(coin: ICoin) {
       this.currentCoin = coin;
     },
     handleClickSetting() {

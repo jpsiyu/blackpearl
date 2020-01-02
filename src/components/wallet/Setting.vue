@@ -48,8 +48,7 @@
 <script lang="ts">
 import Vue from "vue";
 import { mapState } from "vuex";
-import { INetwork } from "../../scripts/wallet/network";
-import { Coin } from "../../scripts/wallet/coin";
+import { INetwork, ICoin } from "../../scripts/wallet/interfaces";
 import { BIP32Node } from "@/scripts/wallet/bip32Node";
 
 interface IData {
@@ -81,7 +80,7 @@ export default Vue.extend({
       currentAcc: (state: any) => state.wallet.currentAcc
     }),
 
-    coins: function(): Coin[] {
+    coins: function(): ICoin[] {
       const selectedNetwork: INetwork = this.networks.find((el: INetwork) => {
         return el.netID === this.form.netID;
       });
@@ -119,7 +118,7 @@ export default Vue.extend({
       const selectedNetwork = this.networks.find((el: INetwork) => {
         return el.netID === this.form.netID;
       });
-      const selectedCoin = this.coins.find((el: Coin) => {
+      const selectedCoin = this.coins.find((el: ICoin) => {
         return el.code === this.form.code;
       });
       const selectedAcc = this.accounts[this.form.accIndex];
