@@ -34,7 +34,7 @@ export class Wallet extends PluginApp {
         name: "Ropsten Test Network",
         color: "palevioletred",
         url: "https://ropsten.infura.io/v3/9f28b75fa35c4dc2ae401196993494f5",
-        coins: [new Coin("ETH", "", false)]
+        coins: [new Coin("ETH", "", false), new Coin("GTM", "0xD5d3B39Bd6259579fB6885D69789aB05dC895Fc7", true)]
       },
       {
         netID: 3,
