@@ -34,30 +34,24 @@ export class Wallet extends PluginApp {
         name: "Ropsten Test Network",
         color: "palevioletred",
         url: "https://ropsten.infura.io/v3/9f28b75fa35c4dc2ae401196993494f5",
-        coins: [
-          new Coin("ETH", "", false),
-        ]
+        coins: [new Coin("ETH", "", false)]
       },
       {
         netID: 3,
         name: "Kovan Test Network",
         color: "blueviolet",
         url: "https://kovan.infura.io/v3/9f28b75fa35c4dc2ae401196993494f5",
-        coins: [
-          new Coin("ETH", "", false),
-        ]
+        coins: [new Coin("ETH", "", false)]
       },
       {
         netID: 4,
         name: "Rinkeby Test Network",
         color: "orange",
         url: "https://rinkeby.infura.io/v3/9f28b75fa35c4dc2ae401196993494f5",
-        coins: [
-          new Coin("ETH", "", false),
-        ]
+        coins: [new Coin("ETH", "", false)]
       }
-    ]
-    return nets
+    ];
+    return nets;
   }
 
   loadWallet() {
@@ -80,8 +74,8 @@ export class Wallet extends PluginApp {
 
     const currentAcc = accounts[0];
 
-    const currentNet: INetwork = this.networks[0]
-    const currentCoin = currentNet.coins[0]
+    const currentNet: INetwork = this.networks[0];
+    const currentCoin = currentNet.coins[0];
 
     this.$store.commit("wallet/setMaster", master);
     this.$store.commit("wallet/setAccounts", accounts);

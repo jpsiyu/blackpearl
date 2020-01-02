@@ -1,4 +1,4 @@
-import { Coin } from "@/scripts/wallet/coin"
+import { Coin } from "@/scripts/wallet/coin";
 
 export interface INetwork {
   netID: number;
