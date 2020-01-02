@@ -80,7 +80,6 @@ export class Wallet extends PluginApp {
     this.$store.commit("wallet/setMaster", master);
     this.$store.commit("wallet/setAccounts", accounts);
     this.$store.commit("wallet/setCurrentAcc", currentAcc);
-    this.$store.commit("wallet/setCoins", currentNet.coins);
     this.$store.commit("wallet/setCurrentCoin", currentCoin);
     this.$store.commit("wallet/setNetworks", this.networks);
     this.$store.commit("wallet/setCurrentNet", currentNet);
