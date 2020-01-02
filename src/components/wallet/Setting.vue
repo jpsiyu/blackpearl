@@ -76,11 +76,14 @@ export default Vue.extend({
     ...mapState({
       networks: (state: any) => state.wallet.networks,
       currentNet: (state: any) => state.wallet.currentNet,
-      coins: (state: any) => state.wallet.coins,
       currentCoin: (state: any) => state.wallet.currentCoin,
       accounts: (state: any) => state.wallet.accounts,
       currentAcc: (state: any) => state.wallet.currentAcc
-    })
+    }),
+
+    coins: function() {
+      return this.currentNet.coins;
+    }
   },
   created() {
     this.form.netID = this.currentNet.netID;

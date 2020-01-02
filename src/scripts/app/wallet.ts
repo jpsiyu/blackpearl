@@ -16,6 +16,50 @@ export class Wallet extends PluginApp {
     this.hasInit = true;
   }
 
+  get networks(): INetwork[] {
+    const nets = [
+      {
+        netID: 1,
+        name: "Main Ethereum Network",
+        color: "darkseagreen",
+        url: "https://mainnet.infura.io/v3/9f28b75fa35c4dc2ae401196993494f5",
+        coins: [
+          new Coin("ETH", "", false),
+          new Coin("USDT", "0xdac17f958d2ee523a2206206994597c13d831ec7", true),
+          new Coin("DAI", "0x6b175474e89094c44da98b954eedeac495271d0f", true)
+        ]
+      },
+      {
+        netID: 2,
+        name: "Ropsten Test Network",
+        color: "palevioletred",
+        url: "https://ropsten.infura.io/v3/9f28b75fa35c4dc2ae401196993494f5",
+        coins: [
+          new Coin("ETH", "", false),
+        ]
+      },
+      {
+        netID: 3,
+        name: "Kovan Test Network",
+        color: "blueviolet",
+        url: "https://kovan.infura.io/v3/9f28b75fa35c4dc2ae401196993494f5",
+        coins: [
+          new Coin("ETH", "", false),
+        ]
+      },
+      {
+        netID: 4,
+        name: "Rinkeby Test Network",
+        color: "orange",
+        url: "https://rinkeby.infura.io/v3/9f28b75fa35c4dc2ae401196993494f5",
+        coins: [
+          new Coin("ETH", "", false),
+        ]
+      }
+    ]
+    return nets
+  }
+
   loadWallet() {
     const wallet = this.$db.getWallet();
     if (!wallet) {
@@ -36,47 +80,15 @@ export class Wallet extends PluginApp {
 
     const currentAcc = accounts[0];
 
-    const coins = [
-      new Coin("ETH", "", false),
-      new Coin("USDT", "0xdac17f958d2ee523a2206206994597c13d831ec7", true),
-      new Coin("DAI", "0x6b175474e89094c44da98b954eedeac495271d0f", true)
-    ];
-    const currentCoin = coins[0];
-
-    const networks: INetwork[] = [
-      {
-        netID: 1,
-        name: "Main Ethereum Network",
-        color: "darkseagreen",
-        url: "https://mainnet.infura.io/v3/9f28b75fa35c4dc2ae401196993494f5"
-      },
-      {
-        netID: 2,
-        name: "Ropsten Test Network",
-        color: "palevioletred",
-        url: "https://ropsten.infura.io/v3/9f28b75fa35c4dc2ae401196993494f5"
-      },
-      {
-        netID: 3,
-        name: "Kovan Test Network",
-        color: "blueviolet",
-        url: "https://kovan.infura.io/v3/9f28b75fa35c4dc2ae401196993494f5"
-      },
-      {
-        netID: 4,
-        name: "Rinkeby Test Network",
-        color: "orange",
-        url: "https://rinkeby.infura.io/v3/9f28b75fa35c4dc2ae401196993494f5"
-      }
-    ];
-    const currentNet: INetwork = networks[0];
+    const currentNet: INetwork = this.networks[0]
+    const currentCoin = currentNet.coins[0]
 
     this.$store.commit("wallet/setMaster", master);
     this.$store.commit("wallet/setAccounts", accounts);
     this.$store.commit("wallet/setCurrentAcc", currentAcc);
-    this.$store.commit("wallet/setCoins", coins);
+    this.$store.commit("wallet/setCoins", currentNet.coins);
     this.$store.commit("wallet/setCurrentCoin", currentCoin);
-    this.$store.commit("wallet/setNetworks", networks);
+    this.$store.commit("wallet/setNetworks", this.networks);
     this.$store.commit("wallet/setCurrentNet", currentNet);
   }
 }
