@@ -29,7 +29,7 @@ export class BIP32Node {
   }
 
   public get privateKey(): Buffer | undefined {
-    return this.node.privateKey
+    return this.node.privateKey;
   }
 
   public get address(): string {

@@ -8,16 +8,23 @@ class WalletVisitor extends Visitor {
     return contract;
   }
 
-  public signTx(privKey: Buffer, to: Buffer, value: Buffer, gasPrice: Buffer, nonce: Buffer, data: Buffer): string {
+  public signTx(
+    privKey: Buffer,
+    to: Buffer,
+    value: Buffer,
+    gasPrice: Buffer,
+    nonce: Buffer,
+    data: Buffer
+  ): string {
     const tx = new Transaction({
       to,
       value,
       gasPrice,
       nonce,
       data
-    })
-    tx.sign(privKey)
-    return "0x" + tx.serialize().toString("hex")
+    });
+    tx.sign(privKey);
+    return "0x" + tx.serialize().toString("hex");
   }
 }
 
