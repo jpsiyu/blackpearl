@@ -1,17 +1,21 @@
 <template>
   <div class="card">
-    <span>地址: {{ currentAcc.checksumAddress }}</span>
-    <span
-      >余额: {{ balance | inBaseUnit(currentCoin.decimals) }}
-      {{ currentCoin.code }}</span
-    >
-    <el-button
-      class="card-refresh"
-      type="primary"
-      :loading="loading"
-      @click="updateInfo"
-      >刷新</el-button
-    >
+    <div class="card-addr">
+      <span>地址:</span>
+      <span>{{ currentAcc.checksumAddress }}</span>
+      <span @click="detail(currentAcc.checksumAddress)">详情</span>
+    </div>
+    <div class="card-balance">
+      <span>余额:</span>
+      <span>{{ balance | inBaseUnit(currentCoin.decimals) }} </span>
+      <span>{{ currentCoin.code }}</span>
+      <i
+        class="card-balance__reload"
+        type="primary"
+        @click="updateInfo"
+        :class="[loading ? 'el-icon-loading' : 'el-icon-refresh']"
+      ></i>
+    </div>
   </div>
 </template>
 
@@ -94,6 +98,11 @@ export default Vue.extend({
         this.balance = balance;
         this.loading = false;
       }
+    },
+
+    detail(address: string) {
+      const url: string = `https://cn.etherscan.com/address/${address}`;
+      window.open(url, "_blank");
     }
   }
 });
@@ -105,8 +114,50 @@ export default Vue.extend({
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  &-refresh {
-    margin-top: 20px;
+  color: var(--color-info);
+  &-addr {
+    span {
+      &:nth-child(1) {
+        font-size: 20px;
+        letter-spacing: 2px;
+        font-weight: 600;
+      }
+      &:nth-child(2) {
+        margin-left: 10px;
+        color: var(--color-warning);
+      }
+      &:nth-child(3) {
+        margin-left: 10px;
+        cursor: pointer;
+        text-decoration: underline;
+        color: var(--color-blue);
+      }
+    }
+  }
+  &-balance {
+    margin-top: 10px;
+    display: flex;
+    align-items: flex-end;
+    span {
+      &:nth-child(1) {
+        font-weight: 600;
+        font-size: 20px;
+        letter-spacing: 2px;
+      }
+      &:nth-child(2) {
+        margin-left: 10px;
+        font-size: 20px;
+        color: var(--color-danger);
+      }
+      &:nth-child(3) {
+        font-size: 12px;
+        margin-left: 5px;
+      }
+    }
+    &__reload {
+      margin-left: 10px;
+      cursor: pointer;
+    }
   }
 }
 </style>
