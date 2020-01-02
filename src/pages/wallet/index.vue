@@ -122,9 +122,12 @@ export default Vue.extend({
     }
   }
   &-op {
+    background: var(--color-base-border);
+    border-top-right-radius: 10px;
+    padding: 5px 20px;
     position: absolute;
-    left: 10px;
-    bottom: 10px;
+    left: 0px;
+    bottom: 0px;
     i {
       font-size: 22px;
       cursor: pointer;
@@ -133,6 +136,7 @@ export default Vue.extend({
   }
   &-acc {
     & > div {
+      border-bottom: 1px solid var(--color-base-border);
       padding: 15px 0;
       display: flex;
       align-items: center;
