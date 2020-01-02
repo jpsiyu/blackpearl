@@ -39,10 +39,9 @@
           ></el-input>
         </el-form-item>
         <el-form-item label="金额:" prop="value">
-          <el-input
-            v-model="txForm.value"
-            placeholder="请输入转账金额"
-          ></el-input>
+          <el-input v-model="txForm.value" placeholder="请输入转账金额">
+            <span slot="append">{{ currentCoin.code }}</span>
+          </el-input>
         </el-form-item>
         <el-form-item label="GasPrice:">
           <el-input :readonly="true" :value="gasPrice | toGwei">
@@ -55,7 +54,9 @@
           </el-input>
         </el-form-item>
         <el-form-item>
-          <el-button type="primary" :disabled="!allFill">确定</el-button>
+          <el-button type="primary" :disabled="!allFill" @click="handleSure"
+            >确定</el-button
+          >
         </el-form-item>
       </el-form>
     </div>
@@ -176,6 +177,16 @@ export default Vue.extend({
       this.gsLoading = false;
     },
 
+    async sendEth(from: string, to: string, value: string, gasPrice: string) {
+      const receipt = await visitor.web3.eth.sendTransaction({
+        from,
+        to,
+        value,
+        gasPrice
+      });
+      return receipt;
+    },
+
     handleSwitch(val: boolean) {
       if (val) {
         this.txForm.from = this.currentAcc.checksumAddress;
@@ -183,6 +194,27 @@ export default Vue.extend({
         this.txForm.to = "";
         this.txForm.value = "";
       }
+    },
+
+    async handleSure() {
+      let receipt;
+      const value = new BN(this.txForm.value)
+        .multipliedBy(10 ** this.currentCoin.decimals)
+        .toString();
+      if (this.currentCoin.isToken) {
+        const contract = visitor.loadErc20Contract(this.currentCoin.address);
+        receipt = await contract.methods
+          .transfer(this.txForm.to, value)
+          .send({ from: this.txForm.from, gasPrice: this.gasPrice });
+      } else {
+        receipt = await visitor.web3.eth.sendTransaction({
+          from: this.txForm.from,
+          to: this.txForm.to,
+          value: value,
+          gasPrice: this.gasPrice
+        });
+      }
+      console.log(receipt);
     },
 
     detail(address: string) {
