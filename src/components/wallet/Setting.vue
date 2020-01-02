@@ -81,10 +81,26 @@ export default Vue.extend({
       currentAcc: (state: any) => state.wallet.currentAcc
     }),
 
-    coins: function() {
-      return this.currentNet.coins;
+    coins: function(): Coin[] {
+      const selectedNetwork: INetwork = this.networks.find((el: INetwork) => {
+        return el.netID === this.form.netID;
+      });
+      if (selectedNetwork) {
+        return selectedNetwork.coins;
+      } else {
+        return [];
+      }
     }
   },
+
+  watch: {
+    coins: function() {
+      if (this.coins) {
+        this.form.code = this.coins[0].code;
+      }
+    }
+  },
+
   created() {
     this.form.netID = this.currentNet.netID;
     this.form.code = this.currentCoin.code;
