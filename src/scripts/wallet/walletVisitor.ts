@@ -3,7 +3,7 @@ import ERC20ABI from "@/assets/contract/ERC20.json";
 import { Transaction } from "ethereumjs-tx";
 
 class WalletVisitor extends Visitor {
-  private gasLimit: number = 50000;
+  private gasLimit: number = 21000;
 
   public loadErc20Contract(address: string) {
     const contract = new this.web3.eth.Contract(ERC20ABI, address);
@@ -19,15 +19,12 @@ class WalletVisitor extends Visitor {
     nonce: number,
     data: string
   ): string {
-    const gasLimitBuffer = Buffer.from(
-      this.web3.utils.numberToHex(this.gasLimit)
-    );
     const tx = new Transaction(
       {
         to,
         value,
         gasPrice,
-        gasLimit: gasLimitBuffer,
+        gasLimit: this.gasLimit,
         nonce,
         data
       },

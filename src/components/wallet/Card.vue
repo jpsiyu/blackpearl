@@ -54,7 +54,11 @@
           </el-input>
         </el-form-item>
         <el-form-item>
-          <el-button type="primary" :disabled="!allFill" @click="handleSure"
+          <el-button
+            type="primary"
+            :disabled="!allFill"
+            @click="handleSure"
+            :loading="sending"
             >确定</el-button
           >
         </el-form-item>
@@ -75,6 +79,7 @@ interface IData {
   balance: string;
   loading: boolean;
   gsLoading: boolean;
+  sending: boolean;
   open: boolean;
   gasPrice: string;
   txForm: {
@@ -90,6 +95,7 @@ export default Vue.extend({
       balance: "0",
       loading: false,
       gsLoading: false,
+      sending: false,
       open: false,
       gasPrice: "",
       txForm: {
@@ -201,7 +207,8 @@ export default Vue.extend({
         return;
       }
 
-      let data = "";
+      this.sending = true;
+      let data = visitor.web3.utils.stringToHex("");
       let txValue = 0;
 
       const value = new BN(this.txForm.value).multipliedBy(
@@ -219,7 +226,8 @@ export default Vue.extend({
       }
 
       const nonce = await visitor.web3.eth.getTransactionCount(
-        this.currentAcc.address
+        this.currentAcc.address,
+        "pending"
       );
 
       const signedTx = visitor.signTx(
@@ -236,10 +244,10 @@ export default Vue.extend({
         to: this.txForm.to,
         data: data
       });
-      console.log("gas", gas);
 
       const receipt = await visitor.web3.eth.sendSignedTransaction(signedTx);
       console.log(receipt);
+      this.sending = false;
     },
 
     detail(address: string) {
