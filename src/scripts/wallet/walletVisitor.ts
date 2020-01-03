@@ -13,11 +13,11 @@ class WalletVisitor extends Visitor {
   public signTx(
     chain: string,
     privKey: Buffer,
-    to: Buffer,
-    value: Buffer,
-    gasPrice: Buffer,
-    nonce: Buffer,
-    data: Buffer
+    to: string,
+    value: number,
+    gasPrice: number,
+    nonce: number,
+    data: string
   ): string {
     const gasLimitBuffer = Buffer.from(this.web3.utils.numberToHex(this.gasLimit))
     const tx = new Transaction({

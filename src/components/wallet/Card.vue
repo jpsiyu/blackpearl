@@ -172,8 +172,7 @@ export default Vue.extend({
 
     async updateGasPrice() {
       this.gsLoading = true;
-      const gasPrice = await visitor.web3.eth.getGasPrice();
-      this.gasPrice = gasPrice;
+      this.gasPrice = await visitor.web3.eth.getGasPrice();
       this.gsLoading = false;
     },
 
@@ -186,6 +185,17 @@ export default Vue.extend({
       }
     },
 
+    /**
+     * Buffer.from hex 接受的字符串必须为偶数，以0x开头
+     */
+    num2EvenHex(val: number | BN): string {
+      let str = val.toString(16);
+      if (str.length % 2 === 1) {
+        str = "0" + str;
+      }
+      return str;
+    },
+
     async handleSure() {
       if (!this.currentAcc.privateKey) {
         return;
@@ -194,16 +204,18 @@ export default Vue.extend({
       let data = "";
       let txValue = 0;
 
-      const value = new BN(this.txForm.value)
-        .multipliedBy(10 ** this.currentCoin.decimals)
-        .toNumber();
+      const value = new BN(this.txForm.value).multipliedBy(
+        10 ** this.currentCoin.decimals
+      );
+      const valueHex = this.num2EvenHex(value);
 
       if (this.currentCoin.isToken) {
         const method = "0xa9059cbb";
         const zero = "000000000000000000000000";
-        const data = `${method}${zero}${this.txForm.to.substring(2)}${value}`;
+        data = `${method}${zero}${this.txForm.to.substring(2)}${valueHex}`;
+        txValue = value.toNumber();
       } else {
-        txValue = value;
+        txValue = 0;
       }
 
       const nonce = await visitor.web3.eth.getTransactionCount(
@@ -213,14 +225,19 @@ export default Vue.extend({
       const signedTx = visitor.signTx(
         this.currentNet.label,
         this.currentAcc.privateKey,
-        Buffer.from(this.txForm.to, "hex"),
-        Buffer.from(visitor.web3.utils.numberToHex(txValue)),
-        Buffer.from(
-          visitor.web3.utils.numberToHex(new BN(this.gasPrice).toNumber())
-        ),
-        Buffer.from(visitor.web3.utils.numberToHex(nonce)),
-        Buffer.from(data, "hex")
+        this.txForm.to,
+        txValue,
+        Number(this.gasPrice),
+        nonce,
+        data
       );
+
+      const gas = await visitor.web3.eth.estimateGas({
+        to: this.txForm.to,
+        data: data
+      });
+      console.log("gas", gas);
+
       const receipt = await visitor.web3.eth.sendSignedTransaction(signedTx);
       console.log(receipt);
     },
