@@ -78,7 +78,7 @@ import {
   ISignTxOutput
 } from "@/scripts/wallet/interfaces";
 import { BIP32Node } from "@/scripts/wallet/bip32Node";
-import BN from "bignumber.js";
+import BigNumber from "bignumber.js";
 
 interface IData {
   balance: string;
@@ -122,7 +122,7 @@ export default Vue.extend({
   },
   filters: {
     inBaseUnit(value: string, decimals: number) {
-      return new BN(value).dividedBy(10 ** decimals).toString();
+      return new BigNumber(value).dividedBy(10 ** decimals).toString();
     },
     toGwei(val: string) {
       const gwei = visitor.web3.utils.fromWei(val, "Gwei");
@@ -196,17 +196,6 @@ export default Vue.extend({
       }
     },
 
-    /**
-     * Buffer.from hex 接受的字符串必须为偶数，以0x开头
-     */
-    num2EvenHex(val: number | BN): string {
-      let str = val.toString(16);
-      if (str.length % 2 === 1) {
-        str = "0" + str;
-      }
-      return str;
-    },
-
     async handleSure() {
       if (!this.currentAcc.privateKey) {
         return;
@@ -214,7 +203,7 @@ export default Vue.extend({
 
       this.sending = true;
 
-      const value = new BN(this.txForm.value).multipliedBy(
+      const value = new BigNumber(this.txForm.value).multipliedBy(
         10 ** this.currentCoin.decimals
       );
       const nonce = await visitor.web3.eth.getTransactionCount(
