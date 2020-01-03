@@ -210,6 +210,7 @@ export default Vue.extend({
       this.sending = true;
       let data = visitor.web3.utils.stringToHex("");
       let txValue = 0;
+      let to = "";
 
       const value = new BN(this.txForm.value).multipliedBy(
         10 ** this.currentCoin.decimals
@@ -220,9 +221,11 @@ export default Vue.extend({
         const method = "0xa9059cbb";
         const zero = "000000000000000000000000";
         data = `${method}${zero}${this.txForm.to.substring(2)}${valueHex}`;
-        txValue = value.toNumber();
-      } else {
         txValue = 0;
+        to = this.currentCoin.address;
+      } else {
+        txValue = value.toNumber();
+        to = this.txForm.to;
       }
 
       const nonce = await visitor.web3.eth.getTransactionCount(
@@ -233,7 +236,7 @@ export default Vue.extend({
       const signedTx = visitor.signTx(
         this.currentNet.label,
         this.currentAcc.privateKey,
-        this.txForm.to,
+        to,
         txValue,
         Number(this.gasPrice),
         nonce,
@@ -244,6 +247,7 @@ export default Vue.extend({
         to: this.txForm.to,
         data: data
       });
+      console.log("estimate gas", gas);
 
       const receipt = await visitor.web3.eth.sendSignedTransaction(signedTx);
       console.log(receipt);
