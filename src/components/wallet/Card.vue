@@ -211,6 +211,7 @@ export default Vue.extend({
       );
 
       const signedTx = visitor.signTx(
+        this.currentNet.label,
         this.currentAcc.privateKey,
         Buffer.from(this.txForm.to, "hex"),
         Buffer.from(visitor.web3.utils.numberToHex(txValue)),
@@ -220,7 +221,7 @@ export default Vue.extend({
         Buffer.from(visitor.web3.utils.numberToHex(nonce)),
         Buffer.from(data, "hex")
       );
-      const receipt = visitor.web3.eth.sendSignedTransaction(signedTx);
+      const receipt = await visitor.web3.eth.sendSignedTransaction(signedTx);
       console.log(receipt);
     },
 

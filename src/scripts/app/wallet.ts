@@ -20,6 +20,7 @@ export class Wallet extends PluginApp {
       {
         netID: 1,
         name: "Main Ethereum Network",
+        label: "mainnet",
         color: "darkseagreen",
         url: "https://mainnet.infura.io/v3/9f28b75fa35c4dc2ae401196993494f5",
         coins: [
@@ -41,6 +42,7 @@ export class Wallet extends PluginApp {
       {
         netID: 2,
         name: "Ropsten Test Network",
+        label: "ropsten",
         color: "palevioletred",
         url: "https://ropsten.infura.io/v3/9f28b75fa35c4dc2ae401196993494f5",
         coins: [
@@ -56,6 +58,7 @@ export class Wallet extends PluginApp {
       {
         netID: 3,
         name: "Kovan Test Network",
+        label: "kovan",
         color: "blueviolet",
         url: "https://kovan.infura.io/v3/9f28b75fa35c4dc2ae401196993494f5",
         coins: [{ code: "ETH", address: "", isToken: false, decimals: 18 }]
@@ -63,6 +66,7 @@ export class Wallet extends PluginApp {
       {
         netID: 4,
         name: "Rinkeby Test Network",
+        label: "rinkeby",
         color: "orange",
         url: "https://rinkeby.infura.io/v3/9f28b75fa35c4dc2ae401196993494f5",
         coins: [{ code: "ETH", address: "", isToken: false, decimals: 18 }]

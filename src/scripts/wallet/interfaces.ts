@@ -8,6 +8,7 @@ export interface ICoin {
 export interface INetwork {
   netID: number;
   name: string;
+  label: string;
   color: string;
   url: string;
   coins: ICoin[];
