@@ -64,6 +64,14 @@
         </el-form-item>
       </el-form>
     </div>
+    <div class="ca-tx" v-show="open">
+      <span v-if="signTxs.length === 0">暂无交易信息</span>
+      <div v-else v-for="(item, index) in signTxs" :key="index">
+        <span>{{ item.txHash }}</span>
+        <el-tag v-if="isTxConfirm(item.txHash)">已确认</el-tag>
+        <i v-else class="el-icon-loading"></i>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -87,6 +95,8 @@ interface IData {
   sending: boolean;
   open: boolean;
   gasPrice: string;
+  signTxs: ISignTxOutput[];
+  receipts: any[];
   txForm: {
     from: string;
     to: string;
@@ -103,6 +113,8 @@ export default Vue.extend({
       sending: false,
       open: false,
       gasPrice: "",
+      signTxs: [],
+      receipts: [],
       txForm: {
         from: "",
         to: "",
@@ -230,11 +242,21 @@ export default Vue.extend({
             nonce
           );
       const signedTx = visitor.signTx(input);
+      this.signTxs.unshift(signedTx);
 
       const receipt = await visitor.web3.eth.sendSignedTransaction(
         signedTx.signData
       );
+      this.receipts.push(receipt);
+
       this.sending = false;
+    },
+
+    isTxConfirm(tx: string): boolean {
+      const target = this.receipts.find((el: any) => {
+        return el.transactionHash === tx;
+      });
+      return target !== undefined;
     },
 
     detail(address: string) {
@@ -349,6 +371,45 @@ export default Vue.extend({
     }
     .el-input {
       width: 300px;
+    }
+  }
+  &-tx {
+    padding: 20px 20px;
+    position: relative;
+    margin-top: 20px;
+    background: seagreen;
+    border-radius: 10px;
+    width: 450px;
+    min-height: 10px;
+    animation: slidein 0.2s;
+    color: whitesmoke;
+    &::before {
+      position: absolute;
+      top: -20px;
+      left: 10%;
+      content: "";
+      width: 10px;
+      height: 20px;
+      border-left: 10px solid chocolate;
+      border-right: 10px solid chocolate;
+    }
+    & > div {
+      color: whitesmoke;
+      padding: 5px 0;
+      display: flex;
+      align-items: center;
+      span {
+        &:nth-child(1) {
+          display: inline-block;
+          width: 300px;
+          overflow: hidden;
+          margin-left: 10px;
+          text-overflow: ellipsis;
+        }
+        &:nth-child(2) {
+          margin-left: 10px;
+        }
+      }
     }
   }
 }
