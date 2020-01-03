@@ -202,6 +202,23 @@ export default Vue.extend({
       return str;
     },
 
+    /**
+     * ERC20 transfer 的输入是256位，需要补0
+     */
+    numTo256Hex(val: number | BN): string {
+      let str = val.toString(16);
+      const padding = 256 / 4 - str.length;
+      const zero = "0";
+      return zero.repeat(padding) + str;
+    },
+
+    addrTo256Hex(addr: string): string {
+      let str = addr.substring(2);
+      const padding = 256 / 4 - str.length;
+      const zero = "0";
+      return zero.repeat(padding) + str;
+    },
+
     async handleSure() {
       if (!this.currentAcc.privateKey) {
         return;
@@ -215,12 +232,13 @@ export default Vue.extend({
       const value = new BN(this.txForm.value).multipliedBy(
         10 ** this.currentCoin.decimals
       );
-      const valueHex = this.num2EvenHex(value);
+      const valueHex = this.numTo256Hex(value);
 
       if (this.currentCoin.isToken) {
         const method = "0xa9059cbb";
         const zero = "000000000000000000000000";
-        data = `${method}${zero}${this.txForm.to.substring(2)}${valueHex}`;
+        const paddedAddr = this.addrTo256Hex(this.txForm.to);
+        data = `${method}${paddedAddr}${valueHex}`;
         txValue = 0;
         to = this.currentCoin.address;
       } else {
@@ -242,12 +260,6 @@ export default Vue.extend({
         nonce,
         data
       );
-
-      const gas = await visitor.web3.eth.estimateGas({
-        to: this.txForm.to,
-        data: data
-      });
-      console.log("estimate gas", gas);
 
       const receipt = await visitor.web3.eth.sendSignedTransaction(signedTx);
       console.log(receipt);
