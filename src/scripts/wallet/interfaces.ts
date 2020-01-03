@@ -13,3 +13,18 @@ export interface INetwork {
   url: string;
   coins: ICoin[];
 }
+
+export interface ISignTxOutput {
+  signData: string;
+  txHash: string;
+}
+
+export interface ISignTxInput {
+  chain: string;
+  privKey: Buffer;
+  to: string;
+  value: number;
+  gasPrice: number;
+  nonce: number;
+  data: string;
+}

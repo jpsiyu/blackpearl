@@ -1,6 +1,8 @@
 import { Visitor } from "@/scripts/web3/visitor";
 import ERC20ABI from "@/assets/contract/ERC20.json";
 import { Transaction } from "ethereumjs-tx";
+import { ISignTxInput, ISignTxOutput } from "@/scripts/wallet/interfaces";
+import BigNumber from "bignumber.js";
 
 class WalletVisitor extends Visitor {
   private gasLimit: number = 100000;
@@ -10,28 +12,85 @@ class WalletVisitor extends Visitor {
     return contract;
   }
 
-  public signTx(
+  public genEthInput(
     chain: string,
     privKey: Buffer,
     to: string,
-    value: number,
+    value: BigNumber,
     gasPrice: number,
-    nonce: number,
-    data: string
-  ): string {
+    nonce: number
+  ): ISignTxInput {
+    const data = this.web3.utils.stringToHex("");
+    const signInput: ISignTxInput = {
+      chain,
+      to,
+      privKey,
+      value: value.toNumber(),
+      gasPrice,
+      nonce,
+      data
+    };
+    return signInput;
+  }
+
+  public genErc20Input(
+    chain: string,
+    privKey: Buffer,
+    to: string,
+    value: BigNumber,
+    gasPrice: number,
+    nonce: number
+  ): ISignTxInput {
+    const method = "0xa9059cbb";
+    const paddedAddr = this.addrTo256Hex(to);
+    const valueHex = this.numTo256Hex(value);
+    const data = `${method}${paddedAddr}${valueHex}`;
+    const signInput: ISignTxInput = {
+      chain,
+      to,
+      privKey,
+      value: 0,
+      gasPrice,
+      nonce,
+      data
+    };
+    return signInput;
+  }
+
+  public signTx(input: ISignTxInput): ISignTxOutput {
     const tx = new Transaction(
       {
-        to,
-        value,
-        gasPrice,
-        gasLimit: this.gasLimit,
-        nonce,
-        data
+        to: input.to,
+        value: input.value,
+        gasPrice: input.gasPrice,
+        nonce: input.nonce,
+        data: input.data,
+        gasLimit: this.gasLimit
       },
-      { chain: chain }
+      { chain: input.chain }
     );
-    tx.sign(privKey);
-    return "0x" + tx.serialize().toString("hex");
+    tx.sign(input.privKey);
+    const signData = tx.serialize().toString("hex");
+    const txHash = "0x" + tx.hash(true).toString("hex");
+    return { signData, txHash };
+  }
+
+  /**
+   *
+   * ERC20 transfer 的输入是256位，需要补0
+   */
+  public numTo256Hex(val: number | BigNumber): string {
+    let str = val.toString(16);
+    const padding = 256 / 4 - str.length;
+    const zero = "0";
+    return zero.repeat(padding) + str;
+  }
+
+  public addrTo256Hex(addr: string): string {
+    let str = addr.substring(2);
+    const padding = 256 / 4 - str.length;
+    const zero = "0";
+    return zero.repeat(padding) + str;
   }
 }
 
