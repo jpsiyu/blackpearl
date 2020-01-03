@@ -1,6 +1,6 @@
 <template>
   <div class="ca">
-    <div class="ca-card">
+    <div class="ca-card ca-block">
       <div class="ca-card-addr">
         <span>地址:</span>
         <span>{{ currentAcc.checksumAddress }}</span>
@@ -27,7 +27,7 @@
         ></el-switch>
       </div>
     </div>
-    <div class="ca-tran" v-show="open">
+    <div class="ca-tran ca-block ca-stick" v-show="open">
       <el-form :model="txForm" label-width="80px">
         <el-form-item label="发送方:" prop="from">
           <el-input v-model="txForm.from" :readonly="true"></el-input>
@@ -64,7 +64,7 @@
         </el-form-item>
       </el-form>
     </div>
-    <div class="ca-tx" v-show="open">
+    <div class="ca-tx ca-block ca-stick" v-show="open">
       <span v-if="signTxs.length === 0">暂无交易信息</span>
       <div v-else v-for="(item, index) in signTxs" :key="index">
         <span>{{ item.txHash }}</span>
@@ -270,14 +270,31 @@ export default Vue.extend({
 <style lang="postcss" scoped>
 .ca {
   padding: 20px;
-  &-card {
+  &-block {
+    padding: 20px 10px;
     position: relative;
-    z-index: 1;
+    margin-top: 20px;
     background: seagreen;
-    color: #fff;
     border-radius: 10px;
-    padding: 10px;
     width: 450px;
+    min-height: 10px;
+    color: whitesmoke;
+  }
+  &-stick {
+    &::before {
+      position: absolute;
+      top: -20px;
+      left: 10%;
+      content: "";
+      width: 10px;
+      height: 20px;
+      border-left: 10px solid chocolate;
+      border-right: 10px solid chocolate;
+    }
+  }
+  &-card {
+    margin-top: 0px !important;
+    z-index: 1;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
@@ -345,26 +362,9 @@ export default Vue.extend({
     }
   }
   &-tran {
-    padding: 20px 0px;
-    position: relative;
-    margin-top: 20px;
-    background: seagreen;
-    border-radius: 10px;
-    width: 450px;
-    min-height: 200px;
     animation: slidein 0.2s;
     &__refresh {
       cursor: pointer;
-    }
-    &::before {
-      position: absolute;
-      top: -20px;
-      left: 10%;
-      content: "";
-      width: 10px;
-      height: 20px;
-      border-left: 10px solid chocolate;
-      border-right: 10px solid chocolate;
     }
     & >>> .el-form-item__label {
       color: whitesmoke;
@@ -374,25 +374,8 @@ export default Vue.extend({
     }
   }
   &-tx {
-    padding: 20px 20px;
-    position: relative;
-    margin-top: 20px;
-    background: seagreen;
-    border-radius: 10px;
-    width: 450px;
-    min-height: 10px;
     animation: slidein 0.2s;
-    color: whitesmoke;
-    &::before {
-      position: absolute;
-      top: -20px;
-      left: 10%;
-      content: "";
-      width: 10px;
-      height: 20px;
-      border-left: 10px solid chocolate;
-      border-right: 10px solid chocolate;
-    }
+
     & > div {
       color: whitesmoke;
       padding: 5px 0;
