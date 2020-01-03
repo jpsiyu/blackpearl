@@ -62,8 +62,8 @@ export default Vue.extend({
 
   mounted() {
     this.chatting instanceof Group
-      ? (this.collapse = "group")
-      : (this.collapse = "private");
+      ? (this.collapse = "private")
+      : (this.collapse = "group");
   },
   methods: {
     select(item: Group | Private) {
