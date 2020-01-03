@@ -16,7 +16,7 @@ export class BIP32Node {
   }
 
   public get name(): string {
-    if (this.isMaster) return "根账户";
+    if (this.isMaster) return "默认账户";
     else return this._name;
   }
 
