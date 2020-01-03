@@ -19,15 +19,20 @@ class WalletVisitor extends Visitor {
     nonce: number,
     data: string
   ): string {
-    const gasLimitBuffer = Buffer.from(this.web3.utils.numberToHex(this.gasLimit))
-    const tx = new Transaction({
-      to,
-      value,
-      gasPrice,
-      gasLimit: gasLimitBuffer,
-      nonce,
-      data
-    }, { chain: chain });
+    const gasLimitBuffer = Buffer.from(
+      this.web3.utils.numberToHex(this.gasLimit)
+    );
+    const tx = new Transaction(
+      {
+        to,
+        value,
+        gasPrice,
+        gasLimit: gasLimitBuffer,
+        nonce,
+        data
+      },
+      { chain: chain }
+    );
     tx.sign(privKey);
     return "0x" + tx.serialize().toString("hex");
   }
