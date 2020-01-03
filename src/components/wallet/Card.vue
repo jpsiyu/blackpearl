@@ -217,6 +217,7 @@ export default Vue.extend({
             this.currentAcc.privateKey,
             this.txForm.to,
             value,
+            this.currentCoin.address,
             Number(this.gasPrice),
             nonce
           )
@@ -233,7 +234,6 @@ export default Vue.extend({
       const receipt = await visitor.web3.eth.sendSignedTransaction(
         signedTx.signData
       );
-      console.log(receipt);
       this.sending = false;
     },
 

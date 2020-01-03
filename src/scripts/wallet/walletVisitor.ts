@@ -38,6 +38,7 @@ class WalletVisitor extends Visitor {
     privKey: Buffer,
     to: string,
     value: BigNumber,
+    contractAddr: string,
     gasPrice: number,
     nonce: number
   ): ISignTxInput {
@@ -47,7 +48,7 @@ class WalletVisitor extends Visitor {
     const data = `${method}${paddedAddr}${valueHex}`;
     const signInput: ISignTxInput = {
       chain,
-      to,
+      to: contractAddr,
       privKey,
       value: 0,
       gasPrice,
@@ -70,7 +71,7 @@ class WalletVisitor extends Visitor {
       { chain: input.chain }
     );
     tx.sign(input.privKey);
-    const signData = tx.serialize().toString("hex");
+    const signData = "0x" + tx.serialize().toString("hex");
     const txHash = "0x" + tx.hash(true).toString("hex");
     return { signData, txHash };
   }
