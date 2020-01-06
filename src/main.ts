@@ -15,8 +15,6 @@ import i18n from "@/plugins/i18n";
 import "@/plugins/gamma";
 import "@/plugins/eventBus";
 
-import "@/assets/css/dex/default.css"
-
 import "@/scripts/dex/filters"
 
 Vue.config.productionTip = false;

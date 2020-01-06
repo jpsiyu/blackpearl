@@ -43,7 +43,7 @@ export default {
     TradesVolumn,
     Updates
   },
-  layout: "pure",
+  layout: "dex",
   computed: {
     ...mapState({
       pairs: state => state.dex.pairs
