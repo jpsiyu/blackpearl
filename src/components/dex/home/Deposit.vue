@@ -51,14 +51,21 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
+import Vue from "vue";
 import { mapState } from "vuex";
 import BigNumber from "bignumber.js";
-import NotifyHash from "@/components/dex/popup/NotifyHash";
-export default {
+import NotifyHash from "@/components/dex/popup/NotifyHash.vue";
+
+interface IData {
+  amountToken: string;
+  amountEth: string;
+}
+
+export default Vue.extend({
   props: ["balance"],
   components: { NotifyHash },
-  data() {
+  data(): IData {
     return {
       amountToken: "",
       amountEth: ""
@@ -66,43 +73,46 @@ export default {
   },
   computed: {
     ...mapState({
-      account: state => state.dex.account,
-      curPair: state => state.dex.curPair
+      account: (state: any) => state.dex.account,
+      curPair: (state: any) => state.dex.curPair
     })
   },
   methods: {
     depositToken() {
-      if (!this.amountToken || isNaN(this.amountToken)) {
+      if (!this.amountToken || isNaN(this.amountToken as any)) {
         return this.$message({ message: "Illegal amount", type: "warning" });
       }
-      const amount = BigNumber(this.amountToken).multipliedBy(10 ** 18);
-      const total = BigNumber(this.balance.token);
+      const amount = new BigNumber(this.amountToken as any).multipliedBy(
+        10 ** 18
+      );
+      const total = new BigNumber(this.balance.token as any);
       if (amount.isGreaterThan(total)) {
         return this.$message({ message: "Not enough", type: "warning" });
       }
 
-      const hashes = [];
+      const hashes: string[] = [];
       this.$gamma.token.methods
         .approve(this.$gamma.dexAddr(), amount.toFixed())
         .send({ from: this.account })
-        .on("transactionHash", hash => {
+        .on("transactionHash", (hash: string) => {
           hashes.push(hash);
           this.$gamma.dex.methods
             .depositToken(this.$gamma.tokenAddr(), amount.toFixed())
             .send({ from: this.account })
-            .on("transactionHash", hash => {
+            .on("transactionHash", (hash: string) => {
               hashes.push(hash);
-              this.$refs.notifyHash.show({ hashes });
+              const comp: any = this.$refs.notifyHash;
+              comp.show({ hashes });
             });
         });
     },
     depositEth() {
-      if (!this.amountEth || isNaN(this.amountEth)) {
+      if (!this.amountEth || isNaN(this.amountEth as any)) {
         return this.$message({ message: "Illegal amount", type: "warning" });
       }
 
-      const amount = BigNumber(this.amountEth).multipliedBy(10 ** 18);
-      const total = BigNumber(this.balance.eth);
+      const amount = new BigNumber(this.amountEth).multipliedBy(10 ** 18);
+      const total = new BigNumber(this.balance.eth);
       if (amount.isGreaterThan(total)) {
         return this.$message({ message: "Not enough", type: "warning" });
       }
@@ -110,15 +120,16 @@ export default {
       this.$gamma.dex.methods
         .deposit()
         .send({ from: this.account, value: amount })
-        .on("transactionHash", hash => {
-          this.$refs.notifyHash.show({ hashes: [hash] });
+        .on("transactionHash", (hash: any) => {
+          const comp: any = this.$refs.notifyHash;
+          comp.show({ hashes: [hash] });
         });
     }
   }
-};
+});
 </script>
 
-<style scoped>
+<style lang="postcss" scoped>
 .dp {
   padding: 0 10px;
   overflow-y: auto;
