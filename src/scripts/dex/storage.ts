@@ -10,7 +10,7 @@ const save = () => {
   localStorage.setItem(key, JSON.stringify(orders));
 };
 
-const getOrders = () => {
+const getOrders = (): any[] => {
   return orders;
 };
 

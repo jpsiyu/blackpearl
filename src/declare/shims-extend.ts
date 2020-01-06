@@ -11,5 +11,6 @@ declare module "vue/types/vue" {
     $shh: SHH;
     $axios: AxiosInstance;
     $gamma: Gamma;
+    $eventBus: any;
   }
 }

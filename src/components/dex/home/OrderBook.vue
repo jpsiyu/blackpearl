@@ -36,31 +36,37 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
+import Vue from "vue";
 import { mapState } from "vuex";
 import storage from "@/scripts/dex/storage";
 import BigNumber from "bignumber.js";
-import Trade from "@/components/dex/popup/Trade";
-export default {
+import Trade from "@/components/dex/popup/Trade.vue";
+
+interface IData {
+  orders: any[];
+}
+
+export default Vue.extend({
   components: { Trade },
-  data() {
+  data(): IData {
     return {
       orders: []
     };
   },
   computed: {
     ...mapState({
-      curPair: state => state.dex.curPair
+      curPair: (state: any) => state.dex.curPair
     }),
     buyList() {
-      const list = [];
-      this.orders.forEach(e => {
+      const list: any[] = [];
+      this.orders.forEach((e: any) => {
         if (e.returnValues[0] !== this.$gamma.ethAddr()) {
           const data = {
             transactionHash: e.transactionHash,
             amount: e.returnValues[1],
-            price: BigNumber(e.returnValues[3])
-              .dividedBy(BigNumber(e.returnValues[1]))
+            price: new BigNumber(e.returnValues[3])
+              .dividedBy(new BigNumber(e.returnValues[1]))
               .toFixed(),
             total: e.returnValues[3]
           };
@@ -70,14 +76,14 @@ export default {
       return list;
     },
     sellList() {
-      const list = [];
-      this.orders.forEach(e => {
+      const list: any[] = [];
+      this.orders.forEach((e: any) => {
         if (e.returnValues[0] === this.$gamma.ethAddr()) {
           const data = {
             transactionHash: e.transactionHash,
             amount: e.returnValues[3],
-            price: BigNumber(e.returnValues[1])
-              .dividedBy(BigNumber(e.returnValues[3]))
+            price: new BigNumber(e.returnValues[1])
+              .dividedBy(new BigNumber(e.returnValues[3]))
               .toFixed(),
             total: e.returnValues[1]
           };
@@ -98,19 +104,21 @@ export default {
     onAddOrder() {
       this.orders = storage.getOrders();
     },
-    onTrade(transactionHash) {
-      const target = this.orders.find(e => {
+
+    onTrade(transactionHash: string) {
+      const target = this.orders.find((e: any) => {
         return e.transactionHash === transactionHash;
       });
       if (target) {
-        this.$refs.trade.show({ order: target });
+        const comp: any = this.$refs.trade;
+        comp.show({ order: target });
       }
     }
   }
-};
+});
 </script>
 
-<style scoped>
+<style lang="postcss" scoped>
 .ob {
   background: var(--container-bg);
   color: var(--page-text);
