@@ -1,52 +1,52 @@
-const key = 'gamma-orders'
-let orders = []
+const key = "gamma-orders";
+let orders: any[] = [];
 
 const init = () => {
-  const data = localStorage.getItem(key)
-  orders = data ? JSON.parse(data) : []
-}
+  const data = localStorage.getItem(key);
+  orders = data ? JSON.parse(data) : [];
+};
 
 const save = () => {
-  localStorage.setItem(key, JSON.stringify(orders))
-}
+  localStorage.setItem(key, JSON.stringify(orders));
+};
 
 const getOrders = () => {
-  return orders
-}
+  return orders;
+};
 
-const addOrder = order => {
+const addOrder = (order: any) => {
   const index = orders.findIndex(e => {
-    return e.transactionHash === order.transactionHash
-  })
-  if (index !== -1) return
-  orders.push(order)
-  save()
-}
+    return e.transactionHash === order.transactionHash;
+  });
+  if (index !== -1) return;
+  orders.push(order);
+  save();
+};
 
-const removeOrder = order => {
+const removeOrder = (order: any) => {
   const index = orders.findIndex(e => {
-    return e.transactionHash === order.transactionHash
-  })
-  if (index === -1) return
-  orders.splice(index, 1)
-  save()
-}
+    return e.transactionHash === order.transactionHash;
+  });
+  if (index === -1) return;
+  orders.splice(index, 1);
+  save();
+};
 
 const clear = () => {
-  orders = []
-  save()
-}
+  orders = [];
+  save();
+};
 
 const setLanguage = (language: string) => {
-  localStorage.setItem('gamma-language', language)
-}
+  localStorage.setItem("gamma-language", language);
+};
 
 const getLanguage = (): string => {
-  const result = localStorage.getItem('gamma-language')
-  return result || 'en'
-}
+  const result = localStorage.getItem("gamma-language");
+  return result || "en";
+};
 
-init()
+init();
 
 export default {
   getOrders,
@@ -55,4 +55,4 @@ export default {
   clear,
   setLanguage,
   getLanguage
-}
+};

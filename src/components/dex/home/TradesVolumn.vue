@@ -1,11 +1,11 @@
 <template>
   <div class="tv">
-    <span>{{$t('tradeVolumn.tradeVolumn')}}</span>
+    <span>{{ $t("tradeVolumn.tradeVolumn") }}</span>
   </div>
 </template>
 
 <style scoped>
-.tv{
+.tv {
   background: var(--container-bg);
   color: var(--page-text);
   flex: 1;

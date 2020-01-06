@@ -13,6 +13,6 @@ export default new Vuex.Store({
   modules: {
     chat,
     wallet,
-    dex,
+    dex
   }
 });

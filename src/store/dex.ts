@@ -4,10 +4,7 @@ interface IPair {
   base: string;
 }
 
-const pairs: IPair[] = [
-  { id: 1, coin: "GTM", base: "ETH" }
-]
-
+const pairs: IPair[] = [{ id: 1, coin: "GTM", base: "ETH" }];
 
 class DexState {
   public pairs: IPair[];
@@ -25,11 +22,11 @@ export default {
   state: new DexState(),
   mutations: {
     changeCurPair: (state: DexState, payload: IPair) => {
-      state.curPair = payload
+      state.curPair = payload;
     },
     setAccount: (state: DexState, payload: string) => {
-      state.account = payload
+      state.account = payload;
     }
   },
-  actions: {},
-}
+  actions: {}
+};

@@ -31,12 +31,12 @@ const router = new Router({
 });
 
 router.beforeEach((to, from, next) => {
-  if (to.path === '/dex') {
-    next('/dex/GTM_ETH')
-    return
+  if (to.path === "/dex") {
+    next("/dex/GTM_ETH");
+    return;
   }
 
-  next()
-})
+  next();
+});
 
-export default router
+export default router;

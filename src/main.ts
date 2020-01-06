@@ -15,7 +15,7 @@ import i18n from "@/plugins/i18n";
 import "@/plugins/gamma";
 import "@/plugins/eventBus";
 
-import "@/scripts/dex/filters"
+import "@/scripts/dex/filters";
 
 Vue.config.productionTip = false;
 
@@ -25,6 +25,6 @@ new Vue({
   i18n,
   render: h => h(App),
   created() {
-    document.body.className = 'default'
+    document.body.className = "default";
   }
 }).$mount("#app");
