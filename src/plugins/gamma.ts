@@ -5,6 +5,7 @@ import storage from '@/scripts/dex/storage'
 import store from '@/store/index'
 
 class Gamma {
+
   constructor() {
     if (!(window.ethereum && window.ethereum.isMetaMask)) {
       const msg = 'Need MetaMask Support!'

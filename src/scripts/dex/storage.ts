@@ -37,11 +37,11 @@ const clear = () => {
   save()
 }
 
-const setLanguage = language => {
+const setLanguage = (language: string) => {
   localStorage.setItem('gamma-language', language)
 }
 
-const getLanguage = () => {
+const getLanguage = (): string => {
   const result = localStorage.getItem('gamma-language')
   return result || 'en'
 }

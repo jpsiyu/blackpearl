@@ -1,7 +1,16 @@
 import BigNumber from 'bignumber.js'
 
 class UserOrder {
-  constructor(order) {
+  private order: any;
+  private tokenGet: number | string;
+  private amountGet: number | string;
+  private tokenGive: number | string;
+  private amountGive: number | string;
+  private expires: number | string;
+  private clientNonce: number | string;
+  private seller: number | string;
+
+  constructor(order: any) {
     this.order = order
     this.tokenGet = this.order.returnValues[0]
     this.amountGet = this.order.returnValues[1]
@@ -19,15 +28,15 @@ class UserOrder {
 
   price() {
     let price = this.isBuy()
-      ? BigNumber(this.amountGive).dividedBy(BigNumber(this.amountGet))
-      : BigNumber(this.amountGet).dividedBy(BigNumber(this.amountGive))
+      ? new BigNumber(this.amountGive).dividedBy(this.amountGet)
+      : new BigNumber(this.amountGet).dividedBy(this.amountGive)
     return price
   }
 
   amount() {
     let amount = this.isBuy()
-      ? BigNumber(this.amountGet)
-      : BigNumber(this.amountGive)
+      ? new BigNumber(this.amountGet)
+      : new BigNumber(this.amountGive)
     return amount
   }
 
