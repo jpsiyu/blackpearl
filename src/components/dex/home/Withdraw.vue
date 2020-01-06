@@ -53,14 +53,21 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
+import Vue from "vue";
 import { mapState } from "vuex";
 import BigNumber from "bignumber.js";
-import NotifyHash from "@/components/dex/popup/NotifyHash";
+import NotifyHash from "@/components/dex/popup/NotifyHash.vue";
+
+interface IData {
+  amountToken: string;
+  amountEth: string;
+}
+
 export default {
   props: ["balance"],
   components: { NotifyHash },
-  data() {
+  data(): IData {
     return {
       amountToken: "",
       amountEth: ""
@@ -68,40 +75,41 @@ export default {
   },
   computed: {
     ...mapState({
-      account: state => state.dex.account,
-      curPair: state => state.dex.curPair
+      account: (state: any) => state.dex.account,
+      curPair: (state: any) => state.dex.curPair
     })
   },
   methods: {
     withdrawToken() {
-      if (!this.amountToken || isNaN(this.amountToken)) {
+      if (!this.amountToken || isNaN(this.amountToken as any)) {
         return this.$message({ message: "Illegal amount", type: "warning" });
       }
-      const amount = BigNumber(this.amountToken).multipliedBy(10 ** 18);
-      const total = BigNumber(this.balance.tokenInDex);
+      const amount = new BigNumber(this.amountToken).multipliedBy(10 ** 18);
+      const total = new BigNumber(this.balance.tokenInDex);
       if (amount.isGreaterThan(total)) {
         return this.$message({ message: "Not enough", type: "warning" });
       }
 
-      const hashes = [];
+      const hashes: string[] = [];
       this.$gamma.dex.methods
         .withdrawToken(this.$gamma.tokenAddr(), amount.toFixed())
         .send({ from: this.account })
-        .on("transactionHash", hash => {
+        .on("transactionHash", (hash: string) => {
           hashes.push(hash);
-          this.$refs.notifyHash.show({ hashes });
+          const comp: any = this.$refs.notifyHash;
+          comp.show({ hashes });
         })
-        .on("receipt", receipt => {
+        .on("receipt", (receipt: any) => {
           console.log("receipt", receipt);
         });
     },
     withdrawEth() {
-      if (!this.amountEth || isNaN(this.amountEth)) {
+      if (!this.amountEth || isNaN(this.amountEth as any)) {
         return this.$message({ message: "Illegal amount", type: "warning" });
       }
 
-      const amount = BigNumber(this.amountEth).multipliedBy(10 ** 18);
-      const total = BigNumber(this.balance.ethInDex);
+      const amount = new BigNumber(this.amountEth).multipliedBy(10 ** 18);
+      const total = new BigNumber(this.balance.ethInDex);
       if (amount.isGreaterThan(total)) {
         return this.$message({ message: "Not enough", type: "warning" });
       }
@@ -109,10 +117,11 @@ export default {
       this.$gamma.dex.methods
         .withdraw(amount.toFixed())
         .send({ from: this.account })
-        .on("transactionHash", hash => {
-          this.$refs.notifyHash.show({ hashes: [hash] });
+        .on("transactionHash", (hash: string) => {
+          const comp: any = this.$refs.notifyHash;
+          comp.show({ hashes: [hash] });
         })
-        .on("receipt", receipt => {
+        .on("receipt", (receipt: any) => {
           console.log("receipt", receipt);
         });
     }
@@ -120,7 +129,7 @@ export default {
 };
 </script>
 
-<style scoped>
+<style lang="postcss" scoped>
 .wd {
   padding: 0 10px;
   overflow-y: auto;
