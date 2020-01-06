@@ -64,7 +64,7 @@ interface IData {
   amountEth: string;
 }
 
-export default {
+export default Vue.extend({
   props: ["balance"],
   components: { NotifyHash },
   data(): IData {
@@ -82,12 +82,14 @@ export default {
   methods: {
     withdrawToken() {
       if (!this.amountToken || isNaN(this.amountToken as any)) {
-        return this.$message({ message: "Illegal amount", type: "warning" });
+        this.$message({ message: "Illegal amount", type: "warning" });
+        return;
       }
       const amount = new BigNumber(this.amountToken).multipliedBy(10 ** 18);
       const total = new BigNumber(this.balance.tokenInDex);
       if (amount.isGreaterThan(total)) {
-        return this.$message({ message: "Not enough", type: "warning" });
+        this.$message({ message: "Not enough", type: "warning" });
+        return;
       }
 
       const hashes: string[] = [];
@@ -126,7 +128,7 @@ export default {
         });
     }
   }
-};
+});
 </script>
 
 <style lang="postcss" scoped>
