@@ -1,0 +1,16 @@
+body{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body.default{
+  --page-bg: #252a44;
+  --container-bg: #171b2b;
+  --container-top: #131625;
+  --page-text: #aeb9d8;
+  --page-text-highlight: #fff;
+  --color-rise: #41b37d;
+  --color-fall: #d74e5a;
+  --button-bg: #5f6594;
+}

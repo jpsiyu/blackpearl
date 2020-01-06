@@ -12,6 +12,12 @@ import "@/plugins/shh";
 import "@/plugins/clipboard";
 import "@/plugins/axios";
 import i18n from "@/plugins/i18n";
+import "@/plugins/gamma";
+import "@/plugins/eventBus";
+
+import "@/assets/css/dex/default.css"
+
+import "@/scripts/dex/filters"
 
 Vue.config.productionTip = false;
 
@@ -19,5 +25,8 @@ new Vue({
   router,
   store,
   i18n,
-  render: h => h(App)
+  render: h => h(App),
+  created() {
+    document.body.className = 'default'
+  }
 }).$mount("#app");
