@@ -5,7 +5,7 @@
       <span class="nav-title">Gamma</span>
       <el-dropdown @command="handleCommand">
         <span class="nav-pair">
-          {{curPair.coin}}
+          {{ curPair.coin }}
           <i class="nav-icon el-icon-arrow-down"></i>
         </span>
         <el-dropdown-menu slot="dropdown">
@@ -13,90 +13,95 @@
             v-for="(item, index) in pairs"
             :key="index"
             :command="item"
-          >{{item.coin}}</el-dropdown-item>
-          <el-dropdown-item command="other">{{$t('nav.other')}}</el-dropdown-item>
+            >{{ item.coin }}</el-dropdown-item
+          >
+          <el-dropdown-item command="other">{{
+            $t("nav.other")
+          }}</el-dropdown-item>
         </el-dropdown-menu>
       </el-dropdown>
     </div>
     <div class="nav-right">
       <el-dropdown @command="handleLang">
-        <span class="nav-lang">{{language.label }}</span>
+        <span class="nav-lang">{{ language.label }}</span>
         <el-dropdown-menu slot="dropdown">
           <el-dropdown-item
             v-for="item in languageSupport"
             :key="item.key"
             :command="item"
-          >{{item.label}}</el-dropdown-item>
+            >{{ item.label }}</el-dropdown-item
+          >
         </el-dropdown-menu>
       </el-dropdown>
-      <span v-if="account" class="nav-account">{{account}}</span>
-      <el-button class="nav-btnLogin" v-else type="success" @click="login">{{$t('nav.login')}}</el-button>
+      <span v-if="account" class="nav-account">{{ account }}</span>
+      <el-button class="nav-btnLogin" v-else type="success" @click="login">{{
+        $t("nav.login")
+      }}</el-button>
     </div>
     <DepositToken ref="deposit" />
   </div>
 </template>
 
 <script>
-import DepositToken from '@/components/dex/popup/DepositToken'
-import storage from '@/scripts/dex/storage'
-import { mapState } from 'vuex'
+import DepositToken from "@/components/dex/popup/DepositToken";
+import storage from "@/scripts/dex/storage";
+import { mapState } from "vuex";
 export default {
   components: { DepositToken },
   data() {
     return {
       language: {}
-    }
+    };
   },
   computed: {
     ...mapState({
-      account: state => state.account,
-      pairs: state => state.pairs,
-      curPair: state => state.curPair,
+      account: state => state.dex.account,
+      pairs: state => state.dex.pairs,
+      curPair: state => state.dex.curPair
     }),
     languageSupport() {
       return [
-        { label: "English", key: 'en' },
-        { label: "中文", key: 'zh-cn' },
-      ]
+        { label: "English", key: "en" },
+        { label: "中文", key: "zh-cn" }
+      ];
     }
   },
   created() {
-    this.initLang()
+    this.initLang();
   },
   methods: {
     handleCommand(item) {
-      if (item === 'other') {
-        this.handleOther()
-        return
+      if (item === "other") {
+        this.handleOther();
+        return;
       }
-      const path = item.coin + '_' + item.base
-      this.$router.push({ path }).catch(() => { })
+      const path = item.coin + "_" + item.base;
+      this.$router.push({ path }).catch(() => {});
     },
     initLang() {
-      const lang = storage.getLanguage()
-      this.$i18n.locale = lang
+      const lang = storage.getLanguage();
+      this.$i18n.locale = lang;
       const target = this.languageSupport.find(e => {
-        return e.key === lang
-      })
-      this.language = target || this.languageSupport[0]
+        return e.key === lang;
+      });
+      this.language = target || this.languageSupport[0];
     },
     handleLang(lang) {
-      this.language = lang
-      this.$i18n.locale = lang.key
-      storage.setLanguage(lang.key)
+      this.language = lang;
+      this.$i18n.locale = lang.key;
+      storage.setLanguage(lang.key);
     },
     handleOther() {
-      this.$refs.deposit.show()
+      this.$refs.deposit.show();
     },
     login() {
-      this.$gamma.metamaskEnable()
-        .then(accounts => {
-          const account = accounts[0]
-          this.$store.commit('setAccount', account)
-        })
+      this.$gamma.metamaskEnable().then(accounts => {
+        const account = accounts[0];
+        this.$store.commit("dex/setAccount", account);
+      });
     }
   }
-}
+};
 </script>
 
 <style scoped>

@@ -25,7 +25,7 @@ class Gamma {
     window.ethereum.autoRefreshOnNetworkChange = false
     window.ethereum.on('accountsChanged', (accounts) => {
       const account = accounts[0]
-      store.commit('setAccount', account)
+      store.commit('dex/setAccount', account)
     })
   }
 
