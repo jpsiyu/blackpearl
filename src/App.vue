@@ -10,6 +10,5 @@ div {
   padding: 0;
   font-size: var(--font-size);
   box-sizing: border-box;
-  color: var(--color-regular-text);
 }
 </style>
