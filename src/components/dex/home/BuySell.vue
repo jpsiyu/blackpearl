@@ -12,20 +12,26 @@
   </div>
 </template>
 
-<script>
-import Buy from "@/components/dex/home/Buy";
-import Sell from "@/components/dex/home/Sell";
-export default {
+<script lang="ts">
+import Vue from "vue";
+import Buy from "@/components/dex/home/Buy.vue";
+import Sell from "@/components/dex/home/Sell.vue";
+
+interface IData {
+  activeName: string;
+}
+
+export default Vue.extend({
   components: { Buy, Sell },
-  data() {
+  data(): IData {
     return {
       activeName: "buy"
     };
   }
-};
+});
 </script>
 
-<style scoped>
+<style lang="postcss" scoped>
 .bs {
   background: var(--container-bg);
   color: var(--page-text);
