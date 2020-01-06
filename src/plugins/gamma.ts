@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import Web3 from 'web3'
-import deploy from '@/assets/smart-contract/deploy'
+import * as deploy from "@/scripts/dex/deploy";
 import storage from '@/scripts/dex/storage'
 import store from '@/store/index'
 
