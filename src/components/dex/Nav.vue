@@ -42,11 +42,13 @@
   </div>
 </template>
 
-<script>
-import DepositToken from "@/components/dex/popup/DepositToken";
+<script lang="ts">
+import Vue from "vue";
+import DepositToken from "@/components/dex/popup/DepositToken.vue";
 import storage from "@/scripts/dex/storage";
 import { mapState } from "vuex";
-export default {
+import { IPair } from "../../scripts/dex/interfaces";
+export default Vue.extend({
   components: { DepositToken },
   data() {
     return {
@@ -55,9 +57,9 @@ export default {
   },
   computed: {
     ...mapState({
-      account: state => state.dex.account,
-      pairs: state => state.dex.pairs,
-      curPair: state => state.dex.curPair
+      account: (state: any) => state.dex.account,
+      pairs: (state: any) => state.dex.pairs,
+      curPair: (state: any) => state.dex.curPair
     }),
     languageSupport() {
       return [
@@ -70,13 +72,14 @@ export default {
     this.initLang();
   },
   methods: {
-    handleCommand(item) {
+    handleCommand(item: string | IPair) {
       if (item === "other") {
         this.handleOther();
         return;
       }
+      item = item as IPair;
       const path = item.coin + "_" + item.base;
-      this.$router.push({ path }).catch(() => {});
+      this.$router.push({ path });
     },
     initLang() {
       const lang = storage.getLanguage();
@@ -86,22 +89,23 @@ export default {
       });
       this.language = target || this.languageSupport[0];
     },
-    handleLang(lang) {
+    handleLang(lang: any) {
       this.language = lang;
       this.$i18n.locale = lang.key;
       storage.setLanguage(lang.key);
     },
     handleOther() {
-      this.$refs.deposit.show();
+      const comp: any = this.$refs.deposit;
+      comp.show();
     },
     login() {
-      this.$gamma.metamaskEnable().then(accounts => {
+      this.$gamma.metamaskEnable().then((accounts: any[]) => {
         const account = accounts[0];
         this.$store.commit("dex/setAccount", account);
       });
     }
   }
-};
+});
 </script>
 
 <style scoped>
