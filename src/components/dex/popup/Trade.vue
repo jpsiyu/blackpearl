@@ -32,14 +32,24 @@
   </el-dialog>
 </template>
 
-<script>
+<script lang="ts">
+import Vue from "vue";
 import { mapState } from "vuex";
 import BigNumber from "bignumber.js";
-import NotifyHash from "@/components/dex/popup/NotifyHash";
-import UserOrder from "@/scripts/dex/userOrder";
-export default {
+import NotifyHash from "@/components/dex/popup/NotifyHash.vue";
+import { UserOrder } from "@/scripts/dex/userOrder";
+
+interface IData {
+  visible: boolean;
+  userOrder: UserOrder | null;
+  form: {
+    amount: string;
+  };
+}
+
+export default Vue.extend({
   components: { NotifyHash },
-  data() {
+  data(): IData {
     return {
       visible: false,
       userOrder: null,
@@ -50,33 +60,37 @@ export default {
   },
   computed: {
     ...mapState({
-      account: state => state.dex.account,
-      curPair: state => state.dex.curPair
+      account: (state: any) => state.dex.account,
+      curPair: (state: any) => state.dex.curPair
     }),
-    title() {
+    title(): string {
       if (!this.userOrder) return "";
       const title = this.userOrder.isBuy()
         ? this.$t("buySell.sellOrder")
         : this.$t("buySell.buyOrder");
-      return title;
+      return title as string;
     },
-    amount() {
+    amount(): BigNumber | string {
       if (!this.userOrder) return "";
       return this.userOrder.amount();
     },
-    price() {
+    price(): BigNumber | string {
       if (!this.userOrder) return "";
       return this.userOrder.price();
     },
-    eth() {
-      if (!this.form.amount || isNaN(this.form.amount) || !this.userOrder)
+    eth(): string {
+      if (
+        !this.form.amount ||
+        isNaN(this.form.amount as any) ||
+        !this.userOrder
+      )
         return "";
-      let eth = BigNumber(this.form.amount).multipliedBy(this.price);
+      let eth = new BigNumber(this.form.amount).multipliedBy(this.price);
       return eth.toFixed();
     }
   },
   methods: {
-    show(options) {
+    show(options: any) {
       this.userOrder = new UserOrder(options.order);
       this.visible = true;
     },
@@ -84,17 +98,16 @@ export default {
       this.visible = false;
     },
     sure() {
+      if (!this.userOrder) {
+        return;
+      }
       if (!this.eth) {
         return this.$message({ message: "Illegal trade", type: "warning" });
       }
 
       const pay = this.userOrder.isBuy()
-        ? BigNumber(this.form.amount)
-            .multipliedBy(10 ** 18)
-            .toFixed()
-        : BigNumber(this.eth)
-            .multipliedBy(10 ** 18)
-            .toFixed();
+        ? new BigNumber(this.form.amount).multipliedBy(10 ** 18).toFixed()
+        : new BigNumber(this.eth).multipliedBy(10 ** 18).toFixed();
 
       this.$gamma.dex.methods
         .buy1(
@@ -108,13 +121,14 @@ export default {
           pay
         )
         .send({ from: this.account })
-        .on("transactionHash", hash => {
-          this.$refs.notifyHash.show({ hashes: [hash] });
+        .on("transactionHash", (hash: string) => {
+          const comp: any = this.$refs.notifyHash;
+          comp.show({ hashes: [hash] });
         })
-        .on("receipt", receipt => {
+        .on("receipt", (receipt: any) => {
           console.log("receipt", receipt);
         });
     }
   }
-};
+});
 </script>

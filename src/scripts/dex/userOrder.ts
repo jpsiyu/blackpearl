@@ -1,14 +1,14 @@
 import BigNumber from "bignumber.js";
 
-class UserOrder {
-  private order: any;
-  private tokenGet: number | string;
-  private amountGet: number | string;
-  private tokenGive: number | string;
-  private amountGive: number | string;
-  private expires: number | string;
-  private clientNonce: number | string;
-  private seller: number | string;
+export class UserOrder {
+  public order: any;
+  public tokenGet: number | string;
+  public amountGet: number | string;
+  public tokenGive: number | string;
+  public amountGive: number | string;
+  public expires: number | string;
+  public clientNonce: number | string;
+  public seller: number | string;
 
   constructor(order: any) {
     this.order = order;
@@ -40,5 +40,3 @@ class UserOrder {
     return amount;
   }
 }
-
-export default UserOrder;

@@ -20,8 +20,10 @@
   </el-dialog>
 </template>
 
-<script>
-export default {
+<script lang="ts">
+import Vue from "vue";
+
+export default Vue.extend({
   data() {
     return {
       visible: false,
@@ -29,7 +31,7 @@ export default {
     };
   },
   methods: {
-    show(options) {
+    show(options: any) {
       this.hashes = options.hashes || [];
       this.visible = true;
     },
@@ -37,12 +39,12 @@ export default {
       this.visible = false;
       this.hashes = [];
     },
-    jumpEtherScan(hash) {
+    jumpEtherScan(hash: string) {
       const url = `https://ropsten.etherscan.io/tx/${hash}`;
       window.open(url, "_blank");
     }
   }
-};
+});
 </script>
 
 <style scoped>

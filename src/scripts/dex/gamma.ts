@@ -5,9 +5,9 @@ import storage from "@/scripts/dex/storage";
 import store from "@/store/index";
 
 export class Gamma {
-  private dex: any;
-  private token: any;
-  private web3: Web3;
+  public dex: any;
+  public token: any;
+  public web3: Web3;
 
   constructor() {
     if (!(window.ethereum && window.ethereum.isMetaMask)) {
