@@ -27,13 +27,23 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
+import Vue from "vue";
 import { mapState } from "vuex";
 import BigNumber from "bignumber.js";
-import NotifyHash from "@/components/dex/popup/NotifyHash";
-export default {
+import NotifyHash from "@/components/dex/popup/NotifyHash.vue";
+
+interface IData {
+  form: {
+    amount: string;
+    price: string;
+    expires: string;
+  };
+}
+
+export default Vue.extend({
   components: { NotifyHash },
-  data() {
+  data(): IData {
     return {
       form: {
         amount: "",
@@ -44,18 +54,19 @@ export default {
   },
   computed: {
     ...mapState({
-      account: state => state.dex.account,
-      curPair: state => state.dex.curPair
+      account: (state: any) => state.dex.account,
+      curPair: (state: any) => state.dex.curPair
     }),
-    total() {
+
+    total(): string {
       if (
         !this.form.amount ||
-        isNaN(this.form.amount) ||
+        isNaN(this.form.amount as any) ||
         !this.form.price ||
-        isNaN(this.form.price)
+        isNaN(this.form.price as any)
       )
         return "";
-      return BigNumber(this.form.amount)
+      return new BigNumber(this.form.amount)
         .multipliedBy(this.form.price)
         .toFixed();
     }
@@ -64,15 +75,15 @@ export default {
     buy() {
       if (!this.total) return;
 
-      const amountUnit = BigNumber(this.form.amount)
+      const amountUnit = new BigNumber(this.form.amount)
         .multipliedBy(10 ** 18)
         .toFixed();
-      const totalUnit = BigNumber(this.total)
+      const totalUnit = new BigNumber(this.total)
         .multipliedBy(10 ** 18)
         .toFixed();
 
       let curBlockNum = 0;
-      let nonce = 0;
+      let nonce = "";
 
       Promise.all([
         this.$gamma.web3.eth.getBlockNumber(),
@@ -91,16 +102,17 @@ export default {
             nonce
           )
           .send({ from: this.account })
-          .on("transactionHash", hash => {
-            this.$refs.notifyHash.show({ hashes: [hash] });
+          .on("transactionHash", (hash: string) => {
+            const comp: any = this.$refs.notifyHash;
+            comp.show({ hashes: [hash] });
           })
-          .on("receipt", receipt => {
+          .on("receipt", (receipt: any) => {
             console.log("receipt", receipt);
           });
       });
     }
   }
-};
+});
 </script>
 
 <style scoped>
