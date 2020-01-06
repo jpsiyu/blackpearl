@@ -23,13 +23,26 @@
   </div>
 </template>
 
-<script>
-import Deposit from "@/components/dex/home/Deposit";
-import Withdraw from "@/components/dex/home/Withdraw";
+<script lang="ts">
+import Vue from "vue";
+import Deposit from "@/components/dex/home/Deposit.vue";
+import Withdraw from "@/components/dex/home/Withdraw.vue";
 import { mapState } from "vuex";
-export default {
+
+interface IData {
+  activeName: string;
+  balance: {
+    token: number | string;
+    tokenInDex: number | string;
+    eth: number | string;
+    ethInDex: number | string;
+  };
+  loading: boolean;
+}
+
+export default Vue.extend({
   components: { Deposit, Withdraw },
-  data() {
+  data(): IData {
     return {
       activeName: "deposit",
       balance: {
@@ -43,7 +56,7 @@ export default {
   },
   computed: {
     ...mapState({
-      account: state => state.dex.account
+      account: (state: any) => state.dex.account
     })
   },
   watch: {
@@ -76,7 +89,7 @@ export default {
         });
     }
   }
-};
+});
 </script>
 
 <style scoped>
