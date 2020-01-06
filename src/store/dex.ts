@@ -1,8 +1,4 @@
-interface IPair {
-  id: number;
-  coin: string;
-  base: string;
-}
+import { IPair } from "@/scripts/dex/interfaces";
 
 const pairs: IPair[] = [{ id: 1, coin: "GTM", base: "ETH" }];
 

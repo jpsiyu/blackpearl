@@ -24,16 +24,18 @@
   </div>
 </template>
 
-<script>
-import Balance from "@/components/dex/home/Balance";
-import BuySell from "@/components/dex/home/BuySell";
-import OrderBook from "@/components/dex/home/OrderBook";
-import PriceChart from "@/components/dex/home/PriceChart";
-import Transactions from "@/components/dex/home/Transactions";
-import TradesVolumn from "@/components/dex/home/TradesVolumn";
-import Updates from "@/components/dex/home/Updates";
+<script lang="ts">
+import Vue from "vue";
+import Balance from "@/components/dex/home/Balance.vue";
+import BuySell from "@/components/dex/home/BuySell.vue";
+import OrderBook from "@/components/dex/home/OrderBook.vue";
+import PriceChart from "@/components/dex/home/PriceChart.vue";
+import Transactions from "@/components/dex/home/Transactions.vue";
+import TradesVolumn from "@/components/dex/home/TradesVolumn.vue";
+import Updates from "@/components/dex/home/Updates.vue";
+import { IPair } from "@/scripts/dex/interfaces";
 import { mapState } from "vuex";
-export default {
+export default Vue.extend({
   components: {
     Balance,
     BuySell,
@@ -46,7 +48,7 @@ export default {
   layout: "dex",
   computed: {
     ...mapState({
-      pairs: state => state.dex.pairs
+      pairs: (state: any) => state.dex.pairs
     })
   },
   watch: {
@@ -66,17 +68,17 @@ export default {
       if (!pairStr) return;
 
       const coin = pairStr.split("_")[0];
-      const target = this.pairs.find(e => {
+      const target = this.pairs.find((e: IPair) => {
         return e.coin === coin;
       });
       if (!target) return;
       this.$store.commit("dex/changeCurPair", target);
     }
   }
-};
+});
 </script>
 
-<style scoped>
+<style lang="postcss" scoped>
 .home {
   background: var(--page-bg);
   color: var(--page-text);
