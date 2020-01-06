@@ -9,7 +9,7 @@ const RouterLayout = createRouterLayout(layout =>
   import(`@/layouts/${layout}.vue`)
 );
 
-export default new Router({
+const router = new Router({
   mode: "history",
   routes: [
     {
@@ -29,3 +29,14 @@ export default new Router({
     }
   ]
 });
+
+router.beforeEach((to, from, next) => {
+  if (to.path === '/dex') {
+    next('/dex/GTM_ETH')
+    return
+  }
+
+  next()
+})
+
+export default router
