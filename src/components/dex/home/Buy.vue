@@ -115,7 +115,7 @@ export default Vue.extend({
 });
 </script>
 
-<style scoped>
+<style lang="postcss" scoped>
 .buy {
   padding: 0 10px;
   margin-bottom: 50px;
