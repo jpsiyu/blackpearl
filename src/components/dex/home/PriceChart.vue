@@ -4,7 +4,7 @@
   </div>
 </template>
 
-<style scoped>
+<style lang="postcss" scoped>
 .pc {
   background: var(--container-bg);
   color: var(--page-text);
