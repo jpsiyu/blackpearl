@@ -10,13 +10,12 @@ export interface IPos {
   y: number;
 }
 
-
 export interface IGridPos {
-  r: number;  // 行
-  c: number;  // 列
+  r: number; // 行
+  c: number; // 列
 }
 
-export interface IImageSrc{
+export interface IImageSrc {
   name: string;
   obj: HTMLImageElement;
 }
