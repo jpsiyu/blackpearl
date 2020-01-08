@@ -43,6 +43,7 @@ export default Vue.extend({
     draw() {
       this.clear();
       this.drawLand();
+      this.drawSelectedGrid();
     },
 
     clear() {
@@ -58,6 +59,23 @@ export default Vue.extend({
       const pos = this.landPos.getPos();
       const callback = (ctx: CanvasRenderingContext2D, pos: IPos) => {
         this.land.draw(ctx, pos);
+      };
+      drawUtil.drawWrapper(this.canvasElem.context, pos, callback);
+    },
+
+    drawSelectedGrid() {
+      if (!this.selectedGrid) return;
+      const pos = this.landPos.getPos();
+
+      const callback = (ctx: CanvasRenderingContext2D, post: IPos) => {
+        if (!this.selectedGrid) return;
+        const rectPos = {
+          x: this.selectedGrid.c * MacroMap.HouseSize,
+          y: this.selectedGrid.r * MacroMap.HouseSize
+        };
+        ctx.fillStyle = "rgba(188,213,103, 0.5)";
+        ctx.rect(rectPos.x, rectPos.y, MacroMap.HouseSize, MacroMap.HouseSize);
+        ctx.fill();
       };
       drawUtil.drawWrapper(this.canvasElem.context, pos, callback);
     },
