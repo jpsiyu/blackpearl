@@ -7,7 +7,7 @@
       :height="height"
     ></canvas>
     <template v-if="canvasElem">
-      <Map />
+      <Map :canvasElem="canvasElem" />
     </template>
   </div>
 </template>
@@ -16,6 +16,7 @@
 import Vue from "vue";
 import { ICanvasElem } from "@/scripts/house/interfaces";
 import Map from "@/components/house/Map.vue";
+import { MacroMap } from "@/scripts/house/macro";
 
 interface IData {
   width: number;
@@ -27,8 +28,8 @@ export default Vue.extend({
   components: { Map },
   data(): IData {
     return {
-      width: 1000,
-      height: 616,
+      width: MacroMap.CanvasWidth,
+      height: MacroMap.CanvasHeight,
       canvasElem: null
     };
   },
@@ -38,8 +39,8 @@ export default Vue.extend({
     if (!context) return;
 
     this.canvasElem = {
-      width: this.width,
-      height: this.height,
+      width: MacroMap.CanvasWidth,
+      height: MacroMap.CanvasHeight,
       canvas,
       context
     };
@@ -54,6 +55,7 @@ export default Vue.extend({
   &-canvas {
     margin: 20px 0;
     border: 1px solid green;
+    background-image: url("/house/grassland.png");
   }
 }
 </style>
