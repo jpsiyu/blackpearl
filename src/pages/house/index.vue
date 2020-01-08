@@ -55,7 +55,6 @@ export default Vue.extend({
   cursor: pointer;
   &-canvas {
     margin: 20px 0;
-    border: 1px solid green;
     background-image: url("/house/grassland.png");
   }
 }
