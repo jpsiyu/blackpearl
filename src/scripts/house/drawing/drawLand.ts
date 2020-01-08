@@ -1,5 +1,5 @@
 import { MacroMap } from "@/scripts/house/macro";
-import { IPos } from "@/scripts/house/interfaces"
+import { IPos } from "@/scripts/house/interfaces";
 
 export class DrawLand {
   private lineColor: string;
