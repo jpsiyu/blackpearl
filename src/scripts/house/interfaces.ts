@@ -15,3 +15,8 @@ export interface IGridPos {
   r: number;  // 行
   c: number;  // 列
 }
+
+export interface IImageSrc{
+  name: string;
+  obj: HTMLImageElement;
+}

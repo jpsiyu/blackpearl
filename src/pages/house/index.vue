@@ -6,7 +6,7 @@
       :width="width"
       :height="height"
     ></canvas>
-    <template v-if="canvasElem">
+    <template v-if="ok">
       <Map :canvasElem="canvasElem" />
     </template>
   </div>
@@ -19,6 +19,7 @@ import Map from "@/components/house/Map.vue";
 import { MacroMap } from "@/scripts/house/macro";
 
 interface IData {
+  ok: boolean;
   width: number;
   height: number;
   canvasElem: ICanvasElem | null;
@@ -28,11 +29,18 @@ export default Vue.extend({
   components: { Map },
   data(): IData {
     return {
+      ok: false,
       width: MacroMap.CanvasWidth,
       height: MacroMap.CanvasHeight,
       canvasElem: null
     };
   },
+
+  async created() {
+    await this.$app.house.init();
+    this.checkOK();
+  },
+
   mounted() {
     const canvas = this.$refs.canvas as HTMLCanvasElement;
     const context = canvas.getContext("2d");
@@ -44,6 +52,13 @@ export default Vue.extend({
       canvas,
       context
     };
+    this.checkOK();
+  },
+
+  methods: {
+    checkOK() {
+      this.ok = this.$app.house.hasInit && this.canvasElem !== null;
+    }
   }
 });
 </script>

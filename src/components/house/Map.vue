@@ -45,6 +45,7 @@ export default Vue.extend({
       this.clear();
       this.drawLand();
       this.drawSelectedGrid();
+      this.drawHouse();
     },
 
     clear() {
@@ -66,9 +67,8 @@ export default Vue.extend({
 
     drawSelectedGrid() {
       if (!this.selectedGrid) return;
-      const pos = this.landPos.getPos();
 
-      const callback = (ctx: CanvasRenderingContext2D, post: IPos) => {
+      const callback = (ctx: CanvasRenderingContext2D, pos: IPos) => {
         if (!this.selectedGrid) return;
         const rectPos = {
           x: this.selectedGrid.c * MacroMap.HouseSize,
@@ -78,6 +78,24 @@ export default Vue.extend({
         ctx.rect(rectPos.x, rectPos.y, MacroMap.HouseSize, MacroMap.HouseSize);
         ctx.fill();
       };
+
+      const pos = this.landPos.getPos();
+      drawUtil.drawWrapper(this.canvasElem.context, pos, callback);
+    },
+
+    drawHouse() {
+      const callback = (ctx: CanvasRenderingContext2D, pos: IPos) => {
+        const midPos = LandPos.gridMiddleInLandPos(0, 0);
+        const houseImage = this.$app.house.imageMgr.getImage("house1.png");
+        const size = MacroMap.HouseImageSize;
+        drawUtil.drawImageMid(
+          this.canvasElem.context,
+          midPos,
+          houseImage.obj,
+          size
+        );
+      };
+      const pos = this.landPos.getPos();
       drawUtil.drawWrapper(this.canvasElem.context, pos, callback);
     },
 
