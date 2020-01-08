@@ -37,6 +37,7 @@ export default Vue.extend({
     this.canvasElem.canvas.addEventListener("mousemove", this.onMouseMove);
     this.canvasElem.canvas.addEventListener("mouseup", this.onMouseUp);
     this.canvasElem.canvas.addEventListener("mouseout", this.onMouseUp);
+    window.addEventListener("keydown", this.onKeyDown);
   },
 
   methods: {
@@ -119,6 +120,28 @@ export default Vue.extend({
 
       this.draw();
       this.landPos.setStart(targetX, targetY);
+    },
+
+    onKeyDown(event: any) {
+      const offset = 10;
+      switch (event.key) {
+        case "d":
+          this.landPos.directMove({ x: offset, y: 0 });
+          this.draw();
+          break;
+        case "a":
+          this.landPos.directMove({ x: -offset, y: 0 });
+          this.draw();
+          break;
+        case "w":
+          this.landPos.directMove({ x: 0, y: -offset });
+          this.draw();
+          break;
+        case "s":
+          this.landPos.directMove({ x: 0, y: offset });
+          this.draw();
+          break;
+      }
     }
   }
 });

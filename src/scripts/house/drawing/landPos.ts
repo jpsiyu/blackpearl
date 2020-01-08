@@ -29,6 +29,9 @@ export class LandPos {
     return { x: this.posX, y: this.posY };
   }
 
+  // setStart, setTarget, move 配合使用，实现拖拽效果
+  // 鼠标点击时，setStart设置起点
+  // 鼠标移动，setTarget设置目标，调用move移动land
   setStart(x: number, y: number) {
     this.startX = x;
     this.startY = y;
@@ -48,6 +51,12 @@ export class LandPos {
 
   getMoved(): IPos {
     return { x: this.movedX, y: this.movedY };
+  }
+
+  // directMove 直接移动land
+  directMove(offset: IPos) {
+    this.posX += offset.x;
+    this.posY += offset.y;
   }
 
   getCanvasMidPos(ctx: CanvasRenderingContext2D): IPos {
