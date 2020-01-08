@@ -52,6 +52,7 @@ export default Vue.extend({
 .house {
   display: flex;
   justify-content: center;
+  cursor: pointer;
   &-canvas {
     margin: 20px 0;
     border: 1px solid green;

@@ -7,26 +7,36 @@ import Vue from "vue";
 import { ICanvasElem } from "@/scripts/house/interfaces";
 import { LandPos } from "@/scripts/house/drawing/landPos";
 import * as drawUtil from "@/scripts/house/drawing/drawUtil";
-import { IPos } from "@/scripts/house/interfaces";
+import { IPos, IGridPos } from "@/scripts/house/interfaces";
 import { MacroMap } from "@/scripts/house/macro";
 import { DrawLand } from "@/scripts/house/drawing/drawLand";
 
 interface IData {
   landPos: LandPos;
   land: DrawLand;
+  draging: boolean;
+  clickFlag: boolean;
+  selectedGrid: IGridPos | null;
 }
 
 export default Vue.extend({
   props: { canvasElem: { type: Object as () => ICanvasElem } },
-  data() {
+  data(): IData {
     return {
       landPos: new LandPos(0, 0),
-      land: new DrawLand()
+      land: new DrawLand(),
+      draging: false,
+      clickFlag: false,
+      selectedGrid: null
     };
   },
 
   mounted() {
     this.draw();
+    this.canvasElem.canvas.addEventListener("mousedown", this.onMouseDown);
+    this.canvasElem.canvas.addEventListener("mousemove", this.onMouseMove);
+    this.canvasElem.canvas.addEventListener("mouseup", this.onMouseUp);
+    this.canvasElem.canvas.addEventListener("mouseout", this.onMouseUp);
   },
 
   methods: {
@@ -50,6 +60,47 @@ export default Vue.extend({
         this.land.draw(ctx, pos);
       };
       drawUtil.drawWrapper(this.canvasElem.context, pos, callback);
+    },
+
+    onClick(event: any) {
+      const canvasPos = { x: event.offsetX, y: event.offsetY };
+      const mapPos = this.landPos.canvasPos2LandPos(canvasPos);
+      const gridPos = this.landPos.landPosInGrid(mapPos);
+      if (
+        gridPos.r < 0 ||
+        gridPos.r >= MacroMap.RowNum ||
+        gridPos.c < 0 ||
+        gridPos.c >= MacroMap.ColNum
+      )
+        this.selectedGrid = null;
+      else this.selectedGrid = gridPos;
+      this.draw();
+    },
+
+    onMouseDown(event: any) {
+      const startX = event.clientX;
+      const startY = event.clientY;
+      this.draging = true;
+      this.clickFlag = true;
+      this.landPos.setStart(startX, startY);
+    },
+
+    onMouseUp(event: any) {
+      this.draging = false;
+      if (this.clickFlag) this.onClick(event);
+    },
+
+    onMouseMove(event: any) {
+      this.clickFlag = false;
+      if (!this.draging) return;
+
+      const targetX = event.clientX;
+      const targetY = event.clientY;
+      this.landPos.setTarget(targetX, targetY);
+      this.landPos.move();
+
+      this.draw();
+      this.landPos.setStart(targetX, targetY);
     }
   }
 });

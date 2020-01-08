@@ -9,3 +9,9 @@ export interface IPos {
   x: number;
   y: number;
 }
+
+
+export interface IGridPos {
+  r: number;  // 行
+  c: number;  // 列
+}

@@ -1,5 +1,5 @@
 import { MacroMap } from "@/scripts/house/macro";
-import { IPos } from "@/scripts/house/interfaces";
+import { IPos, IGridPos } from "@/scripts/house/interfaces";
 
 export class LandPos {
   private posX: number;
@@ -69,7 +69,7 @@ export class LandPos {
     this.posY = pos.y;
   }
 
-  landPosInGrid(pos: IPos): { r: number; c: number } {
+  landPosInGrid(pos: IPos): IGridPos {
     const r = Math.floor(pos.y / MacroMap.HouseSize);
     const c = Math.floor(pos.x / MacroMap.HouseSize);
     return { r, c };
