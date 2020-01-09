@@ -8,7 +8,7 @@ import { ICanvasElem } from "@/scripts/house/interfaces";
 import { LandCoordinate } from "@/scripts/house/drawing/landCoordinate";
 import * as drawUtil from "@/scripts/house/drawing/drawUtil";
 import { IPos, IGridPos } from "@/scripts/house/interfaces";
-import { MacroMap } from "@/scripts/house/macro";
+import { MacroScene } from "@/scripts/house/macro";
 import { LandRender } from "@/scripts/house/drawing/landRender";
 
 interface IData {
@@ -71,11 +71,16 @@ export default Vue.extend({
       const callback = (ctx: CanvasRenderingContext2D, pos: IPos) => {
         if (!this.selectedGrid) return;
         const rectPos = {
-          x: this.selectedGrid.c * MacroMap.HouseSize,
-          y: this.selectedGrid.r * MacroMap.HouseSize
+          x: this.selectedGrid.c * MacroScene.HouseSize,
+          y: this.selectedGrid.r * MacroScene.HouseSize
         };
         ctx.fillStyle = "rgba(188,213,103, 0.5)";
-        ctx.rect(rectPos.x, rectPos.y, MacroMap.HouseSize, MacroMap.HouseSize);
+        ctx.rect(
+          rectPos.x,
+          rectPos.y,
+          MacroScene.HouseSize,
+          MacroScene.HouseSize
+        );
         ctx.fill();
       };
 
@@ -87,7 +92,7 @@ export default Vue.extend({
       const callback = (ctx: CanvasRenderingContext2D, pos: IPos) => {
         const midPos = LandCoordinate.gridMiddle2LandPos(0, 0);
         const houseImage = this.$app.house.imageMgr.getImage("house1.png");
-        const size = MacroMap.HouseImageSize;
+        const size = MacroScene.HouseImageSize;
         drawUtil.drawImageMid(
           this.canvasElem.context,
           midPos,
@@ -105,9 +110,9 @@ export default Vue.extend({
       const gridPos = LandCoordinate.landPos2GridPos(mapPos);
       if (
         gridPos.r < 0 ||
-        gridPos.r >= MacroMap.RowNum ||
+        gridPos.r >= MacroScene.RowNum ||
         gridPos.c < 0 ||
-        gridPos.c >= MacroMap.ColNum
+        gridPos.c >= MacroScene.ColNum
       )
         this.selectedGrid = null;
       else this.selectedGrid = gridPos;

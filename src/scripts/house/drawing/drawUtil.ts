@@ -1,4 +1,4 @@
-import { MacroMap } from "@/scripts/house/macro";
+import { MacroScene } from "@/scripts/house/macro";
 import { IPos } from "@/scripts/house/interfaces";
 
 export const drawWrapper = (
@@ -49,9 +49,9 @@ export const surround = (r: number, c: number, distance: number) => {
   const rows = [];
   const cols = [];
   for (let ri = r - distance; ri <= r + distance; ri++) {
-    if (ri < 0 || ri >= MacroMap.RowNum) continue;
+    if (ri < 0 || ri >= MacroScene.RowNum) continue;
     for (let ci = c - distance; ci <= c + distance; ci++) {
-      if (ci < 0 || ci >= MacroMap.ColNum) continue;
+      if (ci < 0 || ci >= MacroScene.ColNum) continue;
       rows.push(ri);
       cols.push(ci);
     }

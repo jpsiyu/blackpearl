@@ -15,7 +15,7 @@
 <script lang="ts">
 import Vue from "vue";
 import { ICanvasElem } from "@/scripts/house/interfaces";
-import { MacroMap } from "@/scripts/house/macro";
+import { MacroScene } from "@/scripts/house/macro";
 import Scene from "@/components/house/Scene.vue";
 
 interface IData {
@@ -30,8 +30,8 @@ export default Vue.extend({
   data(): IData {
     return {
       ok: false,
-      width: MacroMap.CanvasWidth,
-      height: MacroMap.CanvasHeight,
+      width: MacroScene.CanvasWidth,
+      height: MacroScene.CanvasHeight,
       canvasElem: null
     };
   },
@@ -47,8 +47,8 @@ export default Vue.extend({
     if (!context) return;
 
     this.canvasElem = {
-      width: MacroMap.CanvasWidth,
-      height: MacroMap.CanvasHeight,
+      width: MacroScene.CanvasWidth,
+      height: MacroScene.CanvasHeight,
       canvas,
       context
     };

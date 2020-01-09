@@ -1,4 +1,4 @@
-export const MacroMap = {
+export const MacroScene = {
   HouseSize: 100,
   HouseImageSize: 60,
   EnvImageSize: 80,

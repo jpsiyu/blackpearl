@@ -1,4 +1,4 @@
-import { MacroMap } from "@/scripts/house/macro";
+import { MacroScene } from "@/scripts/house/macro";
 import { IPos, IGridPos } from "@/scripts/house/interfaces";
 
 /**
@@ -85,20 +85,20 @@ export class LandCoordinate {
   }
 
   static landPos2GridPos(pos: IPos): IGridPos {
-    const r = Math.floor(pos.y / MacroMap.HouseSize);
-    const c = Math.floor(pos.x / MacroMap.HouseSize);
+    const r = Math.floor(pos.y / MacroScene.HouseSize);
+    const c = Math.floor(pos.x / MacroScene.HouseSize);
     return { r, c };
   }
 
   static gridPos2LandPos(r: number, c: number): IPos {
-    const x = c * MacroMap.HouseSize;
-    const y = r * MacroMap.HouseSize;
+    const x = c * MacroScene.HouseSize;
+    const y = r * MacroScene.HouseSize;
     return { x, y };
   }
 
   static gridMiddle2LandPos(r: number, c: number): IPos {
-    const x = c * MacroMap.HouseSize + MacroMap.HouseSize / 2;
-    const y = r * MacroMap.HouseSize + MacroMap.HouseSize / 2;
+    const x = c * MacroScene.HouseSize + MacroScene.HouseSize / 2;
+    const y = r * MacroScene.HouseSize + MacroScene.HouseSize / 2;
     return { x, y };
   }
 }

@@ -1,4 +1,4 @@
-import { MacroMap } from "@/scripts/house/macro";
+import { MacroScene } from "@/scripts/house/macro";
 import { IPos } from "@/scripts/house/interfaces";
 
 export class LandRender {
@@ -21,12 +21,12 @@ export class LandRender {
     let lineY = 0;
     let fixedY = 0;
     ctx.lineWidth = this.lineWidth;
-    for (let i = 0; i <= MacroMap.ColNum; i++) {
-      lineY = i * MacroMap.HouseSize;
+    for (let i = 0; i <= MacroScene.ColNum; i++) {
+      lineY = i * MacroScene.HouseSize;
       fixedY = lineY + pos.y;
       if (fixedY >= 0 && fixedY <= ctx.canvas.height) {
         ctx.moveTo(0, lineY);
-        ctx.lineTo(MacroMap.RowNum * MacroMap.HouseSize, lineY);
+        ctx.lineTo(MacroScene.RowNum * MacroScene.HouseSize, lineY);
       }
     }
     ctx.stroke();
@@ -37,12 +37,12 @@ export class LandRender {
     ctx.lineWidth = this.lineWidth;
     let lineX = 0;
     let fixedX = 0;
-    for (let i = 0; i <= MacroMap.RowNum; i++) {
-      lineX = i * MacroMap.HouseSize;
+    for (let i = 0; i <= MacroScene.RowNum; i++) {
+      lineX = i * MacroScene.HouseSize;
       fixedX = lineX + pos.x;
       if (fixedX >= 0 && fixedX <= ctx.canvas.width) {
         ctx.moveTo(lineX, 0);
-        ctx.lineTo(lineX, MacroMap.ColNum * MacroMap.HouseSize);
+        ctx.lineTo(lineX, MacroScene.ColNum * MacroScene.HouseSize);
       }
     }
     ctx.stroke();
