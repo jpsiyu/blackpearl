@@ -85,7 +85,7 @@ export default Vue.extend({
 
     drawHouse() {
       const callback = (ctx: CanvasRenderingContext2D, pos: IPos) => {
-        const midPos = LandCoordinate.gridMiddleInLandPos(0, 0);
+        const midPos = LandCoordinate.gridMiddle2LandPos(0, 0);
         const houseImage = this.$app.house.imageMgr.getImage("house1.png");
         const size = MacroMap.HouseImageSize;
         drawUtil.drawImageMid(
@@ -102,7 +102,7 @@ export default Vue.extend({
     onClick(event: any) {
       const canvasPos = { x: event.offsetX, y: event.offsetY };
       const mapPos = this.landCoord.canvasPos2LandPos(canvasPos);
-      const gridPos = this.landCoord.landPosInGrid(mapPos);
+      const gridPos = LandCoordinate.landPos2GridPos(mapPos);
       if (
         gridPos.r < 0 ||
         gridPos.r >= MacroMap.RowNum ||

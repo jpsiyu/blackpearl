@@ -84,19 +84,19 @@ export class LandCoordinate {
     this.posY = pos.y;
   }
 
-  landPosInGrid(pos: IPos): IGridPos {
+  static landPos2GridPos(pos: IPos): IGridPos {
     const r = Math.floor(pos.y / MacroMap.HouseSize);
     const c = Math.floor(pos.x / MacroMap.HouseSize);
     return { r, c };
   }
 
-  static gridInLandPos(r: number, c: number): IPos {
+  static gridPos2LandPos(r: number, c: number): IPos {
     const x = c * MacroMap.HouseSize;
     const y = r * MacroMap.HouseSize;
     return { x, y };
   }
 
-  static gridMiddleInLandPos(r: number, c: number): IPos {
+  static gridMiddle2LandPos(r: number, c: number): IPos {
     const x = c * MacroMap.HouseSize + MacroMap.HouseSize / 2;
     const y = r * MacroMap.HouseSize + MacroMap.HouseSize / 2;
     return { x, y };
