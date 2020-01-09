@@ -9,11 +9,11 @@ import { LandCoordinate } from "@/scripts/house/drawing/landCoordinate";
 import * as drawUtil from "@/scripts/house/drawing/drawUtil";
 import { IPos, IGridPos } from "@/scripts/house/interfaces";
 import { MacroMap } from "@/scripts/house/macro";
-import { DrawLand } from "@/scripts/house/drawing/drawLand";
+import { LandRender } from "@/scripts/house/drawing/landRender";
 
 interface IData {
   landCoord: LandCoordinate;
-  land: DrawLand;
+  land: LandRender;
   draging: boolean;
   clickFlag: boolean;
   selectedGrid: IGridPos | null;
@@ -24,7 +24,7 @@ export default Vue.extend({
   data(): IData {
     return {
       landCoord: new LandCoordinate(0, 0),
-      land: new DrawLand(),
+      land: new LandRender(),
       draging: false,
       clickFlag: false,
       selectedGrid: null

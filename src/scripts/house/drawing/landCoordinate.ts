@@ -37,7 +37,7 @@ export class LandCoordinate {
 
   // dragStart, dragEnd, dragMove 配合使用，实现拖拽效果
   // 鼠标点击时，dragStart设置起点
-  // 鼠标移动，dragEnd设置目标，调用move移动land
+  // 鼠标移动，dragEnd设置目标，调用dragMove移动land
   dragStart(x: number, y: number) {
     this.dragFromX = x;
     this.dragFromY = y;

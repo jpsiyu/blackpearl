@@ -1,7 +1,7 @@
 import { MacroMap } from "@/scripts/house/macro";
 import { IPos } from "@/scripts/house/interfaces";
 
-export class DrawLand {
+export class LandRender {
   private lineColor: string;
   private lineWidth: number;
 
