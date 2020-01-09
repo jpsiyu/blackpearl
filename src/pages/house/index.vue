@@ -7,7 +7,7 @@
       :height="height"
     ></canvas>
     <template v-if="ok">
-      <Map :canvasElem="canvasElem" />
+      <scene :canvasElem="canvasElem" />
     </template>
   </div>
 </template>
@@ -15,8 +15,8 @@
 <script lang="ts">
 import Vue from "vue";
 import { ICanvasElem } from "@/scripts/house/interfaces";
-import Map from "@/components/house/Map.vue";
 import { MacroMap } from "@/scripts/house/macro";
+import Scene from "@/components/house/Scene.vue";
 
 interface IData {
   ok: boolean;
@@ -26,7 +26,7 @@ interface IData {
 }
 
 export default Vue.extend({
-  components: { Map },
+  components: { Scene },
   data(): IData {
     return {
       ok: false,
