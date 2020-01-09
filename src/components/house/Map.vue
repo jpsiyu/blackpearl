@@ -5,14 +5,14 @@
 <script lang="ts">
 import Vue from "vue";
 import { ICanvasElem } from "@/scripts/house/interfaces";
-import { LandPos } from "@/scripts/house/drawing/landPos";
+import { LandCoordinate } from "@/scripts/house/drawing/landCoordinate";
 import * as drawUtil from "@/scripts/house/drawing/drawUtil";
 import { IPos, IGridPos } from "@/scripts/house/interfaces";
 import { MacroMap } from "@/scripts/house/macro";
 import { DrawLand } from "@/scripts/house/drawing/drawLand";
 
 interface IData {
-  landPos: LandPos;
+  landCoord: LandCoordinate;
   land: DrawLand;
   draging: boolean;
   clickFlag: boolean;
@@ -23,7 +23,7 @@ export default Vue.extend({
   props: { canvasElem: { type: Object as () => ICanvasElem } },
   data(): IData {
     return {
-      landPos: new LandPos(0, 0),
+      landCoord: new LandCoordinate(0, 0),
       land: new DrawLand(),
       draging: false,
       clickFlag: false,
@@ -58,7 +58,7 @@ export default Vue.extend({
     },
 
     drawLand() {
-      const pos = this.landPos.getPos();
+      const pos = this.landCoord.getPos();
       const callback = (ctx: CanvasRenderingContext2D, pos: IPos) => {
         this.land.draw(ctx, pos);
       };
@@ -79,13 +79,13 @@ export default Vue.extend({
         ctx.fill();
       };
 
-      const pos = this.landPos.getPos();
+      const pos = this.landCoord.getPos();
       drawUtil.drawWrapper(this.canvasElem.context, pos, callback);
     },
 
     drawHouse() {
       const callback = (ctx: CanvasRenderingContext2D, pos: IPos) => {
-        const midPos = LandPos.gridMiddleInLandPos(0, 0);
+        const midPos = LandCoordinate.gridMiddleInLandPos(0, 0);
         const houseImage = this.$app.house.imageMgr.getImage("house1.png");
         const size = MacroMap.HouseImageSize;
         drawUtil.drawImageMid(
@@ -95,14 +95,14 @@ export default Vue.extend({
           size
         );
       };
-      const pos = this.landPos.getPos();
+      const pos = this.landCoord.getPos();
       drawUtil.drawWrapper(this.canvasElem.context, pos, callback);
     },
 
     onClick(event: any) {
       const canvasPos = { x: event.offsetX, y: event.offsetY };
-      const mapPos = this.landPos.canvasPos2LandPos(canvasPos);
-      const gridPos = this.landPos.landPosInGrid(mapPos);
+      const mapPos = this.landCoord.canvasPos2LandPos(canvasPos);
+      const gridPos = this.landCoord.landPosInGrid(mapPos);
       if (
         gridPos.r < 0 ||
         gridPos.r >= MacroMap.RowNum ||
@@ -119,7 +119,7 @@ export default Vue.extend({
       const startY = event.clientY;
       this.draging = true;
       this.clickFlag = true;
-      this.landPos.setStart(startX, startY);
+      this.landCoord.setStart(startX, startY);
     },
 
     onMouseUp(event: any) {
@@ -133,30 +133,30 @@ export default Vue.extend({
 
       const targetX = event.clientX;
       const targetY = event.clientY;
-      this.landPos.setTarget(targetX, targetY);
-      this.landPos.move();
+      this.landCoord.setTarget(targetX, targetY);
+      this.landCoord.move();
 
       this.draw();
-      this.landPos.setStart(targetX, targetY);
+      this.landCoord.setStart(targetX, targetY);
     },
 
     onKeyDown(event: any) {
       const offset = 10;
       switch (event.key) {
         case "d":
-          this.landPos.directMove({ x: offset, y: 0 });
+          this.landCoord.directMove({ x: offset, y: 0 });
           this.draw();
           break;
         case "a":
-          this.landPos.directMove({ x: -offset, y: 0 });
+          this.landCoord.directMove({ x: -offset, y: 0 });
           this.draw();
           break;
         case "w":
-          this.landPos.directMove({ x: 0, y: -offset });
+          this.landCoord.directMove({ x: 0, y: -offset });
           this.draw();
           break;
         case "s":
-          this.landPos.directMove({ x: 0, y: offset });
+          this.landCoord.directMove({ x: 0, y: offset });
           this.draw();
           break;
       }

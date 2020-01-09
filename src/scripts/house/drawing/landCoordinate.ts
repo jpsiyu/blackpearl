@@ -1,7 +1,13 @@
 import { MacroMap } from "@/scripts/house/macro";
 import { IPos, IGridPos } from "@/scripts/house/interfaces";
 
-export class LandPos {
+/**
+ * land 坐标系
+ * canvas坐标，指相对于canvas原点的坐标，所有显示的点都是canvas的点
+ * land坐标，指相对于全部土地原点的坐标，land在canvas上移动
+ * grid坐标，指land上某一块土地，(1,2)表示1行2列的土地的启起点
+ */
+export class LandCoordinate {
   private posX: number;
   private posY: number;
   private startX: number;
