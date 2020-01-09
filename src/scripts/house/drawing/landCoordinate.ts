@@ -8,80 +8,80 @@ import { IPos, IGridPos } from "@/scripts/house/interfaces";
  * grid坐标，指land上某一块土地，(1,2)表示1行2列的土地的启起点
  */
 export class LandCoordinate {
-  private posX: number;
-  private posY: number;
-  private startX: number;
-  private startY: number;
-  private targetX: number;
-  private targetY: number;
-  private movedX: number;
-  private movedY: number;
+  private x: number;
+  private y: number;
+  private dragFromX: number;
+  private dragFromY: number;
+  private dragToX: number;
+  private dragToY: number;
+  private dragMoveX: number;
+  private dragMoveY: number;
 
   constructor(x: number, y: number) {
-    this.posX = x;
-    this.posY = y;
+    this.x = x;
+    this.y = y;
 
-    this.startX = 0;
-    this.startY = 0;
+    this.dragFromX = 0;
+    this.dragFromY = 0;
 
-    this.targetX = 0;
-    this.targetY = 0;
+    this.dragToX = 0;
+    this.dragToY = 0;
 
-    this.movedX = 0;
-    this.movedY = 0;
+    this.dragMoveX = 0;
+    this.dragMoveY = 0;
   }
 
   getPos(): IPos {
-    return { x: this.posX, y: this.posY };
+    return { x: this.x, y: this.y };
   }
 
-  // setStart, setTarget, move 配合使用，实现拖拽效果
-  // 鼠标点击时，setStart设置起点
-  // 鼠标移动，setTarget设置目标，调用move移动land
-  setStart(x: number, y: number) {
-    this.startX = x;
-    this.startY = y;
+  // dragStart, dragEnd, dragMove 配合使用，实现拖拽效果
+  // 鼠标点击时，dragStart设置起点
+  // 鼠标移动，dragEnd设置目标，调用move移动land
+  dragStart(x: number, y: number) {
+    this.dragFromX = x;
+    this.dragFromY = y;
   }
 
-  setTarget(x: number, y: number) {
-    this.targetX = x;
-    this.targetY = y;
+  dragEnd(x: number, y: number) {
+    this.dragToX = x;
+    this.dragToY = y;
   }
 
-  move() {
-    this.movedX = this.targetX - this.startX;
-    this.movedY = this.targetY - this.startY;
-    this.posX += this.movedX;
-    this.posY += this.movedY;
+  dragMove() {
+    this.dragMoveX = this.dragToX - this.dragFromX;
+    this.dragMoveY = this.dragToY - this.dragFromY;
+    this.x += this.dragMoveX;
+    this.y += this.dragMoveY;
   }
 
   getMoved(): IPos {
-    return { x: this.movedX, y: this.movedY };
+    return { x: this.dragMoveX, y: this.dragMoveY };
   }
 
   // directMove 直接移动land
   directMove(offset: IPos) {
-    this.posX += offset.x;
-    this.posY += offset.y;
+    this.x += offset.x;
+    this.y += offset.y;
   }
 
   getCanvasMidPos(ctx: CanvasRenderingContext2D): IPos {
     return {
-      x: ctx.canvas.width / 2 - this.posX,
-      y: ctx.canvas.height / 2 - this.posY
+      x: ctx.canvas.width / 2 - this.x,
+      y: ctx.canvas.height / 2 - this.y
     };
   }
 
   canvasPos2LandPos(pos: IPos): IPos {
     return {
-      x: pos.x - this.posX,
-      y: pos.y - this.posY
+      x: pos.x - this.x,
+      y: pos.y - this.y
     };
   }
 
   setOriginPos(pos: IPos) {
-    this.posX = pos.x;
-    this.posY = pos.y;
+    this.x = pos.x;
+    this.y = pos.y;
   }
 
   static landPos2GridPos(pos: IPos): IGridPos {

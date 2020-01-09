@@ -119,7 +119,7 @@ export default Vue.extend({
       const startY = event.clientY;
       this.draging = true;
       this.clickFlag = true;
-      this.landCoord.setStart(startX, startY);
+      this.landCoord.dragStart(startX, startY);
     },
 
     onMouseUp(event: any) {
@@ -133,11 +133,11 @@ export default Vue.extend({
 
       const targetX = event.clientX;
       const targetY = event.clientY;
-      this.landCoord.setTarget(targetX, targetY);
-      this.landCoord.move();
+      this.landCoord.dragEnd(targetX, targetY);
+      this.landCoord.dragMove();
 
       this.draw();
-      this.landCoord.setStart(targetX, targetY);
+      this.landCoord.dragStart(targetX, targetY);
     },
 
     onKeyDown(event: any) {
