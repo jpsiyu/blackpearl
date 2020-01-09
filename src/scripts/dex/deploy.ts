@@ -1,5 +1,5 @@
-import GammaABI from "@/assets/smart-contract/GammaABI.json";
-import TokenABI from "@/assets/smart-contract/Erc20ABI.json";
+import GammaABI from "@/assets/contracts/GammaABI.json";
+import TokenABI from "@/assets/contracts/Erc20ABI.json";
 
 export const DexABI = GammaABI;
 export const DexAddr = "0x6D6620fCB1C5cb2FcB853a72d77A9CbfaE559D6A";

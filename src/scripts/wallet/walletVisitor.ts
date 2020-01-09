@@ -1,5 +1,5 @@
 import { Visitor } from "@/scripts/web3/visitor";
-import ERC20ABI from "@/assets/smart-contract/Erc20ABI.json";
+import ERC20ABI from "@/assets/contracts/Erc20ABI.json";
 import { Transaction } from "ethereumjs-tx";
 import { ISignTxInput, ISignTxOutput } from "@/scripts/wallet/interfaces";
 import BigNumber from "bignumber.js";
